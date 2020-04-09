@@ -8,8 +8,8 @@
 //return 1 if successfully done, otherwise return 0
 int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 {
-	char const *file_name = "input.txt";	//char* file_name = "input.txt"
-	std::ifstream in;
+	char* file_name = "input.txt";	//char const *file_name = "input.txt";
+	ifstream in;	//std::ifstream in;
 	in.open(file_name);
 	in >> baseHP1;
 	in >> wp1;
@@ -37,12 +37,12 @@ void display(float fOut)
 // no exception handled
 {
 	if (fOut == 1){
-		std::cout << fOut;
+		cout << fOut;	//std::cout << fOut;
 	}
 	else{
 		char s[10];
 		sprintf(s,"%.2f",fOut);	//sprintf(s,"%.2f",fOut)
-		std::cout << s;
+		cout << s;	//std::cout << s;
 	}
 }
 
