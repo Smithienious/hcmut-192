@@ -29,7 +29,6 @@ int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 		return 0;
 	in.close();
 	return 1;
-
 }
 
 void display(float fOut)
@@ -41,7 +40,7 @@ void display(float fOut)
 	}
 	else{
 		char s[10];
-		sprintf(s,"%.2f",fOut)
+		sprintf(s,"%.2f",fOut);
 		std::cout << s;
 	}
 }
