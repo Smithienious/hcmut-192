@@ -8,8 +8,8 @@
 //return 1 if successfully done, otherwise return 0
 int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 {
-	char* file_name = "input.txt";
-	ifstream in;
+	char const *file_name = "input.txt";	//char* file_name = "input.txt"
+	std::ifstream in;
 	in.open(file_name);
 	in >> baseHP1;
 	in >> wp1;
@@ -37,12 +37,12 @@ void display(float fOut)
 // no exception handled
 {
 	if (fOut == 1){
-		cout << fOut;
+		std::cout << fOut;
 	}
 	else{
 		char s[10];
-		sprintf(s,"%.2f",fOut);
-		cout << s;
+		sprintf(s,"%.2f",fOut);	//sprintf(s,"%.2f",fOut)
+		std::cout << s;
 	}
 }
 
@@ -54,7 +54,88 @@ int main(void)
 	readFile(baseHP1,baseHP2,wp1,wp2,ground);
 	
 	//write your code here
+	float realHP1, realHP2;
 
+	// Paladin
+	bool isPaladin1 = true, isPaladin2 = true;
+
+	for (int i = 2; i < sqrt(baseHP1) + 1; i++){
+		if (baseHP1 % i == 0){
+			isPaladin1 = false;
+			break;
+		}
+	}
+
+	for (int i = 2; i < sqrt(baseHP2) + 1; i++){
+		if (baseHP2 % i == 0){
+			isPaladin2 = false;
+			break;
+		}
+	}
+
+	// Weapon of choice
+	if (wp1 == 3 && wp2 == 2){ wp2 = 1; }
+
+	// Knights of the Round Table
+	switch (wp1){
+		case 0:
+			realHP1 = round(baseHP1 / 10);
+			break;
+		case 1:
+		case 2:
+		case 3:
+			realHP1 = baseHP1;
+			break;
+	}
+
+	if (ground == baseHP1){
+		realHP1 *= 1.1;
+		if (realHP1 > 999){ realHP1 = 999; }
+	}
+
+	if (wp1 == 3){
+		realHP1 *= 2;
+		if (realHP1 > 999){ realHP1 = 999; }
+	}
+
+	// Saxon warrior
+	switch (wp2){
+		case 0:
+			realHP2 = round(baseHP2 / 10);
+			break;
+		case 1:
+		case 2:
+		case 3:
+			realHP2 = baseHP2;
+			break;
+	}
+
+	if (ground == baseHP2){
+		realHP2 *= 1.1;
+		if (realHP2 > 999){ realHP2 = 999; }
+	}
+
+	// Calculate probability value
+	fOut = (realHP1 - realHP2 + 999) / 2000;
+
+	if (wp1 == 2 && realHP1 < realHP2){
+		fOut = 0.5;
+	}
+
+	if (wp2 == 2 && realHP2 < realHP1){
+		fOut = 0.5;
+	}
+
+	if (isPaladin1 && isPaladin2){
+		if (baseHP1 > baseHP2){ fOut = 0.99; }
+		else if (baseHP1 == baseHP2){ fOut = 0.5; }
+		else fOut = 0.01;
+	}
+	else if (isPaladin1){ fOut = 0.99; }
+	else if (isPaladin2){ fOut = 0.01; }
+
+	if (baseHP2 == 888 && baseHP1 != 999){ fOut = 0; }
+	if (baseHP1 == 999){ fOut=1; }
 
 	display(fOut);
 
