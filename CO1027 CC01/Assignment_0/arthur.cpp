@@ -78,7 +78,7 @@ int main(void)
 	// Knights of the Round Table
 	switch (wp1){
 		case 0:
-			realHP1 = round(baseHP1 / 10);
+			realHP1 = round(baseHP1 / 10.0);
 			break;
 		case 1:
 		case 2:
