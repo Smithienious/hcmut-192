@@ -1,0 +1,326 @@
+\documentclass[12pt,en,a4paper]{article}
+\usepackage{vntex}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\begin{document}
+	\begin{table}[]
+		\centering
+		\begin{tabular}{|p{0.1\textwidth}|p{0.5\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+			\hline
+			\multicolumn{4}{|c|}{GROUP --- MEMBER LIST} \\
+			\hline
+			No. & Name & ID & Role \\
+			\hline
+			1 & Nguyễn Hoàng & 1952255 & Blank \\
+			\hline
+			2 & Blank & Blank & Blank \\
+			\hline
+		\end{tabular}
+	\end{table}
+\pdfbookmark[0]{Problem 1}{prob1}
+	\section*{Problem 1:}
+	Let p and q be the propositions "The election is decided" and "The votes have been counted" respectively.
+	Express each of these compound propositions as English sentences.
+	
+	\begin{enumerate}
+		\item $\neg$p: The election is not decided
+		\item p $\vee$ q: The election is decided or the votes have been counted
+		\item $\neg$p $\wedge$ q: The election is not decided and the votes have been counted
+		\item q $\rightarrow$ p: The votes have been counted implies the election is decided
+		\item $\neg$q $\rightarrow$ $\neg$p: The votes have not been counted implies the election is not decided
+		\item $\neg$p $\rightarrow$ $\neg$q: The election is not decided implies the votes have not been counted
+		\item p $\leftrightarrow$ q: The election is decided if and only if the votes have been counted
+		\item $\neg$q $\vee$ ($\neg$p $\wedge$ q): The votes have not been counted or the election is not decided and the votes have been counted
+	\end{enumerate}
+\newpage
+\pdfbookmark[0]{Problem 2}{prob2}
+	\section*{Problem 2:}
+	Construct a truth table for the compound propositions ((p $\rightarrow$ q) $\rightarrow$ r) $\rightarrow$ s
+	
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		p & q & r & s & p $\rightarrow$ q & (p $\rightarrow$ q) $\rightarrow$ r & ((p $\rightarrow$ q) $\rightarrow$ r) $\rightarrow$ s \\
+		\hline
+		T & T & T & T & T & T & T\\
+		\hline
+		T & T & T & F & T & T & F\\
+		\hline
+		T & T & F & T & T & F & T\\
+		\hline
+		T & T & F & F & T & F & T\\
+		\hline
+		T & F & T & T & F & T & T\\
+		\hline
+		T & F & T & F & F & T & F\\
+		\hline
+		T & F & F & T & F & T & T\\
+		\hline
+		T & F & F & F & F & T & T\\
+		\hline
+		F & T & T & T & T & T & T\\
+		\hline
+		F & T & T & F & T & T & F\\
+		\hline
+		F & T & F & T & T & F & T\\
+		\hline
+		F & T & F & F & T & F & T\\
+		\hline
+		F & F & T & T & T & T & T\\
+		\hline
+		F & F & T & F & T & T & F\\
+		\hline
+		F & F & F & T & T & F & T\\
+		\hline
+		F & F & F & F & T & F & T\\
+		\hline
+	\end{tabular}
+\newpage
+\pdfbookmark[0]{Problem 3}{prob3}
+	\section*{Problem 3:}
+	Show that the statement (p $\vee$ q) $\wedge$ ($\neg$p $\wedge$ $\neg$q) is a contradiction
+	
+	(p $\vee$ q) $\wedge$ ($\neg$p $\wedge$ $\neg$q)\\
+	= p $\wedge$ $\neg$p $\wedge$ $\neg$q $\vee$ q $\wedge$ $\neg$p $\wedge$ $\neg$q\\
+	= \textbf{F} $\vee$ \textbf{F}\\
+	= \textbf{F}
+\newpage
+\pdfbookmark[0]{Problem 4}{prob4}
+	\section*{Problem 4:}
+	On the island of Flopi, there are three types of people: Knights, Knaves, and Floppers.
+	All inhabitants know which type the others are, but they are otherwise indistinguishable. Knights always
+	tell the truth. Knaves always lie. Floppers always choose to lie or tell the truth by doing the opposite of
+	the previous speaker (i.e. if someone just spoke a lie, the 
+Flopper will tell the truth; if someone just spoke a
+	truth, the 
+Flopper will lie). While on your vacation, you come across three inhabitants, A, B, and C. They
+	say the following, in order:\\
+	A says, "We are all knights."\\
+	B says, "C is a knight."\\
+	C says, "A is a knave."\\
+	A says, "C lied."\\\\
+	If A is a knight, statement 1 and 3 contradict. Therefore A is not a knight.	
+	If A is a knave:
+	\begin{itemize}
+		\item If B is a knight, C is a knight.
+		\item If B is a flopper, C is a knight.
+	\end{itemize}
+	Since statement 1 is false, the order can be flopper - knight - knight or flopper - flopper - knight.
+\newpage
+\pdfbookmark[0]{Problem 5}{prob5}
+	\section*{Problem 5:}
+	Five friends have access to a chat room. Is it possible to determine who is chatting if
+	the following information is known? Either Kevin or Heather, or both, are chatting. Either Randy or Vijay,
+	but not both, are chatting. If Abby is chatting, so is Randy. Vijay and Kevin are either both chatting or
+	neither is. If Heather is chatting, then so are Abby and Kevin.\\\\
+	Let Kevin, Heather, Randy, Vijay, Abby chatting be K, H, R, V, A respectively.\\
+	Let S\textsubscript{1} be "Either Kevin or Heather or both are chatting."\\
+	Let S\textsubscript{2} be Either Randy or Vijay, but not both, are chatting."\\
+	Let S\textsubscript{3} be "If Abby is chatting, so is Randy."\\
+	Let S\textsubscript{4} be "Vijay and Kevin are either both chatting or neither."\\
+	Let S\textsubscript{5} be "If Heather is chatting, then so are Abby and Kevin."
+	
+	We have:\\
+	S\textsubscript{1} = K $\vee$ H\\
+	S\textsubscript{2} = R $\oplus$ V\\
+	S\textsubscript{3} = A $\rightarrow$ R\\
+	S\textsubscript{4} = V $\leftrightarrow$ K\\
+	S\textsubscript{5} = H $\rightarrow$ (A $\wedge$ K)\\\\
+	Conclusion C = S\textsubscript{1} $\wedge$ S\textsubscript{2} $\wedge$ S\textsubscript{3} $\wedge$ S\textsubscript{4} $\wedge$ S\textsubscript{5}
+	
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		K & H & V & R & A & S\textsubscript{1} & S\textsubscript{2} & S\textsubscript{3} & 
+		S\textsubscript{4} & 
+		S\textsubscript{5} & 
+		C\\
+		\hline
+		T & T & T & T & T & T & F & T & T & T & F\\
+		\hline
+		T & T & T & T & F & T & F & T & T & F & F\\
+		\hline
+		T & T & T & F & T & T & T & F & T & T & F\\
+		\hline
+		T & T & T & F & F & T & T & T & T & F & F\\
+		\hline
+		T & T & F & T & T & T & T & T & F & T & F\\
+		\hline
+		T & T & F & T & F & T & T & T & F & F & F\\
+		\hline
+		T & T & F & F & T & T & F & F & F & T & F\\
+		\hline
+		T & T & F & F & F & T & F & T & F & F & F\\
+		\hline
+		T & F & T & T & T & T & F & T & T & T & F\\
+		\hline
+		T & F & T & T & F & T & F & T & T & T & F\\
+		\hline
+		T & F & T & F & T & T & T & F & T & T & F\\
+		\hline
+		T & F & T & F & F & T & T & T & T & T & T\\
+		\hline
+		T & F & F & T & T & T & T & T & F & T & F\\
+		\hline
+		T & F & F & T & F & T & T & T & F & T & F\\
+		\hline
+		T & F & F & F & T & T & F & F & F & T & F\\
+		\hline
+		T & F & F & F & F & T & F & T & F & T & F\\
+		\hline
+		F & T & T & T & T & T & F & T & F & F & F\\
+		\hline
+		F & T & T & T & F & T & F & T & F & F & F\\
+		\hline
+		F & T & T & F & T & T & T & F & F & F & F\\
+		\hline
+		F & T & T & F & F & T & T & T & F & F & F\\
+		\hline
+		F & T & F & T & T & T & T & T & T & F & F\\
+		\hline
+		F & T & F & T & F & T & T & T & T & F & F\\
+		\hline
+		F & T & F & F & T & T & F & F & T & F & F\\
+		\hline
+		F & T & F & F & F & T & F & T & T & F & F\\
+		\hline
+		F & F & T & T & T & F & F & T & F & T & F\\
+		\hline
+		F & F & T & T & F & F & F & T & F & T & F\\
+		\hline
+		F & F & T & F & T & F & T & F & F & T & F\\
+		\hline
+		F & F & T & F & F & F & T & T & F & T & F\\
+		\hline
+		F & F & F & T & T & F & T & T & T & T & F\\
+		\hline
+		F & F & F & T & F & F & T & T & T & T & F\\
+		\hline
+		F & F & F & F & T & F & F & F & T & T & F\\
+		\hline
+		F & F & F & F & F & F & F & T & T & T & F\\
+		\hline
+	\end{tabular}\\
+	Therefore Kevin and Vijay are chatting.
+\newpage
+\pdfbookmark[0]{Problem 6}{prob6}
+	\section*{Problem 6:}
+	Show that (p $\rightarrow$ q) $\rightarrow$ [(q $\rightarrow$ r) $\rightarrow$ (p $\rightarrow$ r)] is a tautology using a truth table.\\
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		\hline
+		p & q & r & q $\rightarrow$ r & p $\rightarrow$ r & p $\rightarrow$ q & (q $\rightarrow$ r) $\rightarrow$ (p $\rightarrow$ r) & (p $\rightarrow$ q) $\rightarrow$ [(q $\rightarrow$ r) $\rightarrow$ (p $\rightarrow$ r)]\\
+		\hline
+		T & T & T & T & T & T & T & T\\
+		\hline
+		T & T & F & F & F & T & T & T\\
+		\hline
+		T & F & T & T & T & F & T & T\\
+		\hline
+		T & F & F & T & F & F & F & T\\
+		\hline
+		F & T & T & T & T & T & T & T\\
+		\hline
+		F & T & F & F & T & T & T & T\\
+		\hline
+		F & F & T & T & T & T & T & T\\
+		\hline
+		F & F & F & T & T & T & T & T\\
+		\hline
+	\end{tabular}
+\newpage
+\pdfbookmark[0]{Problem 7}{prob7}
+	\section*{Problem 7:}
+	Prove that (p $\rightarrow$ q) $\wedge $(p $\rightarrow$ r) and p $\rightarrow$ (q $\wedge$ r) are logically equivalent.
+	
+	(p $\rightarrow$ q) $\wedge$ (p $\rightarrow$ r)\\
+	= ($\neg$p $\vee$ q) $\wedge$ ($\neg$p $\vee$ r)\\
+	= $\neg$p $\vee$ $\neg$p $\wedge$ q $\vee$ $\neg$p $\wedge$ r $\vee$ q $\wedge$ r\\
+	= $\neg$p $\vee$ q $\wedge$ r
+	
+	p $\rightarrow$ (q $\wedge$ r)\\
+	= $\neg$p $\vee$ (q $\wedge$ r)\\
+\newpage
+\pdfbookmark[0]{Problem 8}{prob8}
+	\section*{Problem 8:}
+	Prove that $\neg$[[[[(p $\wedge$ q) $\wedge$ r] $\vee$ [(p $\wedge$ r) $\wedge$ $\neg$r]] $\vee$ $\neg$q] $\rightarrow$ s] and [(p $\wedge$ r) $\vee$ $\neg$q] $\wedge$ $\neg$s are logically equivalent. Then check it using a truth table.
+	
+	$\neg$[[[[(p $\wedge$ q) $\wedge$ r] $\vee$ [(p $\wedge$ r) $\wedge$ $\neg$r]] $\vee$ $\neg$q] $\rightarrow$ s]\\
+	= $\neg$[$\neg$[[p $\wedge$ q $\wedge$ r $\vee$ p $\wedge$ r $\wedge$ $\neg$r] $\vee$ $\neg$q] $\vee$ s]\\
+	= $\neg$[$\neg$[p $\wedge$ q $\wedge$ r $\vee$ $\neg$q] $\vee$ s]\\
+	= [p $\wedge$ q $\wedge$ r $\vee$ $\neg$q] $\wedge$ $\neg$s\\
+	= [p $\wedge$ q $\wedge$ r $\vee$ $\neg$q $\vee$ p $\wedge$ $\neg$q $\wedge$ r] $\wedge$ $\neg$s\\
+	= [p $\wedge$ r $\vee$ $\neg$q] $\wedge$ $\neg$s\\	
+	\begin{tabular}{|c|c|c|c|c|>{\bfseries}c|c|>{\bfseries}c|}
+		\hline
+		p & q & r & s & p $\wedge$ q $\wedge$ r $\vee$ $\neg$q & p $\wedge$ q $\wedge$ r $\vee$ $\neg$q $\rightarrow$ s & p $\wedge$ r $\vee$ $\neg$q & [p $\wedge$ r $\vee$ $\neg$q] $\wedge$ $\neg$s\\
+		\hline
+		T & T & T & T & T & T & T & T\\
+		\hline
+		T & T & T & F & T & F & T & F\\
+		\hline
+		T & T & F & T & F & T & F & T\\
+		\hline
+		T & T & F & F & F & T & F & T\\
+		\hline
+		T & F & T & T & T & T & T & T\\
+		\hline
+		T & F & T & F & T & F & T & F\\
+		\hline
+		T & F & F & T & T & T & T & T\\
+		\hline
+		T & F & F & F & T & F & T & F\\
+		\hline
+		F & T & T & T & F & T & F & T\\
+		\hline
+		F & T & T & F & F & T & F & T\\
+		\hline
+		F & T & F & T & F & T & F & T\\
+		\hline
+		F & T & F & F & F & T & F & T\\
+		\hline
+		F & F & T & T & T & T & T & T\\
+		\hline
+		F & F & T & F & T & F & T & F\\
+		\hline
+		F & F & F & T & T & T & T & T\\
+		\hline
+		F & F & F & F & T & F & T & F\\
+		\hline
+	\end{tabular}
+\newpage
+\pdfbookmark[0]{Rosen's Book}{rosen}
+	\section*{Rosen's book}
+	\subsection*{1.1 42:}
+	What is the value of x after each of these statements is encountered in a computer program, if x = 1 before the
+	statement is reached?\\
+	\begin{enumerate}[label=(\alph*)]
+		\item \textbf{if} $x+2=3$ \textbf{then} $x:=x+1$\\
+		$\Rightarrow x=2$
+		\item \textbf{if} $(x+1 =3)OR(2x+2=3)$ \textbf{then} $x:=x+1$\\
+		$\Rightarrow x=1$
+		\item \textbf{if} $(2x+3=5)AND(3x+4=7)$ \textbf{then} $x:=x+1$\\
+		$\Rightarrow x=2$
+		\item \textbf{if} $(x+1=2)XOR(x+2=3)$ \textbf{then} $x:=x+1$\\
+		$\Rightarrow x=1$
+		\item \textbf{if} $x<2$ \textbf{then} $x:=x+1$\\
+		$\Rightarrow x=2$
+	\end{enumerate}
+	\subsection*{1.2 6:}
+	You can upgrade your operating system only if you have a 32-bit processor running at 1 GHz or faster, at least 1 GB RAM, and 16 GB free hard disk space, or a 64-bit processor running at 2 GHz or faster, at least 2 GB RAM, and at least 32 GB free hard disk space. Express your answer in terms of \textit{u}: "You can upgrade your operating system," \textit{b}\textsubscript{32}:"You have a 32-bit processor," \textit{b}\textsubscript{64}:"You have a 64-bit processor," \textit{g}\textsubscript{1}: "Your processor runs at 1 GHz or faster," \textit{g}\textsubscript{2}: "Your processor runs at 2 GHz or faster," \textit{r}\textsubscript{1}: "Your processor has at least 1 GB RAM," \textit{r}\textsubscript{2}: "Your processor has at least 2 GB RAM," \textit{h}\textsubscript{16}: "You have at least 16 GB free hard disk space," and \textit{h}\textsubscript{32}: "Your have at least 32 GB free hard disk space."\\
+	
+	Conclusion C = \textit{b}\textsubscript{32} $\wedge$ \textit{g}\textsubscript{1} $\wedge$ \textit{r}\textsubscript{1} $\wedge$ \textit{h}\textsubscript{16} $\vee$ \textit{b}\textsubscript{64} $\wedge$ \textit{g}\textsubscript{2} $\wedge$ \textit{r}\textsubscript{2} $\wedge$ \textit{h}\textsubscript{32}
+	\subsection*{1.3 30:}
+	Show that (p $\vee$ q) $\wedge$ ($\neg$p $\vee$ r) $\rightarrow$ (q $\vee$ r) is a tautology.\\
+	
+	(p $\vee$ q) $\wedge$ ($\neg$p $\vee$ r) $\rightarrow$ (q $\vee$ r)\\
+	= (p $\wedge$ r $\vee$ $\neg$p $\wedge$ q $\vee$ q $\wedge$ r) $\rightarrow$ (q $\vee$ r)\\
+	= $\neg$(p $\wedge$ r $\vee$ $\neg$p $\wedge$ q $\vee$ q $\wedge$ r) $\vee$ q $\vee$ r\\
+	= $\neg$(p $\wedge$ r) $\wedge$ $\neg$($\neg$p $\wedge$ q) $\wedge$ $\neg$(q $\wedge$ r) $\vee$ q $\vee$ r\\
+	= ($\neg$p $\vee$ $\neg$r) $\wedge$ (p $\vee$ $\neg$q) $\wedge$ ($\neg$q $\vee$ $\neg$r) $\vee$ q $\vee$ r\\
+	= p $\wedge$ $\neg$r $\vee$ $\neg$p $\wedge$ $\neg$q $\vee$ q $\vee$ r\\
+	= p $\wedge$ q $\wedge$ $\neg$r $\vee$ p $\wedge$ $\neg$q $\wedge$ $\neg$r $\vee$ $\neg$p $\wedge$ $\neg$q $\wedge$ r $\vee$ $\neg$p $\wedge$ $\neg$q $\wedge$ $\neg$r $\vee$ q $\vee$ r\\
+	= q $\vee$ r $\vee$ $\neg$q $\wedge$ $\neg$r\\
+	= $\neg$($\neg$q $\wedge$ $\neg$r) $\vee$ $\neg$q $\wedge$ $\neg$r\\
+	= \textbf{T}
+\end{document}

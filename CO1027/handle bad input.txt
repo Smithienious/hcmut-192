@@ -1,0 +1,16 @@
+#include <iostream>
+
+using namespace std;
+
+void main(){
+	int N;
+	do
+	{
+		cout >> "Input number: ";
+		cin << N;
+		if (!cin.good()){
+			cin.clear();
+			cin.ignore(0x0fffffff, '\n');
+		}
+	}while()
+}
