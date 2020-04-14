@@ -1,22 +1,27 @@
 /*****Version 1.1***********/
-#include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <math.h>
+using namespace std;
 
 //read data from input file to corresponding variables
 //return 1 if successfully done, otherwise return 0
-int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
+int readFile(const char* filename, int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 {
-	char const *file_name = "input.txt";
-	std::ifstream in;
-	in.open(file_name);
+	ifstream in;
+	in.open(filename);
+
+	if (!in.good()) return 0;
+
 	in >> baseHP1;
 	in >> wp1;
 	in >> baseHP2;
 	in >> wp2;
 	in >> ground;
+
 	in.close();
+
 	if (baseHP1 < 99 || baseHP1 > 999)
 		return 0;
 	if (wp1 < 0 || wp1 > 3)
@@ -27,50 +32,66 @@ int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 		return 0;
 	if (ground < 1 || ground > 999)
 		return 0;
-	in.close();
+
 	return 1;
 }
 
-void display(float fOut)
-//display value of fOut in format of 0.XX
-// no exception handled
+bool isPrime(int n){
+	bool result = true;
+
+	for (int i = 2; i < sqrt(n) + 1; i++){
+		if (n % i == 0){
+			result =  false;
+			break;
+		}
+	}
+
+	return result;
+}
+
+void puts(float fOut)
 {
 	if (fOut == 1){
-		std::cout << fOut;
+		cout << fOut;
 	}
 	else{
 		char s[10];
 		sprintf(s,"%.2f",fOut);
-		std::cout << s;
+		cout << s;
+	}
+}
+
+void display(float fOut)
+// display value of fOut in format of 0.XX
+// no exception handled
+{
+	if (fOut == 1){
+		cout << fOut;
+	}
+	else{
+		char s[10];
+		cout << setprecision(2) << fOut;
 	}
 }
 
 
-int main(void)
+int main(int argc, char** argv)
 {
+	if (argc < 2) return 1;
+
+	const char* filename = argv[1];
+	cout << filename;
+
 	int baseHP1,baseHP2,wp1,wp2,ground;
 	float fOut = 0.0;
-	readFile(baseHP1,baseHP2,wp1,wp2,ground);
+	readFile(filename, baseHP1, baseHP2, wp1, wp2, ground);
 	
 	//write your code here
 	float realHP1, realHP2;
 
 	// Paladin
-	bool isPaladin1 = true, isPaladin2 = true;
-
-	for (int i = 2; i < sqrt(baseHP1) + 1; i++){
-		if (baseHP1 % i == 0){
-			isPaladin1 = false;
-			break;
-		}
-	}
-
-	for (int i = 2; i < sqrt(baseHP2) + 1; i++){
-		if (baseHP2 % i == 0){
-			isPaladin2 = false;
-			break;
-		}
-	}
+	bool isPaladin1 = isPrime(baseHP1);
+	bool isPaladin2 = isPrime(baseHP2);
 
 	// Weapon of choice
 	if (wp1 == 3 && wp2 == 2){ wp2 = 1; }
@@ -78,7 +99,7 @@ int main(void)
 	// Knights of the Round Table
 	switch (wp1){
 		case 0:
-			realHP1 = round(baseHP1 / 10);
+			realHP1 = round(baseHP1 / 10.0);
 			break;
 		case 1:
 		case 2:
@@ -100,7 +121,7 @@ int main(void)
 	// Saxon warrior
 	switch (wp2){
 		case 0:
-			realHP2 = round(baseHP2 / 10);
+			realHP2 = round(baseHP2 / 10.0);
 			break;
 		case 1:
 		case 2:
@@ -135,6 +156,10 @@ int main(void)
 
 	if (baseHP2 == 888 && baseHP1 != 999){ fOut = 0; }
 	if (baseHP1 == 999){ fOut=1; }
+
+	puts(fOut);
+
+	return 0;
 
 	display(fOut);
 
