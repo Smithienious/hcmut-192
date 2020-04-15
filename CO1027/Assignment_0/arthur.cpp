@@ -68,8 +68,6 @@ void display(float fOut)
 
 int main(int argc, char** argv)
 {
-	argc = 2; argv[0] = "./arthur"; argv[1] = "1.txt";
-
 	if (argc < 2) return 1;
 
 	const char* filename = argv[1];
