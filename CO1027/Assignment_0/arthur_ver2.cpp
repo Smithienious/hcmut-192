@@ -1,15 +1,14 @@
 /*****Version 1.1***********/
-#include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <math.h>
 using namespace std;
 
 //read data from input file to corresponding variables
 //return 1 if successfully done, otherwise return 0
-int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
+int readFile(const char* filename, int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 {
-	char const *filename = "input.txt";
 	ifstream in;
 	in.open(filename);
 	
@@ -35,8 +34,10 @@ int readFile(int& baseHP1,int& baseHP2,int& wp1,int& wp2,int& ground)
 		return 0;
 
 	return 1;
+
 }
 
+// TODO: Your code goes here
 bool isPrime(int n){
 	bool result = true;
 
@@ -51,7 +52,7 @@ bool isPrime(int n){
 }
 
 void display(float fOut)
-//display value of fOut in format of 0.XX
+// display value of fOut in format of 0.XX
 // no exception handled
 {
 	if (fOut == 1){
@@ -65,13 +66,18 @@ void display(float fOut)
 }
 
 
-int main(void)
+int main(int argc, char** argv)
 {
+	if (argc < 2) return 1;
+
+	const char* filename = argv[1];
+	cout << filename << endl;
+
 	int baseHP1,baseHP2,wp1,wp2,ground;
 	float fOut = 0.0;
-	readFile(baseHP1,baseHP2,wp1,wp2,ground);
+	readFile(filename, baseHP1, baseHP2, wp1, wp2, ground);
 	
-	//write your code here
+	// TODO: Your code goes here
 	float realHP1, realHP2;
 
 	// Paladin
