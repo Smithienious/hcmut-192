@@ -144,8 +144,8 @@ int main(int argc, char** argv)
 	else if (isPaladin1){ fOut = 0.99; }
 	else if (isPaladin2){ fOut = 0.01; }
 
-	if (baseHP2 == 888 && baseHP1 != 999){ fOut = 0; }
-	if (baseHP1 == 999){ fOut=1; }
+	if (baseHP2 == 888){ fOut = 0; }
+	if (baseHP1 == 999){ fOut = 1; }
 
 	display(fOut);
 
