@@ -41,10 +41,14 @@ int readFile(const char* filename, int& baseHP1,int& baseHP2,int& wp1,int& wp2,i
 bool isPrime(int n){
 	bool result = true;
 
-	for (int i = 2; i < sqrt(n) + 1; i++){
-		if (n % i == 0){
-			result =  false;
-			break;
+	if (n < 2)
+		result = false;
+	else{
+		for (int i = 2; i < sqrt(n) + 1; i += 1){
+			if (n % i == 0){
+				result =  false;
+				break;
+			}
 		}
 	}
 
@@ -90,7 +94,7 @@ int main(int argc, char** argv)
 	// Knights of the Round Table
 	switch (wp1){
 		case 0:
-			realHP1 = round(baseHP1 / 10.0);
+			realHP1 = round(baseHP1 / 10);
 			break;
 		case 1:
 		case 2:
@@ -112,7 +116,7 @@ int main(int argc, char** argv)
 	// Saxon warrior
 	switch (wp2){
 		case 0:
-			realHP2 = round(baseHP2 / 10.0);
+			realHP2 = round(baseHP2 / 10);
 			break;
 		case 1:
 		case 2:
@@ -129,13 +133,8 @@ int main(int argc, char** argv)
 	// Calculate probability value
 	fOut = (realHP1 - realHP2 + 999) / 2000;
 
-	if (wp1 == 2 && realHP1 < realHP2){
-		fOut = 0.5;
-	}
-
-	if (wp2 == 2 && realHP2 < realHP1){
-		fOut = 0.5;
-	}
+	if (wp1 == 2 && realHP1 < realHP2){ fOut = 0.5; }
+	if (wp2 == 2 && realHP2 < realHP1){ fOut = 0.5;	}
 
 	if (isPaladin1 && isPaladin2){
 		if (baseHP1 > baseHP2){ fOut = 0.99; }
