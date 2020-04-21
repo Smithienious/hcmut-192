@@ -25,7 +25,7 @@ struct knight
 // return 1 if successfully done, otherwise return 0
 int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent)
 {
-	const char* file_name = "14.txt";
+	const char* file_name = "15.txt";
 	FILE* f = 0;
 	char* str = new char[MAX_CHARACTER_EACH_LINE];
 	int num;
@@ -152,10 +152,11 @@ int main(int argc, char** argv)
 	readFile(filename, theKnight, nEvent, arrEvent);
 	//cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.remedy << ' ' << theKnight.maidenkiss << ' ' << theKnight.phoenixdown << endl;
 
-	int b, levelO, damage, N, levelFrog;
+	int b, levelO, damage, N, levelFrog, f1, f2, f3;
 	int maxHP = theKnight.HP, isTiny = 5, isFrog = 5;
 	float baseDamage;
-	bool isEnded, hasExcalibur, hasMythril, hasExcalipoor;
+	bool isEnded, hasExcalibur, hasMythril, hasExcalipoor, princessEscaped;
+
 	for (i = 0; i < nEvent; i++)
 	{
 		int theEvent = arrEvent[i];
@@ -318,38 +319,71 @@ int main(int argc, char** argv)
 
 		case 12:
 			// Obtain mushroom of Fibonacci MushFib
+			f1 = 1, f2 = 1, f3;
+
+			while (theKnight.HP < f3)
+			{
+				f3 = f1 + f2;
+				f1 = f2;
+				f2 = f3;
+			}
+
+			theKnight.HP = f3;
 		break;
 
 		case 13:
 			// Obtain ghost mushroom of MushGhost
+			theKnight.HP -= 50;
+			if (theKnight.HP < 51){ theKnight.HP = 1; }
 		break;
 
 		case 14:
 			// Obtain mushroom of MushKnight
+			if (maxHP < 950){ maxHP += 50; }
+			theKnight.HP = maxHP;
 		break;
 
 		case 15:
 			// Obtain Remedy
+			if (theKnight.remedy < 99){ theKnight.remedy += 1; }
 		break;
 
 		case 16:
 			// Obtain MaidenKiss
+			if (theKnight.maidenkiss < 99){ theKnight.maidenkiss += 1; }
 		break;
 
 		case 17:
 			// Obtain PhoenixDown
+			if (theKnight.phoenixdown < 99){ theKnight.phoenixdown += 1; }
 		break;
 
 		case 18:
 			// Meet Merlin the Wizard
+			if (isTiny <= 3 || isFrog <= 3)
+			{
+				isTiny = 3;
+				isFrog = 3;
+			}
+
+			if (theKnight.level < 9){ theKnight.level += 1; }
+
+			theKnight.HP = maxHP;
 		break;
 
 		case 19:
 			// Fall into the Abyss
+			if (theKnight.level < 7)
+			{
+				isEnded = true;
+				N = -1;
+				i = nEvent;
+			}
 		break;
 
 		case 20:
 			// Meet the princess Guinevere
+			
 		break;
 
 		case 21:
