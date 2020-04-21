@@ -25,7 +25,7 @@ struct knight
 // return 1 if successfully done, otherwise return 0
 int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent)
 {
-	const char* file_name = "15.txt";
+	const char* file_name = "21.txt";
 	FILE* f = 0;
 	char* str = new char[MAX_CHARACTER_EACH_LINE];
 	int num;
@@ -153,14 +153,53 @@ int main(int argc, char** argv)
 	//cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.remedy << ' ' << theKnight.maidenkiss << ' ' << theKnight.phoenixdown << endl;
 
 	int b, levelO, damage, N, levelFrog, f1, f2, f3;
-	int maxHP = theKnight.HP, isTiny = 5, isFrog = 5;
 	float baseDamage;
-	bool isEnded, hasExcalibur, hasMythril, hasExcalipoor, princessEscaped;
+	int
+		maxHP = theKnight.HP,
+		isTiny = 5,
+		isFrog = 5,
+		hasLightwing = 5,
+		meetOdin = 5;
+	bool
+		isEnded = false, 
+		hasExcalibur = false,
+		hasMythril = false,
+		hasExcalipoor = false,
+		princessEscaped = false,
+		isKingArthur = theKnight.HP == 999,
+		isLancelot = theKnight.HP == 888,
+		isPaladin = isPrime(theKnight.HP),
+		isDragonKnight = false;
 
 	for (i = 0; i < nEvent; i++)
 	{
 		int theEvent = arrEvent[i];
 		//cout << theEvent << endl;
+
+		// Odin is active
+		if (meetOdin <= 3){
+			if (theEvent == 0 || theEvent == 20)
+				break;
+			else{
+				meetOdin += 1;
+				continue;
+			};
+		}
+
+		// Lightwing is active
+		if (hasLightwing <= 3){
+			if (theEvent == 21){
+				hasLightwing = 1;
+				continue;
+			}
+			if (theEvent == 0 || theEvent == 20)
+				break;
+			else{
+				hasLightwing += 1;
+				continue;
+			};
+		}
+		
 		switch (theEvent)
 		{
 		case 0:
@@ -388,10 +427,17 @@ int main(int argc, char** argv)
 
 		case 21:
 			// Obtain wings of Lightwing
+			hasLightwing = 1;
 		break;
 
 		case 22:
 			// Meet Odin
+			if (meetOdin <= 3)
+			{
+				meetOdin += 1;
+				continue;
+			}
+			meetOdin = 1;
 		break;
 		
 		case 23:
@@ -441,3 +487,23 @@ int main(int argc, char** argv)
 	return 0;
 }
 
+bool isPrime(int n){
+	bool result = true;
+
+	if (n < 2)
+		result = false;
+	else{
+		for (int i = 2; i < sqrt(n) + 1; i += 1){
+			if (n % i == 0){
+				result =  false;
+				break;
+			}
+		}
+	}
+
+	return result;
+}
+
+bool isKnight(int n){
+
+}
