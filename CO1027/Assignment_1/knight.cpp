@@ -488,9 +488,7 @@ int main(int argc, char** argv)
 
 		case 99:
 			// Meet Bowser
-			if (isArthur ||
-				isLancelot ||
-				isPaladin && theKnight.level >= 8 ||
+			if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
 				theKnight.level == 10 ||
 				isDragonKnight ||
 				meetOdin <= 3)
