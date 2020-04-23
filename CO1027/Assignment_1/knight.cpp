@@ -326,9 +326,7 @@ int main(int argc, char** argv)
 			}
 
 			if (theKnight.HP < 5)
-			{
 				theKnight.HP = 1;
-			}
 		break;
 
 		case 7:
@@ -633,9 +631,7 @@ int main(int argc, char** argv)
 			}
 
 			if (theKnight.HP < 5)
-			{
 				theKnight.HP = 1;
-			}
 		break;
 
 		case 7:
