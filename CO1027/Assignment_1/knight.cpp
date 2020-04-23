@@ -194,7 +194,7 @@ void display(int* nOut)
 int main(int argc, char** argv)
 {
     if (argc < 2) return 1;
-    const char* filename = argv[1];;
+    const char* filename = argv[1];
 
 	struct knight theKnight;
 	int nEvent; //number of events
@@ -205,7 +205,7 @@ int main(int argc, char** argv)
 	readFile(filename, theKnight, nEvent, arrEvent);
 	//cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.remedy << ' ' << theKnight.maidenkiss << ' ' << theKnight.phoenixdown << endl;
 
-	int b, levelO, damage, N, levelFrog, f1, f2, f3, bEvent;
+	int levelO, damage, N, levelFrog, f1, f2, f3, bEvent;
 	float baseDamage;
 	int
 		maxHP 			= theKnight.HP,
@@ -225,7 +225,7 @@ int main(int argc, char** argv)
 		isKnight 		= canKnight(maxHP),
 		isDragonKnight 	= false;
 
-	for (i = 0; i < nEvent; i++)
+	for (i = 0; i < nEvent; i += 1)
 	{
 		int theEvent = arrEvent[i];
 		baseDamage = 10;
@@ -252,6 +252,7 @@ int main(int argc, char** argv)
 				hasLightwing = 1;
 				continue;
 			}
+			
 			if (theEvent == 0 || theEvent == 20)
 			{
 				i = nEvent;
@@ -311,11 +312,7 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-			{
-				theKnight.level += 2;
-				if (theKnight.level > 10)
-					theKnight.level = 10;
-			}
+					theKnight.level += 2;
 			else
 			{
 				isTiny = 0;
@@ -344,11 +341,7 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-			{
-				theKnight.level += 2;
-				if (theKnight.level > 10)
-					theKnight.level = 10;
-			}
+					theKnight.level += 2;
 			else
 			{
 				isFrog = 0;
@@ -493,7 +486,8 @@ int main(int argc, char** argv)
 				isDragonKnight ||
 				meetOdin <= 3)
 					theKnight.level = 10;
-			else{
+			else
+			{
 				isEnded = true;
 				N = -1;
 				i = nEvent;
@@ -543,10 +537,11 @@ int main(int argc, char** argv)
 	}
 
 	// Return to England
-	for (i = bEvent - 1; i >= 0 && princessEscaped; i--)
+	for (i = bEvent - 1; i >= 0 && princessEscaped; i -= 1)
 	{
 		int theEvent = arrEvent[i];
 		baseDamage = 10;
+		//cout << theEvent << endl;
 
 		// Check Lancelot with level
 		if (isLancelot && theKnight.level % 2 == 1)
@@ -569,6 +564,7 @@ int main(int argc, char** argv)
 				hasLightwing = 1;
 				continue;
 			}
+			
 			if (theEvent == 0 || theEvent == 20)
 			{
 				i = nEvent;
@@ -583,11 +579,6 @@ int main(int argc, char** argv)
 		
 		switch (theEvent)
 		{
-		case 0:
-			// Bowser surrendered
-			i = nEvent;
-		break;
-
 		case MADBEAR:
 			// Meet MadBear
 			baseDamage = (baseDamage > 1.0) ? 1.0 : baseDamage;
@@ -628,11 +619,7 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-			{
-				theKnight.level += 2;
-				if (theKnight.level > 10)
-					theKnight.level = 10;
-			}
+					theKnight.level += 2;
 			else
 			{
 				isTiny = 0;
@@ -661,11 +648,7 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-			{
-				theKnight.level += 2;
-				if (theKnight.level > 10)
-					theKnight.level = 10;
-			}
+					theKnight.level += 2;
 			else
 			{
 				isFrog = 0;
@@ -684,11 +667,6 @@ int main(int argc, char** argv)
 			// Obtain Excalibur sword
 			hasExcalibur = true;
 			hasExcalipoor = false;
-		break;
-
-		case 9:
-			// Obtain Mythril armor
-			hasMythril = true;
 		break;
 
 		case 10:
@@ -774,7 +752,14 @@ int main(int argc, char** argv)
 				i = nEvent;
 			}
 		break;
-		
+
+		case 20:
+			// Meet the princess Guinevere
+			princessEscaped = true;
+			bEvent = i;
+			i = nEvent;
+		break;
+
 		case 21:
 			// Obtain wings of Lightwing
 			hasLightwing = 1;
@@ -798,14 +783,13 @@ int main(int argc, char** argv)
 
 		case 99:
 			// Meet Bowser
-			if (isArthur ||
-				isLancelot ||
-				isPaladin && theKnight.level >= 8 ||
+			if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
 				theKnight.level == 10 ||
 				isDragonKnight ||
 				meetOdin <= 3)
 					theKnight.level = 10;
-			else{
+			else
+			{
 				isEnded = true;
 				N = -1;
 				i = nEvent;
