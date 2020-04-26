@@ -318,8 +318,51 @@ int main(int argc, char** argv)
 					break;
 				}
 				
+				// Tiny knight
+				if (isTiny == 3) theKnight.HP *= 5;
+				if (isTiny < 5)
+					isTiny += 1;
+
+				// Frog knight
+				if (isFrog == 3) theKnight.level = levelFrog;
+				if (isFrog < 5)
+					isFrog += 1;
+
+				// Odin counter
+				if (meetOdin <= 3)
+					meetOdin += 1;
+
+				// HP analysing
+				if (theKnight.HP <= 0)
+				{
+					if (theKnight.phoenixdown <= 0)
+					{
+						isEnded = true;
+						N = -1;
+						i = nEvent;
+					}
+					else
+					{
+						isFrog = 5;
+						isTiny = 5;
+						theKnight.HP = maxHP;
+						theKnight.phoenixdown -= 1;
+					}
+				}
+
+				// Restrictions
+				if (theKnight.level > 10)
+					theKnight.level = 10;
+				if (theKnight.HP > maxHP)
+					theKnight.HP = maxHP;
+				if (theKnight.remedy > 99)
+					theKnight.remedy = 99;
+				if (theKnight.maidenkiss > 99)
+					theKnight.maidenkiss = 99;
+				if (theKnight.phoenixdown > 99)
+					theKnight.phoenixdown = 99;
 				continue;
-			};
+			}
 		}
 		
 		switch (theEvent)
@@ -675,7 +718,50 @@ int main(int argc, char** argv)
 						}
 					break;
 				}
-				
+
+				// Tiny knight
+				if (isTiny == 3) theKnight.HP *= 5;
+				if (isTiny < 5)
+					isTiny += 1;
+
+				// Frog knight
+				if (isFrog == 3) theKnight.level = levelFrog;
+				if (isFrog < 5)
+					isFrog += 1;
+
+				// Odin counter
+				if (meetOdin <= 3)
+					meetOdin += 1;
+
+				// HP analysing
+				if (theKnight.HP <= 0)
+				{
+					if (theKnight.phoenixdown <= 0)
+					{
+						isEnded = true;
+						N = -1;
+						i = nEvent;
+					}
+					else
+					{
+						isFrog = 5;
+						isTiny = 5;
+						theKnight.HP = maxHP;
+						theKnight.phoenixdown -= 1;
+					}
+				}
+
+				// Restrictions
+				if (theKnight.level > 10)
+					theKnight.level = 10;
+				if (theKnight.HP > maxHP)
+					theKnight.HP = maxHP;
+				if (theKnight.remedy > 99)
+					theKnight.remedy = 99;
+				if (theKnight.maidenkiss > 99)
+					theKnight.maidenkiss = 99;
+				if (theKnight.phoenixdown > 99)
+					theKnight.phoenixdown = 99;
 				continue;
 			};
 		}
@@ -897,11 +983,11 @@ int main(int argc, char** argv)
 		if (isFrog == 3) theKnight.level = levelFrog;
 		if (isFrog < 5)
 			isFrog += 1;
-/*
+
 		// Odin counter
 		if (meetOdin <= 3)
 			meetOdin += 1;
-		*/
+
 		// HP analysing
 		if (theKnight.HP <= 0)
 		{
