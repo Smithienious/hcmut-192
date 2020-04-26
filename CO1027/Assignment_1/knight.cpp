@@ -223,7 +223,8 @@ int main(int argc, char** argv)
 		isLancelot 		= maxHP == 888,
 		isPaladin 		= isPrime(maxHP),
 		isKnight 		= canKnight(maxHP),
-		isDragonKnight 	= false;
+		isDragonKnight 	= false,
+		metOdin			= false;
 
 	for (i = 0; i < nEvent; i += 1)
 	{
@@ -261,6 +262,62 @@ int main(int argc, char** argv)
 			else
 			{
 				hasLightwing += 1;
+
+				switch(theEvent)
+				{
+					case 6:
+						// Meet Shaman
+						if (isFrog <= 3 || isTiny <= 3) break;
+						levelO = Opponent(0, i).first;
+
+						if (theKnight.level > levelO && !hasExcalipoor ||
+							meetOdin <= 3 ||
+							isArthur ||
+							isPaladin ||
+							isDragonKnight)
+								theKnight.level += 2;
+						else
+						{
+							isTiny = 0;
+							theKnight.HP = round(theKnight.HP / 5);
+
+							if (theKnight.remedy >= 1)
+							{
+								theKnight.remedy -= 1;
+								isTiny = 3;
+							}
+						}
+
+						if (theKnight.HP < 5)
+							theKnight.HP = 1;
+					break;
+
+					case 7:
+						// Meet Siren Vajsh
+						if (isFrog <= 3 || isTiny <= 3) break;
+						levelO = Opponent(0, i).first;
+
+						if (theKnight.level > levelO && !hasExcalipoor ||
+							meetOdin <= 3 ||
+							isArthur ||
+							isPaladin ||
+							isDragonKnight)
+								theKnight.level += 2;
+						else
+						{
+							isFrog = 0;
+							levelFrog = theKnight.level;
+							theKnight.level = 1;
+
+							if (theKnight.maidenkiss >= 1)
+							{
+								theKnight.maidenkiss -= 1;
+								isFrog = 3;
+							}
+						}
+					break;
+				}
+				
 				continue;
 			};
 		}
@@ -463,12 +520,7 @@ int main(int argc, char** argv)
 
 		case 22:
 			// Meet Odin
-			if (meetOdin <= 3)
-			{
-				meetOdin += 1;
-				break;
-			}
-			meetOdin = 1;
+			if (!metOdin) meetOdin = 1;
 		break;
 		
 		case 23:
@@ -502,6 +554,10 @@ int main(int argc, char** argv)
 		if (isFrog == 3) theKnight.level = levelFrog;
 		if (isFrog < 5)
 			isFrog += 1;
+
+		// Odin counter
+		if (meetOdin <= 3)
+			meetOdin += 1;
 
 		// HP analysing
 		if (theKnight.HP <= 0)
@@ -547,13 +603,6 @@ int main(int argc, char** argv)
 		else
 			isArthur = false;
 
-		// Odin is active
-		if (meetOdin <= 3 && (theEvent == 0 || theEvent == 20))
-		{
-			i = nEvent;
-			break;
-		}
-
 		// Lightwing is active
 		if (hasLightwing <= 3)
 		{
@@ -571,6 +620,62 @@ int main(int argc, char** argv)
 			else
 			{
 				hasLightwing += 1;
+
+				switch(theEvent)
+				{
+					case 6:
+						// Meet Shaman
+						if (isFrog <= 3 || isTiny <= 3) break;
+						levelO = Opponent(0, i).first;
+
+						if (theKnight.level > levelO && !hasExcalipoor ||
+							meetOdin <= 3 ||
+							isArthur ||
+							isPaladin ||
+							isDragonKnight)
+								theKnight.level += 2;
+						else
+						{
+							isTiny = 0;
+							theKnight.HP = round(theKnight.HP / 5);
+
+							if (theKnight.remedy >= 1)
+							{
+								theKnight.remedy -= 1;
+								isTiny = 3;
+							}
+						}
+
+						if (theKnight.HP < 5)
+							theKnight.HP = 1;
+					break;
+
+					case 7:
+						// Meet Siren Vajsh
+						if (isFrog <= 3 || isTiny <= 3) break;
+						levelO = Opponent(0, i).first;
+
+						if (theKnight.level > levelO && !hasExcalipoor ||
+							meetOdin <= 3 ||
+							isArthur ||
+							isPaladin ||
+							isDragonKnight)
+								theKnight.level += 2;
+						else
+						{
+							isFrog = 0;
+							levelFrog = theKnight.level;
+							theKnight.level = 1;
+
+							if (theKnight.maidenkiss >= 1)
+							{
+								theKnight.maidenkiss -= 1;
+								isFrog = 3;
+							}
+						}
+					break;
+				}
+				
 				continue;
 			};
 		}
@@ -761,16 +866,6 @@ int main(int argc, char** argv)
 			hasLightwing = 1;
 		break;
 
-		case 22:
-			// Meet Odin
-			if (meetOdin <= 3)
-			{
-				meetOdin += 1;
-				break;
-			}
-			meetOdin = 1;
-		break;
-		
 		case 23:
 			// Obtain Dragon Sword
 			if (isLancelot) break;
@@ -802,7 +897,11 @@ int main(int argc, char** argv)
 		if (isFrog == 3) theKnight.level = levelFrog;
 		if (isFrog < 5)
 			isFrog += 1;
-
+/*
+		// Odin counter
+		if (meetOdin <= 3)
+			meetOdin += 1;
+		*/
 		// HP analysing
 		if (theKnight.HP <= 0)
 		{
