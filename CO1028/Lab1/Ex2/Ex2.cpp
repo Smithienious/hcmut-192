@@ -4,8 +4,9 @@
 using namespace std;
 
 bool ArmstrongNum(int n){
+    if (n < 0) return 0;
     int step = 0;
-    while (n / std::pow(10, step) >= 10)
+    while (n / pow(10, step) >= 10)
     {
         step += 1;
     }
@@ -13,9 +14,9 @@ bool ArmstrongNum(int n){
     int digit[step + 1], sum = 0, N = n;
     for (int i = step; i >= 0; i -= 1)
     {
-        digit[i] = N / std::pow(10, i);
-        N -= digit[i] * std::pow(10, i);
-        sum += std::pow(digit[i], step + 1);
+        digit[i] = N / pow(10, i);
+        N -= digit[i] * pow(10, i);
+        sum += pow(digit[i], step + 1);
     }
 
     return sum == n;
