@@ -1,13 +1,14 @@
 hold on;
 grid on;
 rotate3d on;
-xlabel('x');
-ylabel('y');
-zlabel('z');
 
 xlim([0 1.5]);
 ylim([0 1.5]);
 zlim([0 1.5]);
+
+xlabel('x');
+ylabel('y');
+zlabel('z');
 
 t = 0:0.01:1;
 

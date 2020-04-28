@@ -1,6 +1,7 @@
 hold on;
 grid on;
 rotate3d on;
+
 xlim([0 3]);
 ylim([0 3]);
 zlim([0 2.5]);
