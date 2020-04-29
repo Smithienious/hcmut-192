@@ -230,7 +230,6 @@ int main(int argc, char** argv)
 	{
 		int theEvent = arrEvent[i];
 		baseDamage = 10;
-		//cout << theEvent << endl;
 
 		// Check Lancelot with level
 		if (isLancelot && theKnight.level % 2 == 1)
@@ -238,9 +237,18 @@ int main(int argc, char** argv)
 		else
 			isArthur = false;
 
-		// Odin is active
-		if (meetOdin <= 3 && (theEvent == 0 || theEvent == 20))
+		// Bowser surrendered
+		if (theEvent == 0)
 		{
+			i = nEvent;
+			break;
+		}
+
+		// Meet the princess Guinevere
+		if (theEvent == 20)
+		{
+			princessEscaped = true;
+			bEvent = i;
 			i = nEvent;
 			break;
 		}
@@ -249,16 +257,7 @@ int main(int argc, char** argv)
 		if (hasLightwing <= 3)
 		{
 			if (theEvent == 21)
-			{
 				hasLightwing = 1;
-				continue;
-			}
-			
-			if (theEvent == 0 || theEvent == 20)
-			{
-				i = nEvent;
-				break;
-			}
 			else
 			{
 				hasLightwing += 1;
@@ -276,7 +275,7 @@ int main(int argc, char** argv)
 							isPaladin ||
 							isDragonKnight)
 								theKnight.level += 2;
-						else
+						else if (!hasMythril)
 						{
 							isTiny = 0;
 							theKnight.HP = round(theKnight.HP / 5);
@@ -317,16 +316,6 @@ int main(int argc, char** argv)
 						}
 					break;
 				}
-				
-				// Tiny knight
-				if (isTiny == 3) theKnight.HP *= 5;
-				if (isTiny < 5)
-					isTiny += 1;
-
-				// Frog knight
-				if (isFrog == 3) theKnight.level = levelFrog;
-				if (isFrog < 5)
-					isFrog += 1;
 
 				// Odin counter
 				if (meetOdin <= 3)
@@ -361,17 +350,13 @@ int main(int argc, char** argv)
 					theKnight.maidenkiss = 99;
 				if (theKnight.phoenixdown > 99)
 					theKnight.phoenixdown = 99;
-				continue;
 			}
+
+			continue;
 		}
 		
 		switch (theEvent)
 		{
-		case 0:
-			// Bowser surrendered
-			i = nEvent;
-		break;
-
 		case MADBEAR:
 			// Meet MadBear
 			baseDamage = (baseDamage > 1.0) ? 1.0 : baseDamage;
@@ -413,7 +398,7 @@ int main(int argc, char** argv)
 				isPaladin ||
 				isDragonKnight)
 					theKnight.level += 2;
-			else
+			else if (!hasMythril)
 			{
 				isTiny = 0;
 				theKnight.HP = round(theKnight.HP / 5);
@@ -467,7 +452,7 @@ int main(int argc, char** argv)
 
 		case 10:
 			//  Obtain Excalipoor sword
-			if (isArthur || isPaladin || isKnight) break;
+			if (isArthur || isPaladin || isKnight || meetOdin <= 3) break;
 			if (theKnight.level < 5)
 			{
 				hasExcalibur = false;
@@ -496,7 +481,7 @@ int main(int argc, char** argv)
 
 		case 13:
 			// Obtain ghost mushroom of MushGhost
-			if (isDragonKnight || isPaladin) break;
+			if (isDragonKnight || isPaladin || hasMythril || meetOdin <= 3) break;
 			theKnight.HP -= 50;
 			if (theKnight.HP < 51)
 				theKnight.HP = 1;
@@ -540,20 +525,13 @@ int main(int argc, char** argv)
 
 		case 19:
 			// Fall into the Abyss
-			if (isDragonKnight) break;
+			if (isDragonKnight || meetOdin <= 3) break;
 			if (theKnight.level < 7)
 			{
 				isEnded = true;
 				N = -1;
 				i = nEvent;
 			}
-		break;
-
-		case 20:
-			// Meet the princess Guinevere
-			princessEscaped = true;
-			bEvent = i;
-			i = nEvent;
 		break;
 
 		case 21:
@@ -574,7 +552,13 @@ int main(int argc, char** argv)
 
 		case 99:
 			// Meet Bowser
-			if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
+			if (hasExcalipoor)
+			{
+				isEnded = true;
+				N = -1;
+				i = nEvent;
+			}
+			else if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
 				theKnight.level == 10 ||
 				isDragonKnight ||
 				meetOdin <= 3)
@@ -638,7 +622,6 @@ int main(int argc, char** argv)
 	{
 		int theEvent = arrEvent[i];
 		baseDamage = 10;
-		//cout << theEvent << endl;
 
 		// Check Lancelot with level
 		if (isLancelot && theKnight.level % 2 == 1)
@@ -650,16 +633,7 @@ int main(int argc, char** argv)
 		if (hasLightwing <= 3)
 		{
 			if (theEvent == 21)
-			{
 				hasLightwing = 1;
-				continue;
-			}
-			
-			if (theEvent == 0 || theEvent == 20)
-			{
-				i = nEvent;
-				break;
-			}
 			else
 			{
 				hasLightwing += 1;
@@ -677,7 +651,7 @@ int main(int argc, char** argv)
 							isPaladin ||
 							isDragonKnight)
 								theKnight.level += 2;
-						else
+						else if (!hasMythril)
 						{
 							isTiny = 0;
 							theKnight.HP = round(theKnight.HP / 5);
@@ -719,16 +693,6 @@ int main(int argc, char** argv)
 					break;
 				}
 
-				// Tiny knight
-				if (isTiny == 3) theKnight.HP *= 5;
-				if (isTiny < 5)
-					isTiny += 1;
-
-				// Frog knight
-				if (isFrog == 3) theKnight.level = levelFrog;
-				if (isFrog < 5)
-					isFrog += 1;
-
 				// Odin counter
 				if (meetOdin <= 3)
 					meetOdin += 1;
@@ -762,8 +726,9 @@ int main(int argc, char** argv)
 					theKnight.maidenkiss = 99;
 				if (theKnight.phoenixdown > 99)
 					theKnight.phoenixdown = 99;
-				continue;
-			};
+			}
+
+			continue;
 		}
 		
 		switch (theEvent)
@@ -809,7 +774,7 @@ int main(int argc, char** argv)
 				isPaladin ||
 				isDragonKnight)
 					theKnight.level += 2;
-			else
+			else if (!hasMythril)
 			{
 				isTiny = 0;
 				theKnight.HP = round(theKnight.HP / 5);
@@ -856,9 +821,14 @@ int main(int argc, char** argv)
 			hasExcalipoor = false;
 		break;
 
+		case 9:
+			// Obtain Mythril armor
+			hasMythril = true;
+		break;
+
 		case 10:
 			//  Obtain Excalipoor sword
-			if (isArthur || isPaladin || isKnight) break;
+			if (isArthur || isPaladin || isKnight || meetOdin <= 3) break;
 			if (theKnight.level < 5)
 			{
 				hasExcalibur = false;
@@ -887,7 +857,7 @@ int main(int argc, char** argv)
 
 		case 13:
 			// Obtain ghost mushroom of MushGhost
-			if (isDragonKnight || isPaladin) break;
+			if (isDragonKnight || isPaladin || hasMythril || meetOdin <= 3) break;
 			theKnight.HP -= 50;
 			if (theKnight.HP < 51)
 				theKnight.HP = 1;
@@ -931,7 +901,7 @@ int main(int argc, char** argv)
 
 		case 19:
 			// Fall into the Abyss
-			if (isDragonKnight) break;
+			if (isDragonKnight || meetOdin <= 3) break;
 			if (theKnight.level < 7)
 			{
 				isEnded = true;
@@ -940,18 +910,16 @@ int main(int argc, char** argv)
 			}
 		break;
 
-		case 20:
-			// Meet the princess Guinevere
-			princessEscaped = true;
-			bEvent = i;
-			i = nEvent;
-		break;
-
 		case 21:
 			// Obtain wings of Lightwing
 			hasLightwing = 1;
 		break;
 
+		case 22:
+			// Meet Odin
+			if (!metOdin) meetOdin = 1;
+		break;
+		
 		case 23:
 			// Obtain Dragon Sword
 			if (isLancelot) break;
@@ -960,7 +928,13 @@ int main(int argc, char** argv)
 
 		case 99:
 			// Meet Bowser
-			if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
+			if (hasExcalipoor)
+			{
+				isEnded = true;
+				N = -1;
+				i = nEvent;
+			}
+			else if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
 				theKnight.level == 10 ||
 				isDragonKnight ||
 				meetOdin <= 3)
