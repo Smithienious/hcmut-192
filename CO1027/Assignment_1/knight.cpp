@@ -25,7 +25,7 @@ struct knight
 // return 1 if successfully done, otherwise return 0
 int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent)
 {
-	const char* file_name = "input.txt";
+	const char* file_name = filename;
 	FILE* f = 0;
 	char* str = new char[MAX_CHARACTER_EACH_LINE];
 	int num;
@@ -193,7 +193,7 @@ void display(int* nOut)
 
 int main(int argc, char** argv)
 {
-    //if (argc < 2) return 1;
+    if (argc < 2) return 1;
     const char* filename = argv[1];
 
 	struct knight theKnight;
