@@ -1,10 +1,18 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
-void maxValue(int n, double *a) {
-	#TODO
+
+void averageValue(int n, double *a) {
+	double sum = 0;
+
+	for (int i = 0; i < n; i+= 1)
+		sum += *(a + i);
+
+	cout << sum / n << endl;
 }
-int main(int narg, char** argv)
+
+int main(int argc, char** argv)
 {
 	ifstream ifs;
 	ifs.open(argv[1]);
@@ -20,7 +28,7 @@ int main(int narg, char** argv)
 		{
 			i++;
 		}
-		maxValue(size, a);
+		averageValue(size, a);
 	}
 	catch (char const* s)
 	{
