@@ -205,15 +205,15 @@ int main(int argc, char** argv)
 	readFile(filename, theKnight, nEvent, arrEvent);
 	//cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.remedy << ' ' << theKnight.maidenkiss << ' ' << theKnight.phoenixdown << endl;
 
-	int levelO, damage, N, levelFrog, f1, f2, f3, bEvent;
+	int levelO, damage, levelFrog, f1, f2, f3, bEvent;
 	float baseDamage;
 	int
 		maxHP 			= theKnight.HP,
 		isTiny 			= 5,
 		isFrog 			= 5,
-		meetOdin 		= 5;
+		meetOdin 		= 5,
+		N				= 1;
 	bool
-		isEnded 		= false, 
 		hasExcalibur 	= false,
 		hasMythril 		= false,
 		hasExcalipoor 	= false,
@@ -238,18 +238,14 @@ int main(int argc, char** argv)
 
 		// Bowser surrendered
 		if (theEvent == 0)
-		{
-			i = nEvent;
-			break;
-		}
+			goto forceend;
 
 		// Meet the princess Guinevere
 		if (theEvent == 20)
 		{
 			princessEscaped = true;
-			bEvent = i;
-			i = nEvent;
-			break;
+			bEvent = i + 1;
+			goto loopback;
 		}
 
 		switch (theEvent)
@@ -352,9 +348,9 @@ int main(int argc, char** argv)
 		break;
 
 		case 12:		// Obtain mushroom of Fibonacci MushFib
-			f1 = 1, f2 = 1;
+			f1 = 1, f2 = 1, f3 = 1;
 
-			while (theKnight.HP < f3)
+			while (theKnight.HP > f3)
 			{
 				f3 = f1 + f2;
 				f1 = f2;
@@ -406,20 +402,19 @@ int main(int argc, char** argv)
 			if (isDragonKnight || meetOdin <= 3) break;
 			if (theKnight.level < 7)
 			{
-				isEnded = true;
 				N = -1;
-				i = nEvent;
+				goto forceend;
 			}
 		break;
 
 		case 21:		// Obtain wings of Lightwing
 			if (nEvent - i < 4)
-				i = nEvent;
+				goto forceend;
 			else 
 			if (arrEvent[i + 1] == 0 || arrEvent[i + 1] == 20 ||
 				arrEvent[i + 2] == 0 || arrEvent[i + 2] == 20 ||
 				arrEvent[i + 3] == 0 || arrEvent[i + 3] == 20)
-				i = nEvent;
+				goto forceend;
 			else
 				i += 3;
 		break;
@@ -432,9 +427,8 @@ int main(int argc, char** argv)
 		case 99:		// Meet Bowser
 			if (hasExcalipoor)
 			{
-				isEnded = true;
 				N = -1;
-				i = nEvent;
+				goto forceend;
 			}
 			else if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
 				theKnight.level == 10 ||
@@ -443,9 +437,8 @@ int main(int argc, char** argv)
 					theKnight.level = 10;
 			else
 			{
-				isEnded = true;
 				N = -1;
-				i = nEvent;
+				goto forceend;
 			}
 		break;
 		}
@@ -469,9 +462,8 @@ int main(int argc, char** argv)
 		{
 			if (theKnight.phoenixdown <= 0)
 			{
-				isEnded = true;
 				N = -1;
-				i = nEvent;
+				goto forceend;
 			}
 			else
 			{
@@ -495,8 +487,9 @@ int main(int argc, char** argv)
 			theKnight.phoenixdown = 99;
 	}
 
+loopback:
 	// Return to England
-	for (i = bEvent - 1; i >= 0 && princessEscaped; i -= 1)
+	for (i = bEvent - 2; i >= 0 && princessEscaped; i -= 1)
 	{
 		int theEvent = arrEvent[i];
 		baseDamage = 10;
@@ -520,8 +513,8 @@ int main(int argc, char** argv)
 		case 5:			// Meet Troll
 			baseDamage = (baseDamage > 8.5) ? 8.5 : baseDamage;
 
-			levelO = Opponent(baseDamage, i).first;
-			damage = Opponent(baseDamage, i).second;
+			levelO = Opponent(baseDamage, bEvent).first;
+			damage = Opponent(baseDamage, bEvent).second;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
 				hasExcalibur ||
@@ -536,7 +529,7 @@ int main(int argc, char** argv)
 
 		case 6:			// Meet Shaman
 			if (isFrog <= 3 || isTiny <= 3) break;
-			levelO = Opponent(0, i).first;
+			levelO = Opponent(0, bEvent).first;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
 				meetOdin <= 3 ||
@@ -562,7 +555,7 @@ int main(int argc, char** argv)
 
 		case 7:			// Meet Siren Vajsh
 			if (isFrog <= 3 || isTiny <= 3) break;
-			levelO = Opponent(0, i).first;
+			levelO = Opponent(0, bEvent).first;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
 				meetOdin <= 3 ||
@@ -607,9 +600,9 @@ int main(int argc, char** argv)
 		break;
 
 		case 12:		// Obtain mushroom of Fibonacci MushFib
-			f1 = 1, f2 = 1;
+			f1 = 1, f2 = 1, f3 = 1;
 
-			while (theKnight.HP < f3)
+			while (theKnight.HP > f3)
 			{
 				f3 = f1 + f2;
 				f1 = f2;
@@ -661,20 +654,19 @@ int main(int argc, char** argv)
 			if (isDragonKnight || meetOdin <= 3) break;
 			if (theKnight.level < 7)
 			{
-				isEnded = true;
 				N = -1;
-				i = -1;
+				goto forceend;
 			}
 		break;
 
 		case 21:		// Obtain wings of Lightwing
 			if (i < 3)
-				i = -1;
+				goto forceend;
 			else
 			if (arrEvent[i - 1] == 0 || arrEvent[i - 1] == 20 ||
 				arrEvent[i - 2] == 0 || arrEvent[i - 2] == 20 ||
 				arrEvent[i - 3] == 0 || arrEvent[i - 3] == 20)
-				i = -1;
+				goto forceend;
 			else
 				i -= 3;
 		break;
@@ -691,9 +683,8 @@ int main(int argc, char** argv)
 		case 99:		// Meet Bowser
 			if (hasExcalipoor)
 			{
-				isEnded = true;
 				N = -1;
-				i = -1;
+				goto forceend;
 			}
 			else if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
 				theKnight.level == 10 ||
@@ -702,9 +693,8 @@ int main(int argc, char** argv)
 					theKnight.level = 10;
 			else
 			{
-				isEnded = true;
 				N = -1;
-				i = -1;
+				goto forceend;
 			}
 		break;
 		}
@@ -728,9 +718,8 @@ int main(int argc, char** argv)
 		{
 			if (theKnight.phoenixdown <= 0)
 			{
-				isEnded = true;
 				N = -1;
-				i = -1;
+				goto forceend;
 			}
 			else
 			{
@@ -752,10 +741,13 @@ int main(int argc, char** argv)
 			theKnight.maidenkiss = 99;
 		if (theKnight.phoenixdown > 99)
 			theKnight.phoenixdown = 99;
+
+		bEvent += 1;
 	}
 
-	if (!isEnded)
-		N = theKnight.HP + theKnight.level + theKnight.remedy + theKnight.maidenkiss + theKnight.phoenixdown;
+forceend:
+	N = (N == -1) ? -1 : 
+		theKnight.HP + theKnight.level + theKnight.remedy + theKnight.maidenkiss + theKnight.phoenixdown;
 	nOut = &N;
 	display(nOut);
 	return 0;
