@@ -1,26 +1,41 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-void averageValue(int n, double *a) {
-	#TODO
+
+// matrix is two dimensional array. You should transposition matrix
+void transposition(int rows, int cols, int **matrix) {
+	for (int i = 0; i < cols; i++) {
+		cout << matrix[0][i];
+
+		for (int j = 1; j < rows; j++) {
+			cout << " " << matrix[j][i];
+		}
+
+		cout << endl;
+	}
 }
-int main(int narg, char** argv)
+
+int main(int argc, char** argv)
 {
 	ifstream ifs;
-	ifs.open(argv[1]);
-
-	int size;
-	ifs >> size;
-	ifs.ignore(1, '\n');
-    int i = 0;
-	double *a = new double[size];
-	try {
-
-		while (ifs >> a[i])
-		{
-			i++;
+	ifs.open("test02.txt");
+	
+	int rows;
+	int cols;
+	ifs >> rows;
+	ifs >> cols;
+	int** matrix = new int*[rows];
+	try
+	{
+		int i = 0;
+		int j = 0;
+		for (int i = 0; i < rows; i++) {
+			matrix[i] = new int[cols];
+			for (int j = 0; j < cols; j++) {
+				ifs >> matrix[i][j];
+			}
 		}
-		averageValue(size, a);
+		transposition(rows, cols, matrix);
 	}
 	catch (char const* s)
 	{
