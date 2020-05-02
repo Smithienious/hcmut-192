@@ -1,20 +1,35 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
-void Fibonacci(int n) {
-	#TODO
+
+void maxValue(int n, double *a) {
+	double max = -1000000000;
+
+	for (int i = 0; i < n; i+= 1)
+		if (*(a + i) > max)
+			max = *(a + i);
+
+	cout << max << endl;
 }
-int main(int narg, char** argv)
+
+int main(int argc, char** argv)
 {
 	ifstream ifs;
 	ifs.open(argv[1]);
-	int a;
-	try
-	{
-		while (ifs >> a)
+
+	int size;
+	ifs >> size;
+	ifs.ignore(1, '\n');
+    int i = 0;
+	double *a = new double[size];
+	try {
+
+		while (ifs >> a[i])
 		{
-			Fibonacci(a);
+			i++;
 		}
+		maxValue(size, a);
 	}
 	catch (char const* s)
 	{
