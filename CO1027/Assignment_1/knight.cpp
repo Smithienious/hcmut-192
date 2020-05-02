@@ -7,8 +7,6 @@
 
 using namespace std;
 
-const int MADBEAR = 1;
-const int BANDIT = 2;
 const int EVENT_SIZE = 100;
 const int MAX_CHARACTER_EACH_LINE = 250;
 
@@ -129,6 +127,14 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 	return 1;
 }
 
+void display(int* nOut)
+{
+	if (nOut)
+    	cout << *nOut;
+	else
+		cout << "Error!";
+}
+
 // Test for Paladin
 bool isPrime(int n)
 {
@@ -182,15 +188,6 @@ pair<int, int> Opponent(float baseDamage, int i)
 	return {levelO, damage};
 }
 
-void display(int* nOut)
-{
-	if (nOut)
-    	cout << *nOut;
-	else
-		cout << "Error!";
-}
-
-
 int main(int argc, char** argv)
 {
     if (argc < 2) return 1;
@@ -203,8 +200,7 @@ int main(int argc, char** argv)
 	int i;
 
 	readFile(filename, theKnight, nEvent, arrEvent);
-	//cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.remedy << ' ' << theKnight.maidenkiss << ' ' << theKnight.phoenixdown << endl;
-
+	
 	int levelO, damage, levelFrog, f1, f2, f3, bEvent;
 	float baseDamage;
 	int
@@ -250,9 +246,9 @@ int main(int argc, char** argv)
 
 		switch (theEvent)
 		{
-		case MADBEAR:	// Meet MadBear
+		case 1:			// Meet MadBear
 			baseDamage = (baseDamage > 1.0) ? 1.0 : baseDamage;
-		case BANDIT:	// Meet Bandit
+		case 2:			// Meet Bandit
 			baseDamage = (baseDamage > 1.5) ? 1.5 : baseDamage;
 		case 3:			// Meet Lord Lupine
 			baseDamage = (baseDamage > 4.5) ? 4.5 : baseDamage;
@@ -502,9 +498,9 @@ loopback:
 		
 		switch (theEvent)
 		{
-		case MADBEAR:	// Meet MadBear
+		case 1:			// Meet MadBear
 			baseDamage = (baseDamage > 1.0) ? 1.0 : baseDamage;
-		case BANDIT:	// Meet Bandit
+		case 2:			// Meet Bandit
 			baseDamage = (baseDamage > 1.5) ? 1.5 : baseDamage;
 		case 3:			// Meet Lord Lupine
 			baseDamage = (baseDamage > 4.5) ? 4.5 : baseDamage;
@@ -749,6 +745,8 @@ forceend:
 	N = (N == -1) ? -1 : 
 		theKnight.HP + theKnight.level + theKnight.remedy + theKnight.maidenkiss + theKnight.phoenixdown;
 	nOut = &N;
-	display(nOut);
+	
+    display(nOut);
 	return 0;
 }
+
