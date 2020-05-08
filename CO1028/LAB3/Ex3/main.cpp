@@ -5,7 +5,7 @@ using namespace std;
 
 ifstream ifs;
 
-int main(int narg, char **argv)
+int main(int argc, char **argv)
 {
     ifs.open(argv[1]);
 
@@ -17,7 +17,18 @@ int main(int narg, char **argv)
     ifs.get(str2, 100, '\n');
     ifs.ignore(100, '\n');
 
-    // TODO
+    char *pos = strstr(str1, str2);
+    if (pos == NULL)
+        cout << "Not found";
+    else
+    {
+        pos += strlen(str2);
+
+        for (int i = 0; *(pos + i) != NULL; i += 1)
+            cout << *(pos + i);
+    }
+
+    cout << endl;
 
     ifs.close();
     return 0;
