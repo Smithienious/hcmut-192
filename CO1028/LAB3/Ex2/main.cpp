@@ -39,12 +39,27 @@ int main(int argc, char **argv)
             ifs >> cls[i].weight;
         }
         cout << left << setw(22) << "Name"
-            << left << setw(8) << "Rollno"
-            << left << setw(8) << "Sex"
-            << left << setw(8) << "Height"
-            << left << setw(8) << "Weight" << endl;
+             << left << setw(8) << "Rollno"
+             << left << setw(8) << "Sex"
+             << left << setw(8) << "Height"
+             << left << setw(8) << "Weight" << endl;
 
-        // TODO
+        float hei = 0, wei = 0;
+        for (int i = 0; i < n; i++)
+        {
+            cout << left << setw(22) << cls[i].name
+                 << left << setw(8) << cls[i].rollno
+                 << left << setw(8) << cls[i].sex
+                 << left << setw(8) << cls[i].height
+                 << left << setw(8) << cls[i].weight << endl;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            hei += cls[i].height;
+            wei += cls[i].weight;
+        }
+        cout << "Average height: " << hei / n << endl
+             << "Average weight: " << wei / n << endl;
     }
     catch (int n)
     {
