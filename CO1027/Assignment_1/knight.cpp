@@ -213,22 +213,22 @@ int main(int argc, char **argv)
 	int levelO, damage, levelFrog, f1, f2, f3, bEvent;
 	float baseDamage;
 	int
-		maxHP = theKnight.HP,
-		isTiny = 5,
-		isFrog = 5,
-		meetOdin = 5,
-		N = 1;
+		maxHP 			= theKnight.HP,
+		isTiny 			= 5,
+		isFrog 			= 5,
+		meetOdin 		= 5,
+		N 				= 1;
 	bool
-		hasExcalibur = false,
-		hasMythril = false,
-		hasExcalipoor = false,
-		princessEscaped = false,
-		isArthur = maxHP == 999,
-		isLancelot = maxHP == 888,
-		isPaladin = isPrime(maxHP),
-		isKnight = canKnight(maxHP),
-		isDragonKnight = false,
-		metOdin = false;
+		hasExcalibur	= false,
+		hasMythril 		= false,
+		hasExcalipoor	= false,
+		princessEscaped	= false,
+		isArthur 		= maxHP == 999,
+		isLancelot 		= maxHP == 888,
+		isPaladin 		= isPrime(maxHP),
+		isKnight 		= canKnight(maxHP),
+		isDragonKnight 	= false,
+		metOdin 		= false;
 
 	for (i = 0; i < nEvent; i += 1)
 	{
