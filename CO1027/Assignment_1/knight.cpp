@@ -21,15 +21,15 @@ struct knight
 
 // read data from input file to corresponding variables
 // return 1 if successfully done, otherwise return 0
-int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent)
+int readFile(const char *filename, knight &theKnight, int &nEvent, int *arrEvent)
 {
-	const char* file_name = filename;
-	FILE* f = 0;
-	char* str = new char[MAX_CHARACTER_EACH_LINE];
+	const char *file_name = filename;
+	FILE *f = 0;
+	char *str = new char[MAX_CHARACTER_EACH_LINE];
 	int num;
 
 	f = fopen(file_name, "r");
-	if (f == NULL)	//file not found || cannot read
+	if (f == NULL) //file not found || cannot read
 		return 0;
 
 	fgets(str, MAX_CHARACTER_EACH_LINE, f);
@@ -40,9 +40,10 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 	int len = strlen(str);
 	// read HP
 	while (start < len && str[start] == ' ')
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start] - '0';
 		start++;
 	}
@@ -52,9 +53,10 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 
 	// read level
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start] - '0';
 		start++;
 	}
@@ -64,9 +66,10 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 
 	// read remedy
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start] - '0';
 		start++;
 	}
@@ -76,9 +79,10 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 
 	// read maidenkiss
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start] - '0';
 		start++;
 	}
@@ -88,9 +92,10 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 
 	// read phoenixdown
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start] - '0';
 		start++;
 	}
@@ -100,7 +105,8 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 
 	// read events
 	nEvent = 0;
-	while (1){
+	while (1)
+	{
 		if (feof(f))
 			break;
 		fgets(str, MAX_CHARACTER_EACH_LINE, f);
@@ -108,29 +114,31 @@ int readFile(const char* filename, knight& theKnight, int& nEvent, int* arrEvent
 			break;
 		start = 0;
 		len = strlen(str);
-    // cout << "\'" << str << "\'" << "\t" << len << endl;
-		while (start < len){
+		// cout << "\'" << str << "\'" << "\t" << len << endl;
+		while (start < len)
+		{
 			while (start < len && (str[start] > '9' || str[start] < '0'))
 				start++;
 			if (start >= len)
 				break;
 			arrEvent[nEvent] = 0;
-			while (start < len && str[start] <= '9' && str[start] >= '0'){
+			while (start < len && str[start] <= '9' && str[start] >= '0')
+			{
 				arrEvent[nEvent] = arrEvent[nEvent] * 10 + str[start] - '0';
 				start++;
 			}
 			nEvent++;
 		}
-    delete[] str;
+		delete[] str;
 	}
 	fclose(f);
 	return 1;
 }
 
-void display(int* nOut)
+void display(int *nOut)
 {
 	if (nOut)
-    	cout << *nOut;
+		cout << *nOut;
 	else
 		cout << "Error!";
 }
@@ -147,7 +155,7 @@ bool isPrime(int n)
 		{
 			if (n % i == 0)
 			{
-				result =  false;
+				result = false;
 				break;
 			}
 		}
@@ -162,7 +170,7 @@ bool canKnight(int C)
 	bool result = false;
 	float y;
 
-	while (x < C/2 && !result)
+	while (x < C / 2 && !result)
 	{
 		y = (2.0 * C * x - C * C) / (2.0 * (x - C));
 
@@ -171,7 +179,7 @@ bool canKnight(int C)
 			x += 1;
 			continue;
 		}
-		
+
 		result = true;
 	}
 
@@ -188,38 +196,39 @@ pair<int, int> Opponent(float baseDamage, int i)
 	return {levelO, damage};
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    if (argc < 2) return 1;
-    const char* filename = argv[1];
+	if (argc < 2)
+		return 1;
+	const char *filename = argv[1];
 
 	struct knight theKnight;
-	int nEvent; //number of events
-	int* arrEvent = new int[EVENT_SIZE]; // array of events
-	int* nOut;                           // final result
+	int nEvent;							 //number of events
+	int *arrEvent = new int[EVENT_SIZE]; // array of events
+	int *nOut;							 // final result
 	int i;
 
 	readFile(filename, theKnight, nEvent, arrEvent);
-	
+
 	int levelO, damage, levelFrog, f1, f2, f3, bEvent;
 	float baseDamage;
 	int
-		maxHP 			= theKnight.HP,
-		isTiny 			= 5,
-		isFrog 			= 5,
-		meetOdin 		= 5,
-		N				= 1;
+		maxHP = theKnight.HP,
+		isTiny = 5,
+		isFrog = 5,
+		meetOdin = 5,
+		N = 1;
 	bool
-		hasExcalibur 	= false,
-		hasMythril 		= false,
-		hasExcalipoor 	= false,
+		hasExcalibur = false,
+		hasMythril = false,
+		hasExcalipoor = false,
 		princessEscaped = false,
-		isArthur 		= maxHP == 999,
-		isLancelot 		= maxHP == 888,
-		isPaladin 		= isPrime(maxHP),
-		isKnight 		= canKnight(maxHP),
-		isDragonKnight 	= false,
-		metOdin			= false;
+		isArthur = maxHP == 999,
+		isLancelot = maxHP == 888,
+		isPaladin = isPrime(maxHP),
+		isKnight = canKnight(maxHP),
+		isDragonKnight = false,
+		metOdin = false;
 
 	for (i = 0; i < nEvent; i += 1)
 	{
@@ -246,15 +255,15 @@ int main(int argc, char** argv)
 
 		switch (theEvent)
 		{
-		case 1:			// Meet MadBear
+		case 1: // Meet MadBear
 			baseDamage = (baseDamage > 1.0) ? 1.0 : baseDamage;
-		case 2:			// Meet Bandit
+		case 2: // Meet Bandit
 			baseDamage = (baseDamage > 1.5) ? 1.5 : baseDamage;
-		case 3:			// Meet Lord Lupine
+		case 3: // Meet Lord Lupine
 			baseDamage = (baseDamage > 4.5) ? 4.5 : baseDamage;
-		case 4:			// Meet Elf
+		case 4: // Meet Elf
 			baseDamage = (baseDamage > 6.5) ? 6.5 : baseDamage;
-		case 5:			// Meet Troll
+		case 5: // Meet Troll
 			baseDamage = (baseDamage > 8.5) ? 8.5 : baseDamage;
 
 			levelO = Opponent(baseDamage, i).first;
@@ -266,13 +275,14 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-					theKnight.level += 1;
+				theKnight.level += 1;
 			else if (theKnight.level < levelO && !hasMythril)
-					theKnight.HP -= damage;
-		break;
+				theKnight.HP -= damage;
+			break;
 
-		case 6:			// Meet Shaman
-			if (isFrog <= 3 || isTiny <= 3) break;
+		case 6: // Meet Shaman
+			if (isFrog <= 3 || isTiny <= 3)
+				break;
 			levelO = Opponent(0, i).first;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
@@ -280,7 +290,7 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-					theKnight.level += 2;
+				theKnight.level += 2;
 			else if (!hasMythril)
 			{
 				isTiny = 0;
@@ -295,10 +305,11 @@ int main(int argc, char** argv)
 
 			if (theKnight.HP < 5)
 				theKnight.HP = 1;
-		break;
+			break;
 
-		case 7:			// Meet Siren Vajsh
-			if (isFrog <= 3 || isTiny <= 3) break;
+		case 7: // Meet Siren Vajsh
+			if (isFrog <= 3 || isTiny <= 3)
+				break;
 			levelO = Opponent(0, i).first;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
@@ -306,7 +317,7 @@ int main(int argc, char** argv)
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-					theKnight.level += 2;
+				theKnight.level += 2;
 			else
 			{
 				isFrog = 0;
@@ -319,31 +330,32 @@ int main(int argc, char** argv)
 					isFrog = 3;
 				}
 			}
-		break;
+			break;
 
-		case 8:			// Obtain Excalibur sword
+		case 8: // Obtain Excalibur sword
 			hasExcalibur = true;
 			hasExcalipoor = false;
-		break;
+			break;
 
-		case 9:			// Obtain Mythril armor
+		case 9: // Obtain Mythril armor
 			hasMythril = true;
-		break;
+			break;
 
-		case 10:		//  Obtain Excalipoor sword
-			if (isArthur || isPaladin || isKnight || meetOdin <= 3) break;
+		case 10: //  Obtain Excalipoor sword
+			if (isArthur || isPaladin || isKnight || meetOdin <= 3)
+				break;
 			if (theKnight.level < 5)
 			{
 				hasExcalibur = false;
 				hasExcalipoor = true;
 			}
-		break;
+			break;
 
-		case 11:		// Obtain mushroom of MushMario
+		case 11: // Obtain mushroom of MushMario
 			theKnight.HP += 50;
-		break;
+			break;
 
-		case 12:		// Obtain mushroom of Fibonacci MushFib
+		case 12: // Obtain mushroom of Fibonacci MushFib
 			f1 = 1, f2 = 1, f3 = 1;
 
 			while (theKnight.HP > f3)
@@ -354,36 +366,45 @@ int main(int argc, char** argv)
 			}
 
 			theKnight.HP = f3;
-		break;
+			break;
 
-		case 13:		// Obtain ghost mushroom of MushGhost
-			if (isDragonKnight || isPaladin || hasMythril || meetOdin <= 3) break;
+		case 13: // Obtain ghost mushroom of MushGhost
+			if (isDragonKnight || isPaladin || hasMythril || meetOdin <= 3)
+				break;
 			theKnight.HP -= 50;
 			if (theKnight.HP < 51)
 				theKnight.HP = 1;
-		break;
+			break;
 
-		case 14:		// Obtain mushroom of MushKnight
+		case 14: // Obtain mushroom of MushKnight
 			if (maxHP < 950)
 				maxHP += 50;
 			theKnight.HP = maxHP;
-		break;
+			break;
 
-		case 15:		// Obtain Remedy
-			if (isTiny <= 3){ isTiny = 3; break; }
+		case 15: // Obtain Remedy
+			if (isTiny <= 3)
+			{
+				isTiny = 3;
+				break;
+			}
 			theKnight.remedy += 1;
-		break;
+			break;
 
-		case 16:		// Obtain MaidenKiss
-			if (isFrog <= 3){ isFrog = 3; break; }
+		case 16: // Obtain MaidenKiss
+			if (isFrog <= 3)
+			{
+				isFrog = 3;
+				break;
+			}
 			theKnight.maidenkiss += 1;
-		break;
+			break;
 
-		case 17:		// Obtain PhoenixDown
+		case 17: // Obtain PhoenixDown
 			theKnight.phoenixdown += 1;
-		break;
+			break;
 
-		case 18:		// Meet Merlin the Wizard
+		case 18: // Meet Merlin the Wizard
 			if (isTiny < 3 || isFrog < 3)
 			{
 				isTiny = 3;
@@ -392,60 +413,63 @@ int main(int argc, char** argv)
 
 			theKnight.level += 1;
 			theKnight.HP = maxHP;
-		break;
+			break;
 
-		case 19:		// Fall into the Abyss
-			if (isDragonKnight || meetOdin <= 3) break;
+		case 19: // Fall into the Abyss
+			if (isDragonKnight || meetOdin <= 3)
+				break;
 			if (theKnight.level < 7)
 			{
 				N = -1;
 				goto forceend;
 			}
-		break;
+			break;
 
-		case 21:		// Obtain wings of Lightwing
+		case 21: // Obtain wings of Lightwing
 			if (nEvent - i < 4)
 				goto forceend;
-			else 
-			if (arrEvent[i + 1] == 0 || arrEvent[i + 1] == 20 ||
-				arrEvent[i + 2] == 0 || arrEvent[i + 2] == 20 ||
-				arrEvent[i + 3] == 0 || arrEvent[i + 3] == 20)
+			else if (arrEvent[i + 1] == 0 || arrEvent[i + 1] == 20 ||
+					 arrEvent[i + 2] == 0 || arrEvent[i + 2] == 20 ||
+					 arrEvent[i + 3] == 0 || arrEvent[i + 3] == 20)
 				goto forceend;
 			else
 				i += 3;
-		break;
+			break;
 
-		case 23:		// Obtain Dragon Sword
-			if (isLancelot) break;
+		case 23: // Obtain Dragon Sword
+			if (isLancelot)
+				break;
 			isDragonKnight = isKnight ? true : false;
-		break;
+			break;
 
-		case 99:		// Meet Bowser
+		case 99: // Meet Bowser
 			if (hasExcalipoor)
 			{
 				N = -1;
 				goto forceend;
 			}
 			else if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
-				theKnight.level == 10 ||
-				isDragonKnight ||
-				meetOdin <= 3)
-					theKnight.level = 10;
+					 theKnight.level == 10 ||
+					 isDragonKnight ||
+					 meetOdin <= 3)
+				theKnight.level = 10;
 			else
 			{
 				N = -1;
 				goto forceend;
 			}
-		break;
+			break;
 		}
 
 		// Tiny knight
-		if (isTiny == 3) theKnight.HP *= 5;
+		if (isTiny == 3)
+			theKnight.HP *= 5;
 		if (isTiny < 5)
 			isTiny += 1;
 
 		// Frog knight
-		if (isFrog == 3) theKnight.level = levelFrog;
+		if (isFrog == 3)
+			theKnight.level = levelFrog;
 		if (isFrog < 5)
 			isFrog += 1;
 
@@ -495,18 +519,18 @@ loopback:
 			isArthur = true;
 		else
 			isArthur = false;
-		
+
 		switch (theEvent)
 		{
-		case 1:			// Meet MadBear
+		case 1: // Meet MadBear
 			baseDamage = (baseDamage > 1.0) ? 1.0 : baseDamage;
-		case 2:			// Meet Bandit
+		case 2: // Meet Bandit
 			baseDamage = (baseDamage > 1.5) ? 1.5 : baseDamage;
-		case 3:			// Meet Lord Lupine
+		case 3: // Meet Lord Lupine
 			baseDamage = (baseDamage > 4.5) ? 4.5 : baseDamage;
-		case 4:			// Meet Elf
+		case 4: // Meet Elf
 			baseDamage = (baseDamage > 6.5) ? 6.5 : baseDamage;
-		case 5:			// Meet Troll
+		case 5: // Meet Troll
 			baseDamage = (baseDamage > 8.5) ? 8.5 : baseDamage;
 
 			levelO = Opponent(baseDamage, bEvent).first;
@@ -518,13 +542,14 @@ loopback:
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-					theKnight.level += 1;
+				theKnight.level += 1;
 			else if (theKnight.level < levelO && !hasMythril)
-					theKnight.HP -= damage;
-		break;
+				theKnight.HP -= damage;
+			break;
 
-		case 6:			// Meet Shaman
-			if (isFrog <= 3 || isTiny <= 3) break;
+		case 6: // Meet Shaman
+			if (isFrog <= 3 || isTiny <= 3)
+				break;
 			levelO = Opponent(0, bEvent).first;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
@@ -532,7 +557,7 @@ loopback:
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-					theKnight.level += 2;
+				theKnight.level += 2;
 			else if (!hasMythril)
 			{
 				isTiny = 0;
@@ -547,10 +572,11 @@ loopback:
 
 			if (theKnight.HP < 5)
 				theKnight.HP = 1;
-		break;
+			break;
 
-		case 7:			// Meet Siren Vajsh
-			if (isFrog <= 3 || isTiny <= 3) break;
+		case 7: // Meet Siren Vajsh
+			if (isFrog <= 3 || isTiny <= 3)
+				break;
 			levelO = Opponent(0, bEvent).first;
 
 			if (theKnight.level > levelO && !hasExcalipoor ||
@@ -558,7 +584,7 @@ loopback:
 				isArthur ||
 				isPaladin ||
 				isDragonKnight)
-					theKnight.level += 2;
+				theKnight.level += 2;
 			else
 			{
 				isFrog = 0;
@@ -571,31 +597,32 @@ loopback:
 					isFrog = 3;
 				}
 			}
-		break;
+			break;
 
-		case 8:			// Obtain Excalibur sword
+		case 8: // Obtain Excalibur sword
 			hasExcalibur = true;
 			hasExcalipoor = false;
-		break;
+			break;
 
-		case 9:			// Obtain Mythril armor
+		case 9: // Obtain Mythril armor
 			hasMythril = true;
-		break;
+			break;
 
-		case 10:		//  Obtain Excalipoor sword
-			if (isArthur || isPaladin || isKnight || meetOdin <= 3) break;
+		case 10: //  Obtain Excalipoor sword
+			if (isArthur || isPaladin || isKnight || meetOdin <= 3)
+				break;
 			if (theKnight.level < 5)
 			{
 				hasExcalibur = false;
 				hasExcalipoor = true;
 			}
-		break;
+			break;
 
-		case 11:		// Obtain mushroom of MushMario
+		case 11: // Obtain mushroom of MushMario
 			theKnight.HP += 50;
-		break;
+			break;
 
-		case 12:		// Obtain mushroom of Fibonacci MushFib
+		case 12: // Obtain mushroom of Fibonacci MushFib
 			f1 = 1, f2 = 1, f3 = 1;
 
 			while (theKnight.HP > f3)
@@ -606,36 +633,45 @@ loopback:
 			}
 
 			theKnight.HP = f3;
-		break;
+			break;
 
-		case 13:		// Obtain ghost mushroom of MushGhost
-			if (isDragonKnight || isPaladin || hasMythril || meetOdin <= 3) break;
+		case 13: // Obtain ghost mushroom of MushGhost
+			if (isDragonKnight || isPaladin || hasMythril || meetOdin <= 3)
+				break;
 			theKnight.HP -= 50;
 			if (theKnight.HP < 51)
 				theKnight.HP = 1;
-		break;
+			break;
 
-		case 14:		// Obtain mushroom of MushKnight
+		case 14: // Obtain mushroom of MushKnight
 			if (maxHP < 950)
 				maxHP += 50;
 			theKnight.HP = maxHP;
-		break;
+			break;
 
-		case 15:		// Obtain Remedy
-			if (isTiny <= 3){ isTiny = 3; break; }
+		case 15: // Obtain Remedy
+			if (isTiny <= 3)
+			{
+				isTiny = 3;
+				break;
+			}
 			theKnight.remedy += 1;
-		break;
+			break;
 
-		case 16:		// Obtain MaidenKiss
-			if (isFrog <= 3){ isFrog = 3; break; }
+		case 16: // Obtain MaidenKiss
+			if (isFrog <= 3)
+			{
+				isFrog = 3;
+				break;
+			}
 			theKnight.maidenkiss += 1;
-		break;
+			break;
 
-		case 17:		// Obtain PhoenixDown
+		case 17: // Obtain PhoenixDown
 			theKnight.phoenixdown += 1;
-		break;
+			break;
 
-		case 18:		// Meet Merlin the Wizard
+		case 18: // Meet Merlin the Wizard
 			if (isTiny < 3 || isFrog < 3)
 			{
 				isTiny = 3;
@@ -644,64 +680,68 @@ loopback:
 
 			theKnight.level += 1;
 			theKnight.HP = maxHP;
-		break;
+			break;
 
-		case 19:		// Fall into the Abyss
-			if (isDragonKnight || meetOdin <= 3) break;
+		case 19: // Fall into the Abyss
+			if (isDragonKnight || meetOdin <= 3)
+				break;
 			if (theKnight.level < 7)
 			{
 				N = -1;
 				goto forceend;
 			}
-		break;
+			break;
 
-		case 21:		// Obtain wings of Lightwing
+		case 21: // Obtain wings of Lightwing
 			if (i < 3)
 				goto forceend;
-			else
-			if (arrEvent[i - 1] == 0 || arrEvent[i - 1] == 20 ||
-				arrEvent[i - 2] == 0 || arrEvent[i - 2] == 20 ||
-				arrEvent[i - 3] == 0 || arrEvent[i - 3] == 20)
+			else if (arrEvent[i - 1] == 0 || arrEvent[i - 1] == 20 ||
+					 arrEvent[i - 2] == 0 || arrEvent[i - 2] == 20 ||
+					 arrEvent[i - 3] == 0 || arrEvent[i - 3] == 20)
 				goto forceend;
 			else
 				i -= 3;
-		break;
+			break;
 
-		case 22:		// Meet Odin
-			if (!metOdin) meetOdin = 1;
-		break;
-		
-		case 23:		// Obtain Dragon Sword
-			if (isLancelot) break;
+		case 22: // Meet Odin
+			if (!metOdin)
+				meetOdin = 1;
+			break;
+
+		case 23: // Obtain Dragon Sword
+			if (isLancelot)
+				break;
 			isDragonKnight = isKnight ? true : false;
-		break;
+			break;
 
-		case 99:		// Meet Bowser
+		case 99: // Meet Bowser
 			if (hasExcalipoor)
 			{
 				N = -1;
 				goto forceend;
 			}
 			else if ((isArthur || isLancelot || isPaladin) && theKnight.level >= 8 ||
-				theKnight.level == 10 ||
-				isDragonKnight ||
-				meetOdin <= 3)
-					theKnight.level = 10;
+					 theKnight.level == 10 ||
+					 isDragonKnight ||
+					 meetOdin <= 3)
+				theKnight.level = 10;
 			else
 			{
 				N = -1;
 				goto forceend;
 			}
-		break;
+			break;
 		}
 
 		// Tiny knight
-		if (isTiny == 3) theKnight.HP *= 5;
+		if (isTiny == 3)
+			theKnight.HP *= 5;
 		if (isTiny < 5)
 			isTiny += 1;
 
 		// Frog knight
-		if (isFrog == 3) theKnight.level = levelFrog;
+		if (isFrog == 3)
+			theKnight.level = levelFrog;
 		if (isFrog < 5)
 			isFrog += 1;
 
@@ -742,10 +782,9 @@ loopback:
 	}
 
 forceend:
-	N = (N == -1) ? -1 : 
-		theKnight.HP + theKnight.level + theKnight.remedy + theKnight.maidenkiss + theKnight.phoenixdown;
+	N = (N == -1) ? -1 : theKnight.HP + theKnight.level + theKnight.remedy + theKnight.maidenkiss + theKnight.phoenixdown;
 	nOut = &N;
-	
-    display(nOut);
+
+	display(nOut);
 	return 0;
 }
