@@ -8,7 +8,6 @@
 #define _sword_cpp_
 #endif
 
-
 int maxHP;
 
 const int EVENT_SIZE = 100;
@@ -17,15 +16,15 @@ const int CASTLE_SIZE = 100;
 
 //read data from input file to corresponding variables
 //return 1 if successfully done, otherwise return 0
-int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& nCastle, int& nPetal, int& mode)
+int readFile(const char *filename, knight &theKnight, castle arrCastle[], int &nCastle, int &nPetal, int &mode)
 {
-	const char* file_name = filename;
-	FILE* f = 0;
-	char* str = new char[MAX_CHARACTER_PER_LINE];
+	const char *file_name = filename;
+	FILE *f = 0;
+	char *str = new char[MAX_CHARACTER_PER_LINE];
 	int num;
 
 	f = fopen(file_name, "r");
-	if (f == NULL)	//file not found || cannot read
+	if (f == NULL) //file not found || cannot read
 		return 0;
 
 	fgets(str, MAX_CHARACTER_PER_LINE, f);
@@ -35,17 +34,19 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 	int len = strlen(str);
 	//read mode
 	while (start < len && str[start] == ' ')
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start++] - '0';
 	}
 	mode = num;
 	//read petals
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start++] - '0';
 	}
 	nPetal = num;
@@ -60,9 +61,10 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 	len = strlen(str);
 	//read HP
 	while (start < len && str[start] == ' ')
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start++] - '0';
 	}
 	theKnight.HP = num;
@@ -70,9 +72,10 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 		return 0;
 	//read level
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start++] - '0';
 	}
 	theKnight.level = num;
@@ -80,9 +83,10 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 		return 0;
 	//read antidote
 	while (start < len && str[start] == ' ')
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start++] - '0';
 	}
 	theKnight.antidote = num;
@@ -90,9 +94,10 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 		return 0;
 	//read gil
 	while (start < len && (str[start] > '9' || str[start] < '0'))
-		start ++;
+		start++;
 	num = 0;
-	while (start < len && str[start] <= '9' && str[start] >= '0'){
+	while (start < len && str[start] <= '9' && str[start] >= '0')
+	{
 		num = num * 10 + str[start++] - '0';
 	}
 	theKnight.gil = num;
@@ -102,7 +107,8 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 	nCastle = 0;
 	int nEvent = 0;
 
-	while (1){
+	while (1)
+	{
 		str = new char[MAX_CHARACTER_PER_LINE];
 		if (feof(f))
 			break;
@@ -111,21 +117,26 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 			break;
 		start = 0;
 		len = strlen(str);
-		while (start < len){
+		while (start < len)
+		{
 			while (start < len && (str[start] > '9' || str[start] < '0'))
-				start ++;
+				start++;
 			if (start >= len)
 				break;
 			int num = 0;
-			while (start < len && str[start] <= '9' && str[start] >= '0'){
-				num = num  * 10 + str[start++] - '0';
+			while (start < len && str[start] <= '9' && str[start] >= '0')
+			{
+				num = num * 10 + str[start++] - '0';
 			}
 			//new castle
-			if (num == 0){
+			if (num == 0)
+			{
 				arrCastle[nCastle].nEvent = nEvent;
 				nCastle++;
 				nEvent = 0;
-			}else{
+			}
+			else
+			{
 				arrCastle[nCastle].arrEvent[nEvent++] = num;
 			}
 		}
@@ -135,27 +146,28 @@ int readFile(const char* filename, knight& theKnight, castle arrCastle[], int& n
 	return 1;
 }
 
-void display(knight theKnight, report* rp)
+void display(knight theKnight, report *rp)
 {
-  std::cout.flush();
-  if (rp==NULL) std::cout << "Love me before the last petal falls\n";
-  else
-  {
-      // std::cout << theKnight.HP + theKnight.level + theKnight.antidote + theKnight.gil + rp->nPetal + rp->nWin + rp->nLose;
-			std::cout << "Win result:\n";
-			std::cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.antidote << ' ' << theKnight.gil << std::endl;
-			std::cout << rp->nPetal << ' ' << rp->nWin << ' ' << rp->nLose << std::endl;
-      std::cout << callPhoenix(theKnight, 999);
-      delete rp;
-   }
+	std::cout.flush();
+	if (rp == NULL)
+		std::cout << "Love me before the last petal falls\n";
+	else
+	{
+		// std::cout << theKnight.HP + theKnight.level + theKnight.antidote + theKnight.gil + rp->nPetal + rp->nWin + rp->nLose;
+		std::cout << "Win result:\n";
+		std::cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.antidote << ' ' << theKnight.gil << std::endl;
+		std::cout << rp->nPetal << ' ' << rp->nWin << ' ' << rp->nLose << std::endl;
+		//std::cout << callPhoenix(theKnight, 999);
+		delete rp;
+	}
 }
 
 //called when knight falling in the battle field
-int callPhoenix(knight& woundedKnight, int MaxHP)
+int callPhoenix(knight &woundedKnight, int MaxHP)
 {
 	static int nTimes = 0;
-	woundedKnight.HP = MaxHP/2;
-	woundedKnight.gil = woundedKnight.gil<100? 0: woundedKnight.gil-100;
+	woundedKnight.HP = MaxHP / 2;
+	woundedKnight.gil = woundedKnight.gil < 100 ? 0 : woundedKnight.gil - 100;
 	return ++nTimes;
 }
 
@@ -165,33 +177,34 @@ int hash(int eventCode)
 	return eventCode;
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    if (argc < 2) return 1;
-    const char* filename = argv[1];
+	if (argc < 2)
+		return 1;
+	const char *filename = argv[1];
 
-   knight theKnight;
-   int nCastle; //number of castles
-   castle arrCastle[CASTLE_SIZE];// array of castles
-   int nPetal; // number of petals
-   int mode; // setting mode
-   report* pReport; //
+	knight theKnight;
+	int nCastle;				   //number of castles
+	castle arrCastle[CASTLE_SIZE]; // array of castles
+	int nPetal;					   // number of petals
+	int mode;					   // setting mode
+	report *pReport;			   //
 
-   readFile(filename, theKnight, arrCastle, nCastle, nPetal, mode);
-   maxHP = theKnight.HP;
+	readFile(filename, theKnight, arrCastle, nCastle, nPetal, mode);
+	maxHP = theKnight.HP;
 
-   std::cout << mode << " => " << nPetal <<  " => " <<  nCastle << std::endl;
-   std::cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.antidote << ' ' << theKnight.gil << std::endl;
-   for (int i = 0; i < nCastle; i++)
-   {
-       castle cc = arrCastle[i];
-       for (int j = 0; j < cc.nEvent; j++)
-				std::cout << cc.arrEvent[j] <<  ' ';
-		   std::cout << std::endl;
-   }
+	std::cout << mode << " => " << nPetal << " => " << nCastle << std::endl;
+	std::cout << theKnight.HP << ' ' << theKnight.level << ' ' << theKnight.antidote << ' ' << theKnight.gil << std::endl;
+	for (int i = 0; i < nCastle; i++)
+	{
+		castle cc = arrCastle[i];
+		for (int j = 0; j < cc.nEvent; j++)
+			std::cout << cc.arrEvent[j] << ' ';
+		std::cout << std::endl;
+	}
 
-   pReport = walkthrough (theKnight, arrCastle, nCastle, mode, nPetal);
-   display(theKnight,pReport);
+	pReport = walkthrough(theKnight, arrCastle, nCastle, mode, nPetal);
+	display(theKnight, pReport);
 
-   return 0;
+	return 0;
 }

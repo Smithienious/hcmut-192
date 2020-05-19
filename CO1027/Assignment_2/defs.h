@@ -6,10 +6,10 @@
 
 struct knight
 {
-   int HP;
-   int level;
-   int antidote;
-   int gil;
+	int HP;
+	int level;
+	int antidote;
+	int gil;
 };
 
 struct castle
@@ -20,11 +20,11 @@ struct castle
 
 struct report
 {
-	int nPetal; 
+	int nPetal;
 	int nWin;
 	int nLose;
 };
 
-int callPhoenix(knight& woundedKnight, int maxHP);
+int callPhoenix(knight &woundedKnight, int maxHP);
 int hash(int eventCode);
-report* walkthrough(knight& theKnight, castle arrCastle[], int nCastle, int mode, int nPetal);
+report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal);
