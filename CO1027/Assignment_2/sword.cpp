@@ -77,6 +77,58 @@ int canKnight(int C)
 	return result;
 }
 
+void TripletOrder(int &a, int &b, int &c)
+{
+	if (a < b)
+	{
+		if (a < c)
+		{
+			a = 10;
+			if (b < c)
+			{
+				b = 20;
+				c = 30;
+			}
+			else
+			{
+				c = 20;
+				b = 30;
+			}
+		}
+		else
+		{
+			c = 10;
+			a = 20;
+			b = 30;
+		}
+	}
+	else
+	{
+
+		if (b < c)
+		{
+			b = 10;
+
+			if (a < c)
+			{
+				a = 20;
+				c = 30;
+			}
+			else
+			{
+				c = 20;
+				a = 30;
+			}
+		}
+		else
+		{
+			c = 10;
+			b = 20;
+			a = 30;
+		}
+	}
+}
+
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
 {
 	report *pReturn;
@@ -105,9 +157,15 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		isPoisoned = 0,
 		meetOdin = 0,
 		cldOdin = 0,
-		metOmega = 0;
+		metOmega = 0,
+		x = hash(95),
+		y = hash(96),
+		z = hash(97),
+		hashCount = 10;
 	double baseDamage = 10.0;
+
 	std::pair<int, int> rt;
+	TripletOrder(x, y, z);
 
 	if (isLancelot)
 		hasSpear = 1;
@@ -115,11 +173,6 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		hasHair = 1;
 	if (isPaladin)
 		hasShield = 1;
-
-	if (mode == 1)
-		goto MODE1;
-	if (mode == 2)
-		goto MODE2;
 
 	while (1)
 	{
@@ -143,7 +196,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 
 			hasTreasures = hasShield && hasSpear && hasHair;
 			hasLove = hasSpear && hasHair && !hasExcalibur ||
-					  isArthur && hasHair ||
+					  isKing && hasHair ||
 					  isLancelot && hasHair ||
 					  isGuinevere && hasSpear;
 
@@ -342,15 +395,30 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 95: // Obtain Paladin shield
+				if (mode == 1 && !(hashCount == x))
+					break;
+
 				hasShield = true;
+				if (mode == 1)
+					hashCount += 10;
 				break;
 
 			case 96: // Obtain Lancelot's spear
+				if (mode == 1 && !(hashCount == y))
+					break;
+
 				hasSpear = true;
+				if (mode == 1)
+					hashCount += 10;
 				break;
 
 			case 97: // Obtain Guinevere's hair
+				if (mode == 1 && !(hashCount == z))
+					break;
+
 				hasHair = true;
+				if (mode == 1)
+					hashCount += 10;
 				break;
 
 			case 98: // Obtain Excalibur sword
@@ -427,14 +495,6 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		else
 			currCastle = 0;
 	}
-
-	goto ENDMODE;
-
-MODE1:
-
-	goto ENDMODE;
-
-MODE2:
 
 	goto ENDMODE;
 
