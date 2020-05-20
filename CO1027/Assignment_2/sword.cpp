@@ -31,11 +31,35 @@ int isFriendly(int x, int y)
 	return (fSum / x == sSum / y);
 }
 
-bool canKnight(int C)
+// Test for Paladin
+int isPrime(int n)
+{
+	int result = true;
+
+	if (n < 2)
+		result = false;
+	else
+		for (int i = 2; i * i <= n; i += 1)
+		{
+			if (n % i == 0)
+			{
+				result = false;
+				break;
+			}
+		}
+
+	return result;
+}
+
+// Test for Dragon Knight
+int canKnight(int C)
 {
 	int x = 1;
-	bool result = false;
+	int result = false;
 	float y;
+
+	if (C == 888)
+		return result;
 
 	while (x < C / 2 && !result)
 	{
@@ -56,11 +80,15 @@ bool canKnight(int C)
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
 {
 	report *pReturn;
-	int bFlag = 1;
 	// fighting for the existence of mankind here
-	int maxHP = theKnight.HP,
+	int bFlag = 1,
+		maxHP = theKnight.HP,
 		minHP = 0,
 		isKnight = canKnight(maxHP),
+		isKing = maxHP == 999,
+		isLancelot = maxHP == 888,
+		isGuinevere = maxHP == 777,
+		isPaladin = isPrime(maxHP),
 		currCastle = 0,
 		nWin = 0,
 		nLose = 0,
@@ -69,16 +97,24 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		hasShield = 0,
 		hasSpear = 0,
 		hasHair = 0,
+		hasTreasures = 0,
 		hasExcalibur = 0,
 		hasLionheart = 0,
 		cldLionheart = 0,
-		hasTreasures = 0,
+		hasLove = 0,
 		isPoisoned = 0,
 		meetOdin = 0,
 		cldOdin = 0,
 		metOmega = 0;
 	double baseDamage = 10.0;
 	std::pair<int, int> rt;
+
+	if (isLancelot)
+		hasSpear = 1;
+	if (isGuinevere)
+		hasHair = 1;
+	if (isPaladin)
+		hasShield = 1;
 
 	if (mode == 1)
 		goto MODE1;
@@ -89,20 +125,28 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 	{
 		for (int i = 0; i < arrCastle[currCastle].nEvent; i += 1)
 		{
-			isPoisoned -= (isPoisoned != 0) ? 1 : 0;
-			hasLionheart -= (hasLionheart != 0) ? 1 : 0;
-			cldLionheart -= (cldLionheart != 0) ? 1 : 0;
-
-			if (meetOdin >= 0)
-				meetOdin -= 1;
-			if (cldOdin >= 0)
-				cldOdin -= 1;
-
-			nPetal -= 1;
-			if (nPetal < 0)
+			if (nPetal - 1 < 0 && !isKing)
 				goto ENDNULL;
 
+			if (isPoisoned > 0)
+				isPoisoned -= 1;
+			if (hasLionheart > 0)
+				hasLionheart -= 1;
+			if (cldLionheart > 0)
+				cldLionheart -= 1;
+			if (meetOdin > 0)
+				meetOdin -= 1;
+			if (cldOdin > 0)
+				cldOdin -= 1;
+			if (nPetal > 0)
+				nPetal -= 1;
+
 			hasTreasures = hasShield && hasSpear && hasHair;
+			hasLove = hasSpear && hasHair && !hasExcalibur ||
+					  isArthur && hasHair ||
+					  isLancelot && hasHair ||
+					  isGuinevere && hasSpear;
+
 			switch (arrCastle[currCastle].arrEvent[i])
 			{
 			case 1: // Meet MadBear
@@ -118,7 +162,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 
 				rt = Opponent(i, baseDamage, theKnight);
 
-				if (rt.first && hasExcalibur || hasLionheart || meetOdin)
+				if (rt.first && hasExcalibur || hasLionheart ||
+					meetOdin || isKing || isLancelot || isPaladin)
 				{
 					nWin += 1;
 					theKnight.gil += int(baseDamage * 100);
@@ -126,7 +171,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				else
 				{
 					nLose += 1;
-					theKnight.HP -= rt.second;
+					if (!isGuinevere)
+						theKnight.HP -= rt.second;
 				}
 
 				if (isPoisoned)
@@ -139,7 +185,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 
 				rt = Opponent(i, baseDamage, theKnight);
 
-				if (rt.first && hasExcalibur || hasLionheart || meetOdin)
+				if (rt.first && hasExcalibur || hasLionheart ||
+					meetOdin || isKing || isLancelot)
 				{
 					nWin += 1;
 					theKnight.level += 1;
@@ -147,14 +194,16 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				else
 				{
 					nLose += 1;
-					isPoisoned = 6;
+					if (!isPaladin && !isKnight)
+						isPoisoned = 6;
 				}
 				break;
 
 			case 7: // Meet Queen of Cards
 				rt = Opponent(i, baseDamage, theKnight);
 
-				if (rt.first && hasExcalibur || hasLionheart || meetOdin)
+				if (rt.first && hasExcalibur || hasLionheart ||
+					meetOdin || isKing || isLancelot)
 				{
 					nWin += 1;
 					theKnight.gil *= 2;
@@ -162,7 +211,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				else
 				{
 					nLose += 1;
-					theKnight.gil = int(theKnight.gil / 2.0);
+					if (!hasHakama && !isGuinevere)
+						theKnight.gil = int(theKnight.gil / 2.0);
 				}
 				break;
 
@@ -175,6 +225,12 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 					theKnight.HP = maxHP;
 					hasLionheart = 6;
 					cldLionheart = 7;
+
+					if (isPaladin)
+					{
+						hasLionheart = -1;
+						cldLionheart = -1;
+					}
 					break;
 				}
 
@@ -184,7 +240,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				if (isPoisoned)
 				{
 					isPoisoned = 0;
-					theKnight.gil -= 50;
+					if (!hasHakama && !isGuinevere && !isPaladin)
+						theKnight.gil -= 50;
 				}
 				if (theKnight.gil)
 				{
@@ -196,12 +253,17 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 					theKnight.gil += theKnight.HP - maxHP;
 					theKnight.HP = maxHP;
 				}
+
+				if (isGuinevere)
+					theKnight.gil += 50;
 				break;
 
 			case 9: // Lost into the Durian Garden
 				isPoisoned = 0;
 				theKnight.HP = maxHP;
 				nPetal += 5;
+				if (!hasHakama)
+					nPetal = 99;
 				break;
 
 			case 10: // Obtain antidote
@@ -209,11 +271,11 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 11: // Meet Odin
-				if (meetOdin && !cldOdin || meetOdin < 0)
+				if (cldOdin || meetOdin < 0)
 					break;
 
 				meetOdin = 6;
-				cldOdin = 6;
+				cldOdin = 7;
 				break;
 
 			case 12: // Meet Merlin the Wizard
@@ -246,9 +308,16 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 			case 14: // Meet Hades
 				rt = Opponent(i, baseDamage, theKnight);
 
+				if (isKnight && meetOdin)
+				{
+					nWin += 1;
+					hasArmor = 1;
+					break;
+				}
+
 				meetOdin = 0;
 
-				if (rt.first && hasExcalibur || hasLionheart)
+				if (rt.first || hasLionheart || hasLove)
 				{
 					nWin += 1;
 					hasArmor = 1;
@@ -261,11 +330,15 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 15: // Obtain Scarlet Hakama
-
+				hasHakama = true;
 				break;
 
 			case 16: // Meet LockedDoor
+				if (isLancelot && isKnight)
+					break;
 
+				if (theKnight.level <= ((i + 1) % 10))
+					i = arrCastle[currCastle].nEvent;
 				break;
 
 			case 95: // Obtain Paladin shield
@@ -281,7 +354,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 98: // Obtain Excalibur sword
-				if (!hasTreasures)
+				if (!hasTreasures && !isKing)
 					break;
 				hasExcalibur = true;
 				break;
@@ -300,8 +373,11 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				else
 				{
 					nLose += 1;
-					theKnight.HP = int(theKnight.HP / 3.0);
-					theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
+					if (!isGuinevere)
+					{
+						theKnight.HP = int(theKnight.HP / 3.0);
+						theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
+					}
 				}
 				break;
 			}
