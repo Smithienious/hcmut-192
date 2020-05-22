@@ -56,7 +56,7 @@ int canKnight(int C)
 {
 	int x = 1;
 	int result = false;
-	float y;
+	double y = 0.0;
 
 	if (C == 888)
 		return result;
@@ -77,6 +77,7 @@ int canKnight(int C)
 	return result;
 }
 
+// Mode 1
 void TripletOrder(int &a, int &b, int &c)
 {
 	if (a < b)
@@ -126,6 +127,18 @@ void TripletOrder(int &a, int &b, int &c)
 			b = 20;
 			a = 30;
 		}
+	}
+}
+
+// Mode 2
+void OptimizePath(castle arrCastle[], int nCastle)
+{
+	int check = 0;
+	castle *tempCastle = new castle;
+
+	while (!check)
+	{
+		check = true;
 	}
 }
 
@@ -270,7 +283,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 8: // Meet the merry merchant Nina de Rings
-				if (hasLionheart)
+				if (cldLionheart)
 					break;
 
 				if (isFriendly(theKnight.HP, theKnight.gil) && !cldLionheart)
@@ -339,7 +352,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 13: // Meet Omega Weapon
-				if (!metOmega)
+				if (metOmega)
 					break;
 
 				if (theKnight.level == 10 && hasExcalibur ||
