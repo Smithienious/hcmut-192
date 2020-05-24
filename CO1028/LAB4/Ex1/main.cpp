@@ -6,7 +6,20 @@ using namespace std;
 
 bool palindrome(char strg[], int j)
 {
-	//TODO
+	int n = strlen(strg);
+	int result = 0;
+
+	if (2 * j < n - 1)
+	{
+		if (strg[j] == strg[n - j - 1])
+			result = palindrome(strg, j + 1);
+		else
+			result = 0;
+	}
+	else
+		result = 1;
+
+	return result;
 }
 
 int main(int argc, char **argv)

@@ -5,10 +5,22 @@ using namespace std;
 
 int gcd(int p, int q)
 {
-	//TODO
+	int result = 1;
+
+	if (p > q)
+		p -= q;
+	if (q > p)
+		q -= p;
+
+	if (p == q)
+		result = p;
+	else
+		result = gcd(p, q);
+
+	return result;
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	ifstream ifs;
 	ifs.open(argv[1]);
@@ -20,7 +32,7 @@ int main(int argc, char** argv)
 		ifs >> q;
 		cout << gcd(p, q) << endl;
 	}
-	catch (char const* s)
+	catch (char const *s)
 	{
 		printf("An exception occurred. Exception type: %s\n", s);
 	}

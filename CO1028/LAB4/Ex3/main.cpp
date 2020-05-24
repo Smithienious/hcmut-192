@@ -5,7 +5,21 @@ using namespace std;
 
 bool uniqueElement(int size, int *a, int i)
 {
-	//TODO
+	int result = 1;
+	if (i >= size)
+		return result;
+
+	for (int j = i + 1; j < size; j += 1)
+		if (*(a + i) == *(a + j))
+		{
+			result = 0;
+			break;
+		}
+
+	if (result)
+		result = uniqueElement(size, a, i + 1);
+
+	return result;
 }
 
 int main(int argc, char **argv)

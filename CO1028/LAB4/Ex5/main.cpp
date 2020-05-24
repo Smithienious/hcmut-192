@@ -5,14 +5,34 @@ using namespace std;
 
 int linearSearch(int *a, int key, int sizeofArray)
 {
-	//TODO
+	int result = 0;
+
+	if (sizeofArray > 0)
+		if (key != *(a + sizeofArray - 1))
+			result = linearSearch(a, key, sizeofArray - 1);
+		else
+			result = sizeofArray - 1;
+	else
+		result = -1;
+
+	return result;
 }
 
 // you should remove element in array
 // function return array
 int *removeElement(int *a, int &n, int position)
 {
-	//TODO
+	int temp;
+	n -= 1;
+
+	for (int i = position; i < n; i += 1)
+	{
+		temp = a[i];
+		a[i] = a[i + 1];
+		a[i + 1] = temp;
+	}
+
+	return a;
 }
 
 int main(int argc, char **argv)

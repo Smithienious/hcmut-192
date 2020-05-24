@@ -5,7 +5,13 @@ using namespace std;
 
 int permutation(int n, int m)
 {
-	//TODO
+	int result = 0;
+	if (n == m || m == 0)
+		result = 1;
+	else
+		result = permutation(n - 1, m) + permutation(n - 1, m - 1);
+
+	return result;
 }
 
 int main(int argc, char **argv)
