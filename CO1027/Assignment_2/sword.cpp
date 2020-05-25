@@ -131,15 +131,70 @@ void TripletOrder(int &a, int &b, int &c)
 }
 
 // Mode 2
-void OptimizePath(castle arrCastle[], int nCastle)
+void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
 {
-	int check = 0;
-	castle *tempCastle = new castle;
+	int check = 1, check1 = 1, check2 = 1, n = 0;
+	castle tempCastle;
 
-	while (!check)
+	// Mark meaningless paths
+	for (int i = 0; i < nCastle; i += 1)
 	{
-		check = true;
+		check = 0;
+
+		for (int j = 0; j < arrCastle[i].nEvent; j += 1)
+			if (arrCastle[i].arrEvent[j] == 95 ||
+				arrCastle[i].arrEvent[j] == 96 ||
+				arrCastle[i].arrEvent[j] == 97 ||
+				arrCastle[i].arrEvent[j] == 98 ||
+				arrCastle[i].arrEvent[j] == 99)
+			{
+				check = 1;
+				break;
+			}
+
+		if (!check)
+			arrCastle[i].arrEvent[0] = -1;
 	}
+
+	// Move said castles out of index
+	while (n < nCastle)
+	{
+		if (arrCastle[n].arrEvent[0] == -1)
+		{
+			nCastle -= 1;
+
+			for (int j = n; j < nCastle; j += 1)
+			{
+				tempCastle = arrCastle[j];
+				arrCastle[j] = arrCastle[j + 1];
+				arrCastle[j + 1] = tempCastle;
+			}
+
+			continue;
+		}
+
+		n += 1;
+	}
+
+	// Sort castles by events
+	for (int i = 0; i < nCastle && (check1 || check2); i += 1)
+		for (int j = 0; j < arrCastle[i].nEvent && (check1 || check2); j += 1)
+		{
+			if (arrCastle[i].arrEvent[j] == 98)
+			{
+				tempCastle = arrCastle[i];
+				arrCastle[i] = arrCastle[nCastle - 2];
+				arrCastle[nCastle - 2] = tempCastle;
+				check1 = 0;
+			}
+			if (arrCastle[i].arrEvent[j] == 99)
+			{
+				tempCastle = arrCastle[i];
+				arrCastle[i] = arrCastle[nCastle - 1];
+				arrCastle[nCastle - 1] = tempCastle;
+				check2 = 0;
+			}
+		}
 }
 
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
@@ -179,6 +234,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 
 	std::pair<int, int> rt;
 	TripletOrder(x, y, z);
+	if (mode == 2)
+		OptimizePath(arrCastle, nCastle, nPetal);
 
 	if (isLancelot)
 		hasSpear = 1;
@@ -228,7 +285,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 
 				rt = Opponent(i, baseDamage, theKnight);
 
-				if (rt.first && hasExcalibur || hasLionheart ||
+				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot || isPaladin)
 				{
 					nWin += 1;
@@ -251,7 +308,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 
 				rt = Opponent(i, baseDamage, theKnight);
 
-				if (rt.first && hasExcalibur || hasLionheart ||
+				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
 				{
 					nWin += 1;
@@ -268,7 +325,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 			case 7: // Meet Queen of Cards
 				rt = Opponent(i, baseDamage, theKnight);
 
-				if (rt.first && hasExcalibur || hasLionheart ||
+				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
 				{
 					nWin += 1;
