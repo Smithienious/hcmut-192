@@ -357,7 +357,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 					break;
 				}
 
-				if (theKnight.gil < 50)
+				if (theKnight.gil < 50 && !isGuinevere)
 					break;
 
 				if (isPoisoned)
@@ -369,11 +369,13 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				if (theKnight.gil)
 				{
 					theKnight.HP += theKnight.gil;
-					theKnight.gil = 0;
+					if (!isGuinevere)
+						theKnight.gil = 0;
 				}
 				if (theKnight.HP > maxHP)
 				{
-					theKnight.gil += theKnight.HP - maxHP;
+					if (!isGuinevere)
+						theKnight.gil += theKnight.HP - maxHP;
 					theKnight.HP = maxHP;
 				}
 
