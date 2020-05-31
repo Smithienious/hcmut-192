@@ -233,7 +233,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 	double baseDamage = 10.0;
 
 	std::pair<int, int> rt;
-	TripletOrder(x, y, z);
+	if (mode == 1)
+		TripletOrder(x, y, z);
 	if (mode == 2)
 		OptimizePath(arrCastle, nCastle, nPetal);
 
