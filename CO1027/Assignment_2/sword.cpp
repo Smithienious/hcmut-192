@@ -524,16 +524,19 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 			}
 
 			// Mythril armor
-			if (minHP < theKnight.HP || isPoisoned)
-				minHP = theKnight.HP;
 			if (hasArmor)
+			{
+				if (minHP < theKnight.HP || isPoisoned)
+					minHP = theKnight.HP;
 				theKnight.HP = minHP;
+			}
 
 			// Call Phoenix
 			if (theKnight.HP <= 0)
 			{
 				callPhoenix(theKnight, maxHP);
 				isPoisoned = 0;
+				minHP = theKnight.HP;
 			}
 
 			// Poison
