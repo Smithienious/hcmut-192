@@ -2,6 +2,7 @@
 #include "defs.h"
 #define _definition_h_
 #endif
+#include <algorithm>
 
 std::pair<int, int> Opponent(int i, double baseDamage, knight theKnight)
 {
@@ -130,7 +131,6 @@ void TripletOrder(int &a, int &b, int &c)
 	}
 }
 
-
 // Mode 2
 void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
 {
@@ -198,8 +198,7 @@ void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
 		}
 }
 
-/*
-// Mode 2: possible number of paths
+//
 int Factorial(int n)
 {
 	int result = 1;
@@ -212,11 +211,10 @@ int Factorial(int n)
 	return result;
 }
 
-// Mode 2: trial and error
-int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
+// Mode 2: bruteforce
+void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastle, int pIndex, int nPetal)
 {
-	int bFlag = 1,
-		maxHP = theKnight.HP,
+	int maxHP = theKnight.HP,
 		minHP = 0,
 		isKnight = canKnight(maxHP),
 		isKing = maxHP == 999,
@@ -224,8 +222,6 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 		isGuinevere = maxHP == 777,
 		isPaladin = isPrime(maxHP),
 		currCastle = 0,
-		nWin = 0,
-		nLose = 0,
 		hasHakama = 0,
 		hasArmor = 0,
 		hasShield = 0,
@@ -239,13 +235,8 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 		isPoisoned = 0,
 		meetOdin = 0,
 		cldOdin = 0,
-		metOmega = 0,
-		x = hash(95),
-		y = hash(96),
-		z = hash(97),
-		hashCount = 10;
+		metOmega = 0;
 	double baseDamage = 10.0;
-
 	std::pair<int, int> rt;
 
 	if (isLancelot)
@@ -255,13 +246,14 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 	if (isPaladin)
 		hasShield = 1;
 
-	while (nCastle)
+	for (int j = 0; j < nCastle; j += 1)
 	{
+		currCastle = actCastle[pIndex][j + 1];
 		for (int i = 0; i < arrCastle[currCastle].nEvent; i += 1)
 		{
 			if (nPetal - 1 < 0 && !isKing)
 			{
-				bFlag = 0;
+				nPetal = 0;
 				goto END;
 			}
 
@@ -301,16 +293,10 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot || isPaladin)
-				{
-					nWin += 1;
 					theKnight.gil += int(baseDamage * 100);
-				}
-				else
-				{
-					nLose += 1;
-					if (!isGuinevere)
-						theKnight.HP -= rt.second;
-				}
+
+				else if (!isGuinevere)
+					theKnight.HP -= rt.second;
 
 				if (isPoisoned)
 					theKnight.HP -= rt.second;
@@ -324,16 +310,11 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
-				{
-					nWin += 1;
 					theKnight.level += 1;
-				}
-				else
-				{
-					nLose += 1;
-					if (!isPaladin && !isKnight)
-						isPoisoned = 6;
-				}
+
+				else if (!isPaladin && !isKnight)
+					isPoisoned = 6;
+
 				break;
 
 			case 7: // Meet Queen of Cards
@@ -341,16 +322,11 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
-				{
-					nWin += 1;
 					theKnight.gil *= 2;
-				}
-				else
-				{
-					nLose += 1;
-					if (!hasHakama && !isGuinevere)
-						theKnight.gil = int(theKnight.gil / 2.0);
-				}
+
+				else if (!hasHakama && !isGuinevere)
+					theKnight.gil = int(theKnight.gil / 2.0);
+
 				break;
 
 			case 8: // Meet the merry merchant Nina de Rings
@@ -431,17 +407,14 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 				if (theKnight.level == 10 && hasExcalibur ||
 					isKnight && hasLionheart)
 				{
-					nWin += 1;
 					maxHP += (10 - theKnight.level) * 100;
 					theKnight.level = 10;
 					theKnight.gil = 999;
 					metOmega += 1;
 				}
 				else
-				{
-					nLose += 1;
 					theKnight.HP = 0;
-				}
+
 				break;
 
 			case 14: // Meet Hades
@@ -449,7 +422,6 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 
 				if (isKnight && meetOdin)
 				{
-					nWin += 1;
 					hasArmor = 1;
 					break;
 				}
@@ -457,15 +429,12 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 				meetOdin = 0;
 
 				if (rt.first || hasLionheart || hasLove)
-				{
-					nWin += 1;
+
 					hasArmor = 1;
-				}
+
 				else
-				{
-					nLose += 1;
 					theKnight.HP = 0;
-				}
+
 				break;
 
 			case 15: // Obtain Scarlet Hakama
@@ -481,30 +450,15 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 				break;
 
 			case 95: // Obtain Paladin shield
-				if (mode == 1 && !(hashCount == x))
-					break;
-
 				hasShield = true;
-				if (mode == 1)
-					hashCount += 10;
 				break;
 
 			case 96: // Obtain Lancelot's spear
-				if (mode == 1 && !(hashCount == y))
-					break;
-
 				hasSpear = true;
-				if (mode == 1)
-					hashCount += 10;
 				break;
 
 			case 97: // Obtain Guinevere's hair
-				if (mode == 1 && !(hashCount == z))
-					break;
-
 				hasHair = true;
-				if (mode == 1)
-					hashCount += 10;
 				break;
 
 			case 98: // Obtain Excalibur sword
@@ -516,7 +470,6 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 			case 99: // Encounter Ultimecia
 				if (hasExcalibur || hasLionheart)
 				{
-					nWin += 1;
 					if (isPoisoned)
 					{
 						theKnight.HP = int(theKnight.HP / 3.0);
@@ -524,15 +477,12 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 					}
 					goto END;
 				}
-				else
+				else if (!isGuinevere)
 				{
-					nLose += 1;
-					if (!isGuinevere)
-					{
-						theKnight.HP = int(theKnight.HP / 3.0);
-						theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
-					}
+					theKnight.HP = int(theKnight.HP / 3.0);
+					theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
 				}
+
 				break;
 			}
 
@@ -579,35 +529,68 @@ int Alternative(knight &theKnight, castle arrCastle[], int nCastle, int mode, in
 		// End of castle
 		theKnight.level += 1;
 		maxHP += 100;
-		if (currCastle < nCastle - 1)
-			currCastle += 1;
-		else
-			currCastle = 0;
 	}
 
 END:
-	return bFlag;
-}
-
-// Mode 2: bruteforce
-void BackTrack(knight theKnight, castle arrCastle[], int nCastle, int nPetal, int &pIndex, int **actCastle)
-{
-	for (int i = 0; i < nCastle; i += 1)
-	{
-	}
+	actCastle[pIndex][0] = nPetal;
 }
 
 // Mode 2: setting up
-void SetUp(knight theKnight, castle arrCaste[], int nCastle, int nPetal)
+void SetUp(knight theKnight, castle arrCastle[], int nCastle, int nPetal)
 {
-	int pIndex = 0; // Used to identify path
+	int maxPetal = 0;
+	int pIndex = 0; // Path index
 	int nPath = Factorial(nCastle);
+	int rCastle[nCastle]; // Will be used to reorder castles
+	castle tmpCastle;
 	int **actCastle;
 	actCastle = new int *[nPath];
-	for (int i = 0; i < nCastle + 1; i += 1) // Index 0 will be used to store number of remaining petals
-		actCastle[i] = new int[nCastle];
+
+	// Enumerate castles
+	for (int i = 0; i < nCastle; i += 1)
+	{
+		rCastle[i] = i;
+	}
+
+	// Create array with path index and castle array
+	for (int i = 0; i < nPath; i += 1)
+	{
+		actCastle[i] = new int[nPetal + 1];
+		actCastle[i][0] = nPetal; // Index 0 will be used to store number of remaining petals
+	}
+
+	//Randomize castles
+	std::sort(rCastle, rCastle + nCastle);
+	do
+	{
+		for (int i = 0; i < nCastle; i += 1)
+			actCastle[pIndex][i + 1] = rCastle[i];
+		pIndex += 1;
+	} while (std::next_permutation(rCastle, rCastle + nCastle));
+
+	// Iterate through all castles one time
+	for (int i = 0; i < nPath; i += 1)
+		BackTrack(theKnight, arrCastle, actCastle, nCastle, i, nPetal);
+
+	// Find optimal path
+	for (int i = 0; i < nPath; i += 1)
+		maxPetal = (maxPetal < actCastle[i][0]) ? actCastle[i][0] : maxPetal;
+
+	// Get index of optimal path
+	for (int i = 0; i < nPath; i += 1)
+		if (maxPetal == actCastle[i][0])
+			pIndex = i;
+
+	// Switch to optimal path
+	for (int i = 0; i < nPath; i += 1)
+		for (int j = i; j < nPath; j += 1)
+			if (j == actCastle[pIndex][i + 1])
+			{
+				tmpCastle = arrCastle[i];
+				arrCastle[i] = arrCastle[j];
+				arrCastle[j] = tmpCastle;
+			}
 }
-*/
 
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
 {
@@ -643,13 +626,13 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		z = hash(97),
 		hashCount = 10;
 	double baseDamage = 10.0;
-
 	std::pair<int, int> rt;
+
 	if (mode == 1)
 		TripletOrder(x, y, z);
 	if (mode == 2)
-		OptimizePath(arrCastle, nCastle, nPetal);
-		//SetUp(theKnight, arrCastle, nCastle, nPetal);
+		//OptimizePath(arrCastle, nCastle, nPetal);
+		SetUp(theKnight, arrCastle, nCastle, nPetal);
 
 	if (isLancelot)
 		hasSpear = 1;
