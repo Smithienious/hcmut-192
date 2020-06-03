@@ -131,73 +131,6 @@ void TripletOrder(int &a, int &b, int &c)
 	}
 }
 
-// Mode 2
-void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
-{
-	int check = 1, check1 = 1, check2 = 1, n = 0;
-	castle tempCastle;
-
-	// Mark meaningless paths
-	for (int i = 0; i < nCastle; i += 1)
-	{
-		check = 0;
-
-		for (int j = 0; j < arrCastle[i].nEvent; j += 1)
-			if (arrCastle[i].arrEvent[j] == 95 ||
-				arrCastle[i].arrEvent[j] == 96 ||
-				arrCastle[i].arrEvent[j] == 97 ||
-				arrCastle[i].arrEvent[j] == 98 ||
-				arrCastle[i].arrEvent[j] == 99)
-			{
-				check = 1;
-				break;
-			}
-
-		if (!check)
-			arrCastle[i].arrEvent[0] = -1;
-	}
-
-	// Move said castles out of index
-	while (n < nCastle)
-	{
-		if (arrCastle[n].arrEvent[0] == -1)
-		{
-			nCastle -= 1;
-
-			for (int j = n; j < nCastle; j += 1)
-			{
-				tempCastle = arrCastle[j];
-				arrCastle[j] = arrCastle[j + 1];
-				arrCastle[j + 1] = tempCastle;
-			}
-
-			continue;
-		}
-
-		n += 1;
-	}
-
-	// Sort castles by events
-	for (int i = 0; i < nCastle && (check1 || check2); i += 1)
-		for (int j = 0; j < arrCastle[i].nEvent && (check1 || check2); j += 1)
-		{
-			if (arrCastle[i].arrEvent[j] == 98)
-			{
-				tempCastle = arrCastle[i];
-				arrCastle[i] = arrCastle[nCastle - 2];
-				arrCastle[nCastle - 2] = tempCastle;
-				check1 = 0;
-			}
-			if (arrCastle[i].arrEvent[j] == 99)
-			{
-				tempCastle = arrCastle[i];
-				arrCastle[i] = arrCastle[nCastle - 1];
-				arrCastle[nCastle - 1] = tempCastle;
-				check2 = 0;
-			}
-		}
-}
-
 //
 int Factorial(int n)
 {
@@ -235,7 +168,8 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 		isPoisoned = 0,
 		meetOdin = 0,
 		cldOdin = 0,
-		metOmega = 0;
+		metOmega = 0,
+		n = 0;
 	double baseDamage = 10.0;
 	std::pair<int, int> rt;
 
@@ -246,9 +180,9 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 	if (isPaladin)
 		hasShield = 1;
 
-	for (int j = 0; j < nCastle; j += 1)
+	while (nCastle)
 	{
-		currCastle = actCastle[pIndex][j + 1];
+		currCastle = actCastle[pIndex][n + 1];
 		for (int i = 0; i < arrCastle[currCastle].nEvent; i += 1)
 		{
 			if (nPetal - 1 < 0 && !isKing)
@@ -529,6 +463,10 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 		// End of castle
 		theKnight.level += 1;
 		maxHP += 100;
+		if (n < nCastle - 1)
+			n += 1;
+		else
+			n = 0;
 	}
 
 END:
@@ -552,7 +490,7 @@ void SetUp(knight theKnight, castle arrCastle[], int nCastle, int nPetal)
 		rCastle[i] = i;
 	}
 
-	// Create array with path index and castle array
+	// Create array of castles path index
 	for (int i = 0; i < nPath; i += 1)
 	{
 		actCastle[i] = new int[nPetal + 1];
@@ -579,19 +517,90 @@ void SetUp(knight theKnight, castle arrCastle[], int nCastle, int nPetal)
 	// Get index of optimal path
 	for (int i = 0; i < nPath; i += 1)
 		if (maxPetal == actCastle[i][0])
+		{
 			pIndex = i;
+			break;
+		}
 
 	// Switch to optimal path
-	for (int i = 0; i < nPath; i += 1)
-		for (int j = i; j < nPath; j += 1)
+	for (int i = 0; i < nCastle; i += 1)
+		for (int j = i; j < nCastle; j += 1)
 			if (j == actCastle[pIndex][i + 1])
 			{
 				tmpCastle = arrCastle[i];
 				arrCastle[i] = arrCastle[j];
 				arrCastle[j] = tmpCastle;
+				break;
 			}
 }
+/*
+// Mode 2
+void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
+{
+	int check = 1, check1 = 1, check2 = 1, n = 0;
+	castle tempCastle;
 
+	// Mark meaningless paths
+	for (int i = 0; i < nCastle; i += 1)
+	{
+		check = 0;
+
+		for (int j = 0; j < arrCastle[i].nEvent; j += 1)
+			if (arrCastle[i].arrEvent[j] == 95 ||
+				arrCastle[i].arrEvent[j] == 96 ||
+				arrCastle[i].arrEvent[j] == 97 ||
+				arrCastle[i].arrEvent[j] == 98 ||
+				arrCastle[i].arrEvent[j] == 99)
+			{
+				check = 1;
+				break;
+			}
+
+		if (!check)
+			arrCastle[i].arrEvent[0] = -1;
+	}
+
+	// Move said castles out of index
+	while (n < nCastle)
+	{
+		if (arrCastle[n].arrEvent[0] == -1)
+		{
+			nCastle -= 1;
+
+			for (int j = n; j < nCastle; j += 1)
+			{
+				tempCastle = arrCastle[j];
+				arrCastle[j] = arrCastle[j + 1];
+				arrCastle[j + 1] = tempCastle;
+			}
+
+			continue;
+		}
+
+		n += 1;
+	}
+
+	// Sort castles by events
+	for (int i = 0; i < nCastle && (check1 || check2); i += 1)
+		for (int j = 0; j < arrCastle[i].nEvent && (check1 || check2); j += 1)
+		{
+			if (arrCastle[i].arrEvent[j] == 98)
+			{
+				tempCastle = arrCastle[i];
+				arrCastle[i] = arrCastle[nCastle - 2];
+				arrCastle[nCastle - 2] = tempCastle;
+				check1 = 0;
+			}
+			if (arrCastle[i].arrEvent[j] == 99)
+			{
+				tempCastle = arrCastle[i];
+				arrCastle[i] = arrCastle[nCastle - 1];
+				arrCastle[nCastle - 1] = tempCastle;
+				check2 = 0;
+			}
+		}
+}
+*/
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
 {
 	report *pReturn;
