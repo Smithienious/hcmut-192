@@ -267,9 +267,10 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				if (cldLionheart)
 					break;
 
-				if (isFriendly(theKnight.HP, theKnight.gil) && !cldLionheart)
+				if (isFriendly(theKnight.HP, theKnight.gil))
 				{
 					theKnight.HP = maxHP;
+					isPoisoned = 0;
 					hasLionheart = 6;
 					cldLionheart = 7;
 
@@ -281,30 +282,35 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 					break;
 				}
 
+				if (hasHakama || isGuinevere || isPaladin)
+				{
+					theKnight.HP = maxHP; // Updated from formal classes
+					isPoisoned = 0;
+					if (isGuinevere)
+						theKnight.gil += 50;
+					break;
+				}
+
+				if (theKnight.gil < 50)
+					break;
+
 				if (isPoisoned)
 				{
-					if (!(hasHakama || isGuinevere || isPaladin))
-						if (theKnight.gil < 50)
-							break;
-						else
-							theKnight.gil -= 50;
+					theKnight.gil -= 50;
 					isPoisoned = 0;
 				}
+
 				if (theKnight.gil)
 				{
 					theKnight.HP += theKnight.gil;
-					if (!isGuinevere)
-						theKnight.gil = 0;
-				}
-				if (theKnight.HP > maxHP)
-				{
-					if (!isGuinevere)
-						theKnight.gil += theKnight.HP - maxHP;
-					theKnight.HP = maxHP;
+					theKnight.gil = 0;
 				}
 
-				if (isGuinevere)
-					theKnight.gil += 50;
+				if (theKnight.HP > maxHP)
+				{
+					theKnight.gil += theKnight.HP - maxHP;
+					theKnight.HP = maxHP;
+				}
 				break;
 
 			case 9: // Lost into the Durian Garden
@@ -752,9 +758,10 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				if (cldLionheart)
 					break;
 
-				if (isFriendly(theKnight.HP, theKnight.gil) && !cldLionheart)
+				if (isFriendly(theKnight.HP, theKnight.gil))
 				{
 					theKnight.HP = maxHP;
+					isPoisoned = 0;
 					hasLionheart = 6;
 					cldLionheart = 7;
 
@@ -766,30 +773,35 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 					break;
 				}
 
+				if (hasHakama || isGuinevere || isPaladin)
+				{
+					theKnight.HP = maxHP; // Updated from formal classes
+					isPoisoned = 0;
+					if (isGuinevere)
+						theKnight.gil += 50;
+					break;
+				}
+
+				if (theKnight.gil < 50)
+					break;
+
 				if (isPoisoned)
 				{
-					if (!(hasHakama || isGuinevere || isPaladin))
-						if (theKnight.gil < 50)
-							break;
-						else
-							theKnight.gil -= 50;
+					theKnight.gil -= 50;
 					isPoisoned = 0;
 				}
+
 				if (theKnight.gil)
 				{
 					theKnight.HP += theKnight.gil;
-					if (!isGuinevere)
-						theKnight.gil = 0;
-				}
-				if (theKnight.HP > maxHP)
-				{
-					if (!isGuinevere)
-						theKnight.gil += theKnight.HP - maxHP;
-					theKnight.HP = maxHP;
+					theKnight.gil = 0;
 				}
 
-				if (isGuinevere)
-					theKnight.gil += 50;
+				if (theKnight.HP > maxHP)
+				{
+					theKnight.gil += theKnight.HP - maxHP;
+					theKnight.HP = maxHP;
+				}
 				break;
 
 			case 9: // Lost into the Durian Garden
