@@ -229,7 +229,7 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 					meetOdin || isKing || isLancelot || isPaladin)
 					theKnight.gil += int(baseDamage * 100);
 
-				else if (!isGuinevere)
+				else if (!(isGuinevere && baseDamage == 1.5))
 					theKnight.HP -= rt.second;
 
 				if (isPoisoned)
@@ -281,14 +281,14 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 					break;
 				}
 
-				if (theKnight.gil < 50 && !isGuinevere)
-					break;
-
 				if (isPoisoned)
 				{
+					if (!(hasHakama || isGuinevere || isPaladin))
+						if (theKnight.gil < 50)
+							break;
+						else
+							theKnight.gil -= 50;
 					isPoisoned = 0;
-					if (!hasHakama && !isGuinevere && !isPaladin)
-						theKnight.gil -= 50;
 				}
 				if (theKnight.gil)
 				{
@@ -703,7 +703,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				else
 				{
 					nLose += 1;
-					if (!isGuinevere)
+					if (!(isGuinevere && baseDamage == 1.5))
 						theKnight.HP -= rt.second;
 				}
 
@@ -766,14 +766,14 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 					break;
 				}
 
-				if (theKnight.gil < 50 && !isGuinevere)
-					break;
-
 				if (isPoisoned)
 				{
+					if (!(hasHakama || isGuinevere || isPaladin))
+						if (theKnight.gil < 50)
+							break;
+						else
+							theKnight.gil -= 50;
 					isPoisoned = 0;
-					if (!hasHakama && !isGuinevere && !isPaladin)
-						theKnight.gil -= 50;
 				}
 				if (theKnight.gil)
 				{
