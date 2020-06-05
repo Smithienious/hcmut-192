@@ -227,6 +227,7 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 
 	while (nCastle)
 	{
+		currCastle = actCastle[pIndex][n + 1];
 		for (int i = 0; i < arrCastle[currCastle].nEvent; i += 1)
 		{
 			if (nPetal - 1 < 0 && !isKing)
