@@ -1,17 +1,25 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
+
 int sum(int array[], int numEls)
 {
-    // TODO
+    int result = 0;
+    for (int i = 0; i < numEls; i += 1)
+        result += array[i];
+    return result;
 }
 
 void sum2(int *array, int numEls, int &result)
 {
-    // TODO
+    int sum = 0;
+    for (int i = 0; i < numEls; i += 1)
+        sum += array[i];
+    result = sum;
 }
 
-int main(int narg, char **argv)
+int main(int argc, char **argv)
 {
     ifstream ifs;
     ifs.open(argv[1]);

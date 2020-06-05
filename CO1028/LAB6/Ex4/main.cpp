@@ -3,9 +3,13 @@
 using namespace std;
 int findMax(int *vals, int numEls)
 {
-    // TODO
+    int result = vals[0];
+    for (int i = 1; i < numEls; i += 1)
+        if (vals[i] > result)
+            result = vals[i];
+    return result;
 }
-int main(int narg, char **argv)
+int main(int arc, char **argv)
 {
     ifstream ifs;
     ifs.open(argv[1]);

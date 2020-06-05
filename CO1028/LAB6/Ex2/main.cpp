@@ -1,9 +1,15 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
+
 bool completeNum(int N)
 {
-    // TODO
+    int sum = 0;
+    for (int i = 1; i <= N; i += 1)
+        if (N % i == 0)
+            sum += i;
+    return sum == 2 * N;
 }
 
 int main(int argc, char **argv)

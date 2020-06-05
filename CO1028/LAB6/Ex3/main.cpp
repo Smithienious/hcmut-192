@@ -1,22 +1,24 @@
 #include <iostream>
 #include <fstream>
+
 using namespace std;
+
 int cube(int a)
 {
-    // TODO
+    return a * a * a;
 }
 
 void cube2(int &a)
 {
-    // TODO
+    a = a * a * a;
 }
 
 void cube3(int *a)
 {
-    // TODO
+    *a = *a * *a * *a;
 }
 
-int main(int narg, char **argv)
+int main(int argc, char **argv)
 {
     ifstream ifs;
     ifs.open(argv[1]);
