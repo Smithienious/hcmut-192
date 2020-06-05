@@ -4,6 +4,7 @@
 #endif
 #include <algorithm>
 
+//
 std::pair<int, int> Opponent(int i, double baseDamage, knight theKnight)
 {
 	int b = (i + 1) % 10;
@@ -17,19 +18,63 @@ std::pair<int, int> Opponent(int i, double baseDamage, knight theKnight)
 	return {result, damage};
 }
 
-int isFriendly(int x, int y)
+//
+int SumOfFactors(int n)
 {
-	int fSum = 0, sSum = 0;
+	// Traversing through all prime factors.
+	int result = 1;
+	for (int i = 2; i * i <= n; i++)
+	{
+		int count = 0, sum = 1;
+		int term = 1;
+		while (n % i == 0)
+		{
+			count++;
+			n = n / i;
 
-	for (int i = 1; i <= x; i += 1)
-		if (x % i == 0)
-			fSum += i;
+			term *= i;
+			sum += term;
+		}
 
-	for (int i = 1; i <= y; i += 1)
-		if (y % i == 0)
-			sSum += i;
+		result *= sum;
+	}
 
-	return (fSum / x == sSum / y);
+	if (n >= 2)
+		result *= (1 + n);
+
+	return result;
+}
+
+// Function to return gcd of a and b
+int GCD(int a, int b)
+{
+	if (a == 0)
+		return b;
+	return GCD(b % a, a);
+}
+
+//
+int isFriendly(int n, int m)
+{
+	// Finding the sum of factors of n and m
+	int sumFactors_n = SumOfFactors(n);
+	int sumFactors_m = SumOfFactors(m);
+
+	// Finding GCD of n and sum of its factors.
+	int gcd_n = GCD(n, sumFactors_n);
+
+	// Finding GCD of m and sum of its factors.
+	int gcd_m = GCD(m, sumFactors_m);
+
+	// Checking if numerator and denominator of
+	// abundancy index of both number are equal
+	// or not.
+	if (n / gcd_n == m / gcd_m &&
+		sumFactors_n / gcd_n == sumFactors_m / gcd_m)
+		return true;
+
+	else
+		return false;
 }
 
 // Test for Paladin
@@ -182,14 +227,10 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 
 	while (nCastle)
 	{
-		currCastle = actCastle[pIndex][n + 1];
 		for (int i = 0; i < arrCastle[currCastle].nEvent; i += 1)
 		{
 			if (nPetal - 1 < 0 && !isKing)
-			{
-				nPetal = 0;
 				goto END;
-			}
 
 			if (isPoisoned > 0)
 				isPoisoned -= 1;
@@ -228,7 +269,6 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot || isPaladin)
 					theKnight.gil += int(baseDamage * 100);
-
 				else if (!(isGuinevere && baseDamage == 1.5))
 					theKnight.HP -= rt.second;
 
@@ -245,7 +285,6 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
 					theKnight.level += 1;
-
 				else if (!isPaladin && !isKnight)
 					isPoisoned = 6;
 
@@ -257,7 +296,6 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
 					theKnight.gil *= 2;
-
 				else if (!hasHakama && !isGuinevere)
 					theKnight.gil = int(theKnight.gil / 2.0);
 
@@ -369,12 +407,9 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				meetOdin = 0;
 
 				if (rt.first || hasLionheart || hasLove)
-
 					hasArmor = 1;
-
 				else
 					theKnight.HP = 0;
-
 				break;
 
 			case 15: // Obtain Scarlet Hakama
@@ -539,6 +574,7 @@ void SetUp(knight theKnight, castle arrCastle[], int nCastle, int nPetal)
 				break;
 			}
 }
+
 /*
 // Mode 2
 void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
@@ -607,6 +643,7 @@ void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
 		}
 }
 */
+
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
 {
 	report *pReturn;
