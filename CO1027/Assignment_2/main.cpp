@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
 	const char *filename = argv[1];
 
 	knight theKnight;
-	int nCastle;				   //number of castles
+	int nCastle;				   // number of castles
 	castle arrCastle[CASTLE_SIZE]; // array of castles
 	int nPetal;					   // number of petals
 	int mode;					   // setting mode

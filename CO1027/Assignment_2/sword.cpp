@@ -23,15 +23,16 @@ int SumOfFactors(int n)
 {
 	// Traversing through all prime factors.
 	int result = 1;
+
 	for (int i = 2; i * i <= n; i++)
 	{
 		int count = 0, sum = 1;
 		int term = 1;
+
 		while (n % i == 0)
 		{
 			count++;
 			n = n / i;
-
 			term *= i;
 			sum += term;
 		}
@@ -60,19 +61,16 @@ int isFriendly(int n, int m)
 	int sumFactors_n = SumOfFactors(n);
 	int sumFactors_m = SumOfFactors(m);
 
-	// Finding GCD of n and sum of its factors.
+	// Finding GCD of n and sum of its factors
 	int gcd_n = GCD(n, sumFactors_n);
 
-	// Finding GCD of m and sum of its factors.
+	// Finding GCD of m and sum of its factors
 	int gcd_m = GCD(m, sumFactors_m);
 
-	// Checking if numerator and denominator of
-	// abundancy index of both number are equal
-	// or not.
+	// Checking if numerator and denominator of abundancy index of both number are equal or not
 	if (n / gcd_n == m / gcd_m &&
 		sumFactors_n / gcd_n == sumFactors_m / gcd_m)
 		return true;
-
 	else
 		return false;
 }
@@ -352,20 +350,12 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				}
 				break;
 
-			case 9: // Lost into the Durian Garden
-				isPoisoned = 0;
-				theKnight.HP = maxHP;
-				nPetal += 5;
-				if (!hasHakama)
-					nPetal = 99;
-				break;
-
 			case 10: // Obtain antidote
 				theKnight.antidote += 1;
 				break;
 
 			case 11: // Meet Odin
-				if (cldOdin || meetOdin < 0)
+				if (cldOdin)
 					break;
 
 				meetOdin = 6;
@@ -405,8 +395,11 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 					break;
 				}
 
-				meetOdin = 0;
-
+				if (meetOdin)
+				{
+					meetOdin = 0;
+					cldOdin = -1;
+				}
 				if (rt.first || hasLionheart || hasLove)
 					hasArmor = 1;
 				else
@@ -576,75 +569,7 @@ void SetUp(knight theKnight, castle arrCastle[], int nCastle, int nPetal)
 			}
 }
 
-/*
-// Mode 2
-void OptimizePath(castle arrCastle[], int &nCastle, int nPetal)
-{
-	int check = 1, check1 = 1, check2 = 1, n = 0;
-	castle tempCastle;
-
-	// Mark meaningless paths
-	for (int i = 0; i < nCastle; i += 1)
-	{
-		check = 0;
-
-		for (int j = 0; j < arrCastle[i].nEvent; j += 1)
-			if (arrCastle[i].arrEvent[j] == 95 ||
-				arrCastle[i].arrEvent[j] == 96 ||
-				arrCastle[i].arrEvent[j] == 97 ||
-				arrCastle[i].arrEvent[j] == 98 ||
-				arrCastle[i].arrEvent[j] == 99)
-			{
-				check = 1;
-				break;
-			}
-
-		if (!check)
-			arrCastle[i].arrEvent[0] = -1;
-	}
-
-	// Move said castles out of index
-	while (n < nCastle)
-	{
-		if (arrCastle[n].arrEvent[0] == -1)
-		{
-			nCastle -= 1;
-
-			for (int j = n; j < nCastle; j += 1)
-			{
-				tempCastle = arrCastle[j];
-				arrCastle[j] = arrCastle[j + 1];
-				arrCastle[j + 1] = tempCastle;
-			}
-
-			continue;
-		}
-
-		n += 1;
-	}
-
-	// Sort castles by events
-	for (int i = 0; i < nCastle && (check1 || check2); i += 1)
-		for (int j = 0; j < arrCastle[i].nEvent && (check1 || check2); j += 1)
-		{
-			if (arrCastle[i].arrEvent[j] == 98)
-			{
-				tempCastle = arrCastle[i];
-				arrCastle[i] = arrCastle[nCastle - 2];
-				arrCastle[nCastle - 2] = tempCastle;
-				check1 = 0;
-			}
-			if (arrCastle[i].arrEvent[j] == 99)
-			{
-				tempCastle = arrCastle[i];
-				arrCastle[i] = arrCastle[nCastle - 1];
-				arrCastle[nCastle - 1] = tempCastle;
-				check2 = 0;
-			}
-		}
-}
-*/
-
+//
 report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode, int nPetal)
 {
 	report *pReturn;
@@ -684,7 +609,6 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 	if (mode == 1)
 		TripletOrder(x, y, z);
 	if (mode == 2)
-		//OptimizePath(arrCastle, nCastle, nPetal);
 		SetUp(theKnight, arrCastle, nCastle, nPetal);
 
 	if (isLancelot)
@@ -846,8 +770,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				isPoisoned = 0;
 				theKnight.HP = maxHP;
 				nPetal += 5;
-				if (!hasHakama)
-					nPetal = 99;
+				if (hasHakama)
+					nPetal = 98;
 				break;
 
 			case 10: // Obtain antidote
@@ -855,7 +779,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 11: // Meet Odin
-				if (cldOdin || meetOdin < 0)
+				if (cldOdin)
 					break;
 
 				meetOdin = 6;
@@ -899,8 +823,11 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 					break;
 				}
 
-				meetOdin = 0;
-
+				if (meetOdin)
+				{
+					meetOdin = 0;
+					cldOdin = -1;
+				}
 				if (rt.first || hasLionheart || hasLove)
 				{
 					nWin += 1;
@@ -1031,6 +958,20 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 	}
 
 END:
+	// Restrictions
+	if (maxHP > 999)
+		maxHP = 999;
+	if (nPetal > 99)
+		nPetal = 99;
+	if (theKnight.level > 10)
+		theKnight.level = 10;
+	if (theKnight.HP > maxHP)
+		theKnight.HP = maxHP;
+	if (theKnight.antidote > 99)
+		theKnight.antidote = 99;
+	if (theKnight.gil > 999)
+		theKnight.gil = 999;
+
 	bFlag = (bFlag == 0) ? 0 : 1;
 
 	// success or failure?
