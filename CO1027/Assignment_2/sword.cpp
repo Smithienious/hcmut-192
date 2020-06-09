@@ -105,17 +105,15 @@ int canKnight(int C)
 	if (C == 888)
 		return result;
 
-	while (x < C / 2 && !result)
+	while (x <= C / 3 && !result)
 	{
 		y = (2.0 * C * x - C * C) / (2.0 * (x - C));
-
-		if (y != int(y))
+		if (y == int(y))
 		{
-			x += 1;
-			continue;
+			result = true;
+			break;
 		}
-
-		result = true;
+		x += 1;
 	}
 
 	return result;
@@ -188,7 +186,7 @@ int Factorial(int n)
 }
 
 // Mode 2: bruteforce
-void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastle, int pIndex, int nPetal)
+void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastle, int pIndex, int nPetal, int &maxPetal)
 {
 	int maxHP = theKnight.HP,
 		minHP = 0,
@@ -225,6 +223,11 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 
 	while (nCastle)
 	{
+		if (nPetal < maxPetal)
+		{
+			nPetal = -1;
+			goto END;
+		}
 		currCastle = actCastle[pIndex][n + 1];
 		for (int i = 0; i < arrCastle[currCastle].nEvent; i += 1)
 		{
@@ -411,7 +414,7 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				break;
 
 			case 16: // Meet LockedDoor
-				if (isLancelot && isKnight)
+				if (isLancelot || isKnight)
 					break;
 
 				if (theKnight.level <= ((i + 1) % 10))
@@ -504,6 +507,7 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 			n = 0;
 	}
 
+	maxPetal = nPetal;
 END:
 	actCastle[pIndex][0] = nPetal;
 }
@@ -543,9 +547,10 @@ void SetUp(knight theKnight, castle arrCastle[], int nCastle, int nPetal)
 
 	// Iterate through all castles one time
 	for (int i = 0; i < nPath; i += 1)
-		BackTrack(theKnight, arrCastle, actCastle, nCastle, i, nPetal);
+		BackTrack(theKnight, arrCastle, actCastle, nCastle, i, nPetal, maxPetal);
 
 	// Find optimal path
+	maxPetal = 0;
 	for (int i = 0; i < nPath; i += 1)
 		maxPetal = (maxPetal < actCastle[i][0]) ? actCastle[i][0] : maxPetal;
 
@@ -640,6 +645,11 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				cldOdin -= 1;
 			if (nPetal > 0)
 				nPetal -= 1;
+			if (mode == 1)
+				if (hashCount == x && hasShield ||
+					hashCount == y && hasSpear ||
+					hashCount == z && hasHair)
+					hashCount += 10;
 
 			hasTreasures = hasShield && hasSpear && hasHair;
 			hasLove = hasSpear && hasHair && !hasExcalibur ||
@@ -845,7 +855,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 16: // Meet LockedDoor
-				if (isLancelot && isKnight)
+				if (isLancelot || isKnight)
 					break;
 
 				if (theKnight.level <= ((i + 1) % 10))
@@ -853,7 +863,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 95: // Obtain Paladin shield
-				if (mode == 1 && !(hashCount == x))
+				if (mode == 1 && hashCount != x)
 					break;
 
 				hasShield = true;
@@ -862,7 +872,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 96: // Obtain Lancelot's spear
-				if (mode == 1 && !(hashCount == y))
+				if (mode == 1 && hashCount != y)
 					break;
 
 				hasSpear = true;
@@ -871,7 +881,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 97: // Obtain Guinevere's hair
-				if (mode == 1 && !(hashCount == z))
+				if (mode == 1 && hashCount != z)
 					break;
 
 				hasHair = true;
