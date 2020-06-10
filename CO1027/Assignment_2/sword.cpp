@@ -304,8 +304,11 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				break;
 
 			case 8: // Meet the merry merchant Nina de Rings
-				if (cldLionheart)
+				if (cldLionheart > 0)
+				{
+					cldLionheart = 7;
 					break;
+				}
 
 				if (isFriendly(theKnight.HP, theKnight.gil))
 				{
@@ -358,7 +361,12 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				break;
 
 			case 11: // Meet Odin
-				if (cldOdin)
+				if (cldOdin > 0)
+				{
+					cldOdin = 7;
+					break;
+				}
+				if (cldOdin == -1)
 					break;
 
 				meetOdin = 6;
@@ -727,8 +735,11 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 8: // Meet the merry merchant Nina de Rings
-				if (cldLionheart)
+				if (cldLionheart > 0)
+				{
+					cldLionheart = 7;
 					break;
+				}
 
 				if (isFriendly(theKnight.HP, theKnight.gil))
 				{
@@ -789,7 +800,12 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 11: // Meet Odin
-				if (cldOdin)
+				if (cldOdin > 0)
+				{
+					cldOdin = 7;
+					break;
+				}
+				if (cldOdin == -1)
 					break;
 
 				meetOdin = 6;
