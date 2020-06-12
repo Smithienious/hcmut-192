@@ -78,6 +78,8 @@ int isFriendly(int n, int m)
 // Test for Paladin
 int isPrime(int n)
 {
+	if (n == 777 || n == 888 || n == 999)
+		return false;
 	int result = true;
 
 	if (n < 2)
@@ -102,8 +104,8 @@ int canKnight(int C)
 	int result = false;
 	double y = 0.0;
 
-	if (C == 888)
-		return result;
+	if (C == 777 || C == 888 || C == 999)
+		return false;
 
 	while (x <= C / 3 && !result)
 	{
@@ -204,7 +206,7 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 		hasTreasures = 0,
 		hasExcalibur = 0,
 		hasLionheart = 0,
-		cldLionheart = 0,
+		cldNina = 0,
 		hasLove = 0,
 		isPoisoned = 0,
 		meetOdin = 0,
@@ -238,8 +240,8 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				isPoisoned -= 1;
 			if (hasLionheart > 0)
 				hasLionheart -= 1;
-			if (cldLionheart > 0)
-				cldLionheart -= 1;
+			if (cldNina > 0)
+				cldNina -= 1;
 			if (meetOdin > 0)
 				meetOdin -= 1;
 			if (cldOdin > 0)
@@ -286,7 +288,10 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 
 				if (rt.first || hasLionheart ||
 					meetOdin || isKing || isLancelot)
+				{
 					theKnight.level += 1;
+					maxHP += 100;
+				}
 				else if (!isPaladin && !isKnight)
 					isPoisoned = 6;
 
@@ -304,23 +309,20 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				break;
 
 			case 8: // Meet the merry merchant Nina de Rings
-				if (cldLionheart > 0)
-				{
-					cldLionheart = 7;
+				if (cldNina != 0)
 					break;
-				}
+				cldNina = 7;
 
 				if (isFriendly(theKnight.HP, theKnight.gil))
 				{
 					theKnight.HP = maxHP;
 					isPoisoned = 0;
 					hasLionheart = 6;
-					cldLionheart = 7;
 
 					if (isPaladin)
 					{
 						hasLionheart = -1;
-						cldLionheart = -1;
+						cldNina = -1;
 					}
 					break;
 				}
@@ -361,12 +363,7 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				break;
 
 			case 11: // Meet Odin
-				if (cldOdin > 0)
-				{
-					cldOdin = 7;
-					break;
-				}
-				if (cldOdin == -1)
+				if (cldOdin != 0)
 					break;
 
 				meetOdin = 6;
@@ -442,9 +439,8 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 				break;
 
 			case 98: // Obtain Excalibur sword
-				if (!hasTreasures && !isKing)
-					break;
-				hasExcalibur = true;
+				if (hasTreasures || isKing)
+					hasExcalibur = true;
 				break;
 
 			case 99: // Encounter Ultimecia
@@ -458,10 +454,10 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 					goto END;
 				}
 				else if (!isGuinevere)
-				{
-					theKnight.HP = int(theKnight.HP / 3.0);
-					theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
-				}
+					theKnight.HP = (theKnight.HP < 3) ? 1 : int(theKnight.HP / 3.0);
+
+				if (isPoisoned && !hasArmor)
+					theKnight.HP = (theKnight.HP < 3) ? 1 : int(theKnight.HP / 3.0);
 
 				break;
 			}
@@ -507,8 +503,10 @@ void BackTrack(knight theKnight, castle arrCastle[], int **actCastle, int nCastl
 		}
 
 		// End of castle
-		theKnight.level += 1;
-		maxHP += 100;
+		if (theKnight.level < 10)
+			theKnight.level += 1;
+		if (theKnight.HP < 900)
+			maxHP += 100;
 		if (n < nCastle - 1)
 			n += 1;
 		else
@@ -606,7 +604,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		hasTreasures = 0,
 		hasExcalibur = 0,
 		hasLionheart = 0,
-		cldLionheart = 0,
+		cldNina = 0,
 		hasLove = 0,
 		isPoisoned = 0,
 		meetOdin = 0,
@@ -645,8 +643,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				isPoisoned -= 1;
 			if (hasLionheart > 0)
 				hasLionheart -= 1;
-			if (cldLionheart > 0)
-				cldLionheart -= 1;
+			if (cldNina > 0)
+				cldNina -= 1;
 			if (meetOdin > 0)
 				meetOdin -= 1;
 			if (cldOdin > 0)
@@ -708,6 +706,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				{
 					nWin += 1;
 					theKnight.level += 1;
+					maxHP += 100;
 				}
 				else
 				{
@@ -735,23 +734,20 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 8: // Meet the merry merchant Nina de Rings
-				if (cldLionheart > 0)
-				{
-					cldLionheart = 7;
+				if (cldNina != 0)
 					break;
-				}
+				cldNina = 7;
 
 				if (isFriendly(theKnight.HP, theKnight.gil))
 				{
 					theKnight.HP = maxHP;
 					isPoisoned = 0;
 					hasLionheart = 6;
-					cldLionheart = 7;
 
 					if (isPaladin)
 					{
 						hasLionheart = -1;
-						cldLionheart = -1;
+						cldNina = -1;
 					}
 					break;
 				}
@@ -788,6 +784,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 9: // Lost into the Durian Garden
+				if (mode == 2)
+					break;
 				isPoisoned = 0;
 				theKnight.HP = maxHP;
 				nPetal += 5;
@@ -800,12 +798,7 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 11: // Meet Odin
-				if (cldOdin > 0)
-				{
-					cldOdin = 7;
-					break;
-				}
-				if (cldOdin == -1)
+				if (cldOdin != 0)
 					break;
 
 				meetOdin = 6;
@@ -906,9 +899,8 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				break;
 
 			case 98: // Obtain Excalibur sword
-				if (!hasTreasures && !isKing)
-					break;
-				hasExcalibur = true;
+				if (hasTreasures || isKing)
+					hasExcalibur = true;
 				break;
 
 			case 99: // Encounter Ultimecia
@@ -916,22 +908,19 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 				{
 					nWin += 1;
 					if (isPoisoned)
-					{
-						theKnight.HP = int(theKnight.HP / 3.0);
-						theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
-					}
+						theKnight.HP = (theKnight.HP < 3) ? 1 : int(theKnight.HP / 3.0);
 					goto END;
 				}
 				else
 				{
 					nLose += 1;
 					if (!isGuinevere)
-					{
-						theKnight.HP = int(theKnight.HP / 3.0);
-						theKnight.HP = (theKnight.HP < 3) ? 1 : theKnight.HP;
-					}
+						theKnight.HP = (theKnight.HP < 3) ? 1 : int(theKnight.HP / 3.0);
 				}
 				break;
+
+				if (isPoisoned && !hasArmor)
+					theKnight.HP = (theKnight.HP < 3) ? 1 : int(theKnight.HP / 3.0);
 			}
 
 			// Mythril armor
@@ -975,8 +964,10 @@ report *walkthrough(knight &theKnight, castle arrCastle[], int nCastle, int mode
 		}
 
 		// End of castle
-		theKnight.level += 1;
-		maxHP += 100;
+		if (theKnight.level < 10)
+			theKnight.level += 1;
+		if (maxHP < 900)
+			maxHP += 100;
 		if (currCastle < nCastle - 1)
 			currCastle += 1;
 		else
