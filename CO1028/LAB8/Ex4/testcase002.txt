@@ -1,0 +1,2 @@
+7
+Ghi chu: Moi dong la 1 plain text dung de sinh ra testcase
