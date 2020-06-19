@@ -1,0 +1,497 @@
+\documentclass[12pt,en,a4paper]{article}
+\usepackage{vntex}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{pgfplots}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bookmark}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{anyfontsize}
+\usepackage{pifont}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{listings}
+\usetikzlibrary{calc,backgrounds}
+\newcommand\HRule{\rule{12cm}{1pt}}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[L]{
+	\color{blue}
+	\begin{tabular}{rl}
+		\begin{picture}(25,15)(0,0)
+		\put(0,-8){\includegraphics[width=8mm, height=8mm]{BK.png}}
+		\end{picture}
+		\begin{tabular}{l}
+			\textbf{\bf \ttfamily Ho Chi Minh University of Technology}\\
+			\textbf{\bf \ttfamily Faculty of Computer Science \& Engineering}
+		\end{tabular} 	
+	\end{tabular}
+}
+\fancyhead[R]{
+	\begin{tabular}{l}
+		\tiny \bf \\
+		\tiny \bf 
+	\end{tabular}
+}
+\fancyfoot{} % clear all footer fields
+\fancyfoot[L]{\scriptsize \ttfamily Discrete Structures Assignment}
+\fancyfoot[R]{\scriptsize \ttfamily Page {\thepage}/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\begin{document}
+		\begin{titlepage}
+		\begin{tikzpicture}[remember picture, overlay]
+		\draw[line width = 2pt] ($(current page.north west) + (1in,-1in)$) rectangle ($(current page.south east) + (-1in,1in)$);
+		\end{tikzpicture}
+		
+		\begin{center}
+			
+			% Upper part of the page
+			\textbf{\fontsize{12pt}{1pt}\selectfont HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY}\\[0.5cm]
+			{\fontsize{13pt}{1pt}\selectfont Faculty of Computer Science \& Engineering}\\[0.5cm]
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=1.7in,height=1.7in]{BK.png}
+			\end{figure}
+			
+			% Title
+			\HRule \\[0.5cm]
+			{ \textbf{\fontsize{25pt}{1pt}\selectfont Discrete Structures Assignment}}\\[0.4cm]
+			
+			\HRule \\[0.8cm]
+			\begin{minipage}{0.545\textwidth}   
+				\begin{flushleft} 
+					\textbf{Authors:}\\
+					\begin{tabular}{l l l}
+						Nguyễn Hoàng & 1952255 & Blank \\
+						Tạ Minh Huy & 1952268 & Blank \\
+						Ho Trí Kháng & 1952069 & Blank \\
+						Nguyễn Khương & 1952310 & Blank \\
+					\end{tabular}
+				\end{flushleft}
+			\end{minipage}
+			\begin{minipage}{0.4\textwidth}
+				\begin{flushright} 
+					\textbf{Class:}\\
+					CO1007\\
+					\textbf{Lecturer:}\\
+					Trần Tuấn Anh\\
+					
+				\end{flushright}
+			\end{minipage}
+			
+			\vfill
+			
+			% Bottom of the page
+			\vspace{2cm}
+			{\large} %{\large \today}
+		\end{center}
+	\end{titlepage}
+
+	\pdfbookmark[0]{Counting}{counting}
+	\section*{Counting}
+	\pdfbookmark[1]{Problem 6}{cprob6}
+	\subsection*{Problem 6:}
+	A domino is a
+flat rectangular block, the face of which is divided into two square parts, each part showing from zero to six pips (or dots). Playing a game consists of playing dominoes with a matching number of pips. Explain why there are 28 dominoes in a complete set.
+	
+	\pdfbookmark[1]{Problem 7}{cprob7}
+	\subsection*{Problem 7:}
+	\begin{enumerate}
+		\item How many solutions are there to the equation $x_1 + x_2 + x_3 + x_4 \leq 20$, where $x_1, x_2, x_3, x_4$ are non-negative integers? are positive integers?
+		\item How many solutions are there to the equation $x_1 + x_2 + x_3 + x_4 = 20$, where $x_1, x_2, x_3, x_4$ are non-negative integers with $x_1 \leq 3, x_2 \geq 2, x_3 > 4$.
+		\item How many ways to arrange 30 marbles in 5 different boxes, so that box 1 has at least 5 balls, knowing that box 2 and box 3 do not contain more than 6 balls.
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 8}{cprob8}
+	\subsection*{Problem 8:}
+	Given a set $A = \{1,2,3,4,5,6,7,8,9\}$.
+	\begin{enumerate}
+		\item From $A$ we can create how many sequence containing 5-different-digit numbers such that the middle number of this sequence is divisible by 5, number 5 appears only one, and the last number is an odd number?
+		\item From $A$ we can create how many sequence containing 6-different-digit numbers such that the odd numbers cannot stand side by side (an odd number is not next to an odd number)?
+		\item We can create how many odd numbers (a number includes 6-digit numbers from $A$) such that the number 5 always appears twice?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 9}{cprob9}
+	\subsection*{Problem 9:}
+	\begin{enumerate}
+		\item Let $A$ be the set containing $n$ elements ($n > 4$). Assume there are $16n$ subsets of $A$ that have the number of elements is an odd number (the number of elements of each subset is an odd number). Find $n$?
+		\item Let $A$ be the set containing $n$ elements ($n \geq 4$). Let $m$ be the number of subsets of $A$ which contains 4 elements, $k$ is the number of subsets of $A$ which contains 2 elements. Assume that $m = 20k$, find $n$?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 10}{cprob10}
+	\subsection*{Problem 10:}
+	Given an equilateral triangle with the length of an edge is $n$. Separate this triangle into $n^2$ small equilateral triangles by using the parallel straight lines with the edges of the given triangle. Calculate the number of parallelograms located inside the given triangle.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.4\textwidth]{cprob10.png}
+		\label{fig:cprob10}
+	\end{figure}
+	
+	\pdfbookmark[1]{Rosen's Book}{crosen}
+	\subsection*{Rosen's Book}
+	\pdfbookmark[2]{6.1.1}{c6.1.1}
+	\subsubsection*{6.1.1:}
+	
+	\pdfbookmark[2]{6.1.20}{c6.1.20}
+	\subsubsection*{6.1.20:}
+	
+	\pdfbookmark[2]{6.1.22}{c6.1.22}
+	\subsubsection*{6.1.22:}
+	
+	\pdfbookmark[2]{6.1.32}{c6.1.32}
+	\subsubsection*{6.1.32:}
+	
+	\pdfbookmark[2]{6.1.50}{c6.1.50}
+	\subsubsection*{6.1.50:}
+	
+	\pdfbookmark[2]{6.1.51}{c6.1.51}
+	\subsubsection*{6.1.51:}
+	
+	\pdfbookmark[2]{6.2.1}{c6.2.1}
+	\subsubsection*{6.2.1:}
+	
+	\pdfbookmark[2]{6.2.10}{c6.2.10}
+	\subsubsection*{6.2.10:}
+	
+	\pdfbookmark[2]{6.2.17}{c6.2.17}
+	\subsubsection*{6.2.17:}
+	
+	\pdfbookmark[2]{6.2.22}{c6.2.22}
+	\subsubsection*{6.2.22:}
+	
+	\pdfbookmark[2]{6.2.38}{c6.2.38}
+	\subsubsection*{6.2.38:}
+	
+	\pdfbookmark[2]{6.3.12}{c6.3.12}
+	\subsubsection*{6.3.12:}
+	
+	\pdfbookmark[2]{6.3.18}{c6.3.18}
+	\subsubsection*{6.3.18:}
+	
+	\pdfbookmark[2]{6.3.21}{c6.3.21}
+	\subsubsection*{6.3.21:}
+	
+	\pdfbookmark[2]{6.3.25}{c6.3.25}
+	\subsubsection*{6.3.25:}
+	
+	\pdfbookmark[2]{6.3.38}{c6.3.38}
+	\subsubsection*{6.3.38:}
+	
+	\pdfbookmark[2]{6.4.9}{c6.4.9}
+	\subsubsection*{6.4.9:}
+	
+	\pdfbookmark[2]{6.4.10}{c6.4.10}
+	\subsubsection*{6.4.10:}
+	
+	\pdfbookmark[2]{6.4.15}{c6.4.15}
+	\subsubsection*{6.4.15:}
+	
+	\pdfbookmark[2]{6.4.20}{c6.4.20}
+	\subsubsection*{6.4.20:}
+	
+	\pdfbookmark[2]{6.4.25}{c6.4.25}
+	\subsubsection*{6.4.25:}
+	
+	\pdfbookmark[2]{6.4.60}{c6.4.60}
+	\subsubsection*{6.4.60:}
+	
+	\newpage
+	\pdfbookmark[0]{Probability}{probability}
+	\section*{Probability}
+	\pdfbookmark[1]{Problem 1}{pprob1}
+	\subsection*{Problem 1:}
+	Suppose that 8\% of the patients tested in a clinic are infected with HIV. Furthermore, suppose that when a blood test for HIV is given, 98\% of the patients infected with HIV test positive and that 3\% of the patients not infected with HIV test positive. What is the probability that infected with it?
+	\begin{enumerate}
+		\item a patient testing positive for HIV with this test is infected with it?
+		\item a patient testing positive for HIV with this test is not infected with it?
+		\item a patient testing negative for HIV with this test is infected with it?
+		\item a patient testing negative for HIV with this test is not?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 2}{pprob2}
+	\subsection*{Problem 2:}
+	The final exam of a discrete mathematics course consists of 50 true/false questions, each worth two points, and 25 multiple-choice questions, each worth four points. The probability that Linda answers a true/false question correctly is 0.9, and the probability that she answers a multiple-choice question correctly is 0.8. What is her expected score on the final?
+	
+	\pdfbookmark[1]{Problem 3}{pprob3}
+	\subsection*{Problem 3:}
+	Please consider the poker rule via this link: $\href{https://en.wikipedia.org/wiki/List_of_poker_hands}{https://en.wikipedia.org/wiki/List\_of\_poker\_hands}$. Following this rule, what is the probability that a poker hand contains: Straight flush, Four of a kind, Full house, Flush, Straight, Three of a kind, Two pair, One pair, High card?
+	
+	\pdfbookmark[1]{Problem 4}{pprob4}
+	\subsection*{Problem 4:}
+	\begin{enumerate}
+		\item A group containing 20 people (5 men and 15 women) is randomly assigned to 4 different groups (each group has 5 people). Calculate the probability that females will be in the same group?
+		\item A phone number consisting of 9 random numbers, a man forgets two last digits of the phone number. However, he knows that the two digits are different. He chooses these two numbers randomly, find the probability that he calls the correct number?
+		\item Arrange 7 people consisting of four sons, two daughters, and a child sitting in seven chairs around a round-table. What is the probability of a child sitting between two girls?
+		\item Roll three dice at the same time, knowing that at least one of them is five dots. Calculate the probability that the total number of dots of 3 dice is 8?
+		\item A soccer tournament has 12 teams, 9 teams are foreign and 3 teams are domestic. The organizers want to divide 12 teams into 3 groups A, B, C (4 teams per group). Calculate the probability that three domestic teams are in three different tables.
+		\item Let A, B, C be any events. Prove that: \\
+		\begin{math}
+			P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(B \cap C) - P(A \cap C) + P(A \cap B \cap C)
+		\end{math}
+		\item Suppose that E and F are events such that $p(E) = 0.7$ and $p(F) = 0.5$. Show that $p(E \cup F) \geq 0.7$ and $p(E \cap F) \geq 0.2$
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 5}{pprob5}
+	\subsection*{Problem 5:}
+	To go to school, a student must cross a railroad track. The time trains run through this rail are a little bit different every day. However, this student estimates she has to wait for the train approximately 15\% of the school days. During one week of schooling there are 5 days, the probability will be how much if this student
+	\begin{enumerate}
+		\item Sees a train on Monday and do it again on Tuesday?
+		item The first time she meets a train is Thursday?
+		\item Sees a train everyday?
+		\item Sees a train at least once a week?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 6}{pprob6}
+	\subsection*{Problem 6:}
+	A straight iron rod of length $l$ (unit length) is cut randomly into three pieces. Find the probability that these three iron pieces form a triangle.
+	
+	\pdfbookmark[1]{Problem 7}{pprob7}
+	\subsection*{Problem 7:}
+	A player in an archery Olympic game has 80\% probability to shoot an arrow and hit the target. Assume that every shot is independent, and this archer shoots 6 arrows,
+	\begin{enumerate}
+		\item Fine the mean and standard deviation of the number of the shot that the arrow hit the target?
+		\item Find the probability the first hit target is in the third shot?
+		\item Find the probability at least one arrow hits the target?
+		\item Find the probability the first arrow hitting the target is the fourth or fifth shot?
+		\item Find the probability there are exactly 4 arrows hitting the target?
+		\item Find the probability there are at least 4 arrows hit the target?
+		\item Find the probability there are at most 4 arrows hit the target?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 8}{pprob8}
+	\subsection*{Problem 8:}
+	A student who wants to go to school must go through five intersections with traffic lights, and must stop there if there is a red light. This student estimates the probability model for the number of red lights that this person encounters, as follows. \\
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		$X$ = number of red light & 0 & 1 & 2 & 3 & 4 & 5 \\
+		\hline
+		$P(X = x)$ & 0.05 & 0.25 & 0.35 & 0.15 & 0.15 & 0.05 \\
+		\hline
+	\end{tabular}
+	\begin{enumerate}
+		\item This student should expect to meet how many red lights a day?
+		\item Calculate the standard deviation?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 9}{pprob9}
+	\subsection*{Problem 9:}
+	Suppose that Frida selects a ball by first picking one of two boxes at random and then select a ball from this box at random. The first box contains two white balls and three blue balls, and the second box contains four white balls and one blue ball. That is the probability that Frida picked the a ball for the first box if she has selected a blue ball?
+	
+	\pdfbookmark[1]{Problem 10}{pprob10}
+	\subsection*{Problem 10:}
+	We throw a coin until a heat turns up for the second time, where $p$ is the probability that throw results in a head and we assume that the outcome of each throw is independent of the previous outcomes. Let $X$ be the number of times we have thrown the coin.
+	\begin{enumerate}
+		\item Determine $P(X = 2), P(x = 3), P(X = 4)$.
+		\item Show that $P(X = n) = (n-1) p^2 (1-p)^{n - 2}$ for $n /geq x$.
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 11}{pprob11}
+	\subsection*{Problem 11:}
+	A computer virus is trying to corrupt two files. The first file will be corrupted with probability 0.4. Independently of it, the second file will be corrupted with probability 0.3.
+	\begin{enumerate}
+		\item Compute the probability mass function (pmf) of $X$, the number of corrupted files.
+		\item Draw a graph of its cumulative distributions function (cdf).
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 12}{pprob12}
+	\subsection*{Problem 12:}
+	Suppose that a Bayesian spam filter is trained on a set of 500 spam messages and 200 messages that are not spam. The word "exiting" appears in 40 spam messages and in 25 messages that are not spam. Would an incoming message be rejected as spam if it contains the word "exiting" and the threshold for rejecting spam is 0.9?
+	
+	\pdfbookmark[1]{Rosen's Book}{prosen}
+	\subsection*{Rosen's Book:}
+	\pdfbookmark[2]{7.1.2}{p7.1.2}
+	\subsubsection*{7.1.2:}
+	
+	\pdfbookmark[2]{7.1.6}{p7.1.6}
+	\subsubsection*{7.1.6:}
+	
+	\pdfbookmark[2]{7.1.25}{p7.1.25}
+	\subsubsection*{7.1.25:}
+	
+	\pdfbookmark[2]{7.1.30}{p7.1.30}
+	\subsubsection*{7.1.30:}
+	
+	\pdfbookmark[2]{7.1.35}{p7.1.35}
+	\subsubsection*{7.1.35:}
+	
+	\pdfbookmark[2]{7.2.5}{p7.2.5}
+	\subsubsection*{7.2.5:}
+	
+	\pdfbookmark[2]{7.2.7}{p7.2.7}
+	\subsubsection*{7.2.7:}
+	
+	\pdfbookmark[2]{7.2.9}{p7.2.9}
+	\subsubsection*{7.2.9:}
+	
+	\pdfbookmark[2]{7.2.19}{p7.2.19}
+	\subsubsection*{7.2.19:}
+	
+	\pdfbookmark[2]{7.2.39}{p7.2.39}
+	\subsubsection*{7.2.39:}
+	
+	\pdfbookmark[2]{7.3.2}{p7.3.2}
+	\subsubsection*{7.3.2:}
+	
+	\pdfbookmark[2]{7.3.7}{p7.3.7}
+	\subsubsection*{7.3.7:}
+	
+	\pdfbookmark[2]{7.3.8}{p7.3.8}
+	\subsubsection*{7.3.8:}
+	
+	\pdfbookmark[2]{7.3.15}{p7.3.15}
+	\subsubsection*{7.3.15:}
+	
+	\pdfbookmark[2]{7.3.17}{p7.3.17}
+	\subsubsection*{7.3.17:}
+	
+	\pdfbookmark[2]{7.4.1}{p7.4.1}
+	\subsubsection*{7.4.1:}
+	
+	\pdfbookmark[2]{7.4.5}{p7.4.5}
+	\subsubsection*{7.4.5:}
+	
+	\pdfbookmark[2]{7.4.6}{p7.4.6}
+	\subsubsection*{7.4.6:}
+	
+	\pdfbookmark[2]{7.4.17}{p7.4.17}
+	\subsubsection*{7.4.17:}
+	
+	\pdfbookmark[2]{7.4.21}{p7.4.21}
+	\subsubsection*{7.4.21:}
+	
+	\newpage
+	\pdfbookmark[0]{Graph}{graph}
+	\section*{Graph}
+	\pdfbookmark[1]{Problem 1}{gprob1}
+	\subsection*{Problem 1:}
+	\begin{enumerate}
+	\item A chess tournament of n persons plays according to the circle competition. Prove that at any moment of the tournament there are always two players having identical number of games played. And if $n \geq 4$, at any intermediate moment of the tournament, there are always two players having identical number of games that they are the winner.
+	\item In a tournament with $n$ teams participated $(n \geq 4)$, $n + 1$ competition games were happening. Prove that there exists a team that has played at least three matches.
+	\item With any four of the $n$ people $(n \geq 4)$, there exists a person who knows the three others. Prove that there exists a person who knows all $n -1$ others.
+	\item In a party of 6 people, prove that there are 3 people who know each other or 3 people who do not know each other.
+	\item During a summer vacation, 7 friends are vacationing away. They promised each other that during the holidays each person must write to exactly three of them. Prove that there is someone who does not write back to his sender.
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 2}{gprob2}
+	\subsection*{Problem 2:}
+	\begin{enumerate}
+		\item How many vertices and how many edges do these graphs have? $K_n$; $C_n$; $W_n$; $K_{m, n}$; $Q_n$.
+		\item Is there any simple graph including vertices that their degree are respectively: $3 ,3 ,3, 3, 2$; $5, 4, 3, 2, 1$; $4, 4, 3, 2 ,1$; $4, 4, 3, 3, 3$; $3, 2, 2, 1, 0$, $1, 1, 1, 1, 1$.
+		\item How many edges does a graph have if it has vertices of degree $4, 3, 2, 2, 2$? Draw such graph.
+		\item If the simple graph $G$ has $v$ vertices and $e$ edges, how many edges does $G$ have?
+		\item The complementary graph $G$ of a simple graph $G$ has the same vertices and $G$. Two vertices are adjacent in $G$ if and only if they are not adjacent in $G$. If $G$ has 15 edges and $G$ has 13 edges, how many vertices does $G$ have?
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 3}{gprob3}
+	\subsection*{Problem 3:}
+	\begin{enumerate}
+		\item Use adjacency matrix and incidence matrix to represent the given graph.
+		\begin{figure}[ht]
+			\begin{minipage}{0.3\textwidth}
+				\includegraphics[width=0.5\textwidth]{gprob3_1.png}
+				\label{fig:gprob3_1}
+			\end{minipage}
+			\begin{minipage}{0.3\textwidth}
+				\includegraphics[width=0.5\textwidth]{gprob3_2.png}
+				\label{fig:gprob3_2}
+			\end{minipage}
+			\begin{minipage}{0.3\textwidth}
+				\includegraphics[width=0.5\textwidth]{gprob3_3.png}
+				\label{fig:gprob3_3}
+			\end{minipage}
+		\end{figure}
+		\item Draw an directed graph represented by the given adjacency matrix.
+		$\begin{bmatrix}
+			1 & 1 & 1 & 1 \\
+			0 & 0 & 0 & 1 \\
+			1 & 1 & 0 & 0 \\
+			0 & 1 & 1 & 1
+		\end{bmatrix}$ \\
+		Draw an undirected graph represented by the given adjacency matrix.
+		$\begin{bmatrix}
+		1 & 2 & 1 \\
+		2 & 0 & 2 \\
+		1 & 2 & 2
+		\end{bmatrix}$
+		\item Let $G$ be a graph with $v$ vertices and $e$ edges. Let $M$ be the maximum degree of the vertices of $G$, and let $m$ be the minimum degree of the vertices of $G$. Show that $m \leq 2e/v \leq M$.
+	\end{enumerate}
+	
+	\pdfbookmark[1]{Problem 4}{gprob4}
+	\subsection*{Problem 4:}
+	Determine whether the given pair of graphs is isomorphic. Exhibit an isomorphism or provide a rigorous argument that none exists.
+	\begin{figure}[ht]
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_1.png}
+			\caption*{a)}
+			\label{fig:gprob4_1}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_2.png}
+			\caption*{b)}
+			\label{fig:gprob4_2}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_3.png}
+			\caption*{c)}
+			\label{fig:gprob4_3}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_4.png}
+			\caption*{d)}
+			\label{fig:gprob4_4}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_5.png}
+			\caption*{e)}
+			\label{fig:gprob4_5}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_6.png}
+			\caption*{f)}
+			\label{fig:gprob4_6}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_7.png}
+			\caption*{g)}
+			\label{fig:gprob4_7}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_8.png}
+			\caption*{h)}
+			\label{fig:gprob4_8}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_9.png}
+			\caption*{i)}
+			\label{fig:gprob4_9}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_10.png}
+			\caption*{j)}
+			\label{fig:gprob4_10}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_11.png}
+			\caption*{k)}
+			\label{fig:gprob4_11}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\includegraphics[width=0.8\textwidth]{gprob4_12.png}
+			\caption*{l)}
+			\label{fig:gprob4_12}
+		\end{minipage}
+	\end{figure}
+\end{document}
