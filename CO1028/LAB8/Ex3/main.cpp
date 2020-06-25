@@ -26,18 +26,18 @@ using namespace std;
 */
 class Champion
 {
-    int id;
-    int health;
-    int damage;
-    static int numberOfAliveChampions; // Think: Why static? What is a static member?
-                                       /* What are the differences between a static member and the others? */
+	int id;
+	int health;
+	int damage;
+	static int numberOfAliveChampions; // Think: Why static? What is a static member?
+									   /* What are the differences between a static member and the others? */
 public:
-    Champion(int _id, int _health, int _damage);
-    ~Champion();
-    bool attack(Champion &_victim);
-    int getHeath();
-    static int getNumberOfAliveChampions(); // Why static? What is a static method?
-                                            /* What are the differences between a static method and the others? */
+	Champion(int _id, int _health, int _damage);
+	~Champion();
+	bool attack(Champion &_victim);
+	int getHeath();
+	static int getNumberOfAliveChampions(); // Why static? What is a static method?
+											/* What are the differences between a static method and the others? */
 };
 
 /**
@@ -47,36 +47,48 @@ public:
 /* The constructor */
 Champion::Champion(int _id, int _health, int _damage)
 {
-    // Hint: set the corresponding passed values to id, health, and damage
-    // Hint: We have a static variable for alive champion counting!
-    // TODO
+	// Hint: set the corresponding passed values to id, health, and damage
+	// Hint: We have a static variable for alive champion counting!
+	// TODO
+	id = _id;
+	health = _health;
+	damage = _damage;
+	numberOfAliveChampions += 1;
 }
 
 /* The destructor */
 Champion::~Champion()
 {
-    // Think: What must be done when the the object is destroyed?
-    // Hint: We have a static variable for alive champion counting!
-    // TODO
+	// Think: What must be done when the the object is destroyed?
+	// Hint: We have a static variable for alive champion counting!
+	// TODO
+	numberOfAliveChampions -= 1;
 }
 
 /* This champion attack another champion, the victim will lose an amount of health
 equal to the attacker damage, return true if the victim dies after being attacked */
 bool Champion::attack(Champion &_victim)
 {
-    // TODO
+	// TODO
+	int result = 0;
+	_victim.health -= this->damage;
+	if (_victim.health <= 0)
+		result = 1;
+	return result;
 }
 
 /* The getter for instance member: this->health */
 int Champion::getHeath()
 {
-    // TODO
+	// TODO
+	return this->health;
 }
 
 /* The getter for the class member: Champion::numberOfAliveChampions */
 int Champion::getNumberOfAliveChampions()
 { // Why static? What is a static method?
-    // TODO
+	// TODO
+	return numberOfAliveChampions;
 }
 // Think: What are the differences between the two getter above?
 
@@ -93,110 +105,137 @@ or return 0 if no one dies after the fight. Please note that, to mark that a cha
 you have to delete that champion object and set the corresponding pionter to NULL*/
 int fight(Champion *&a, Champion *&b, bool *eventList, int numberOfEvent)
 {
-    /*Please note that, to mark that a champion is killed,
+	/*Please note that, to mark that a champion is killed,
 	you have to delete that champion object and set the corresponding pionter to NULL */
-    // TODO
+	// TODO
+	int result = 0;
+	for (int i = 0; i < numberOfEvent && !result; i += 1)
+	{
+		if (eventList[i] == 1)
+		{
+			result = a->attack(*b);
+			if (result)
+			{
+				result = 1;
+				b->Champion::~Champion();
+				b = nullptr;
+			}
+		}
+		else
+		{
+			result = b->attack(*a);
+			if (result)
+			{
+				result = -1;
+				a->Champion::~Champion();
+				a = nullptr;
+			}
+		}
+	}
+	return result;
 }
 
 //------------------------------------------------------------------------
 
 struct Match
 {
-    int indexOfA;
-    int indexOfB;
-    int numberOfEvents;
-    bool *eventList;
+	int indexOfA;
+	int indexOfB;
+	int numberOfEvents;
+	bool *eventList;
 };
 
 /* There are many matches, in each match, the two champion will fight with each other */
 void combat(Champion **championList, int numberOfChampions, Match *matchList, int numberOfMatches)
 {
-    for (int i = 0; i < numberOfMatches; i++)
-    {
-        if (championList[matchList[i].indexOfA] != NULL && championList[matchList[i].indexOfB] != NULL)
-            fight(championList[matchList[i].indexOfA], championList[matchList[i].indexOfB], matchList[i].eventList, matchList[i].numberOfEvents);
-    }
+	for (int i = 0; i < numberOfMatches; i++)
+	{
+		if (championList[matchList[i].indexOfA] != NULL && championList[matchList[i].indexOfB] != NULL)
+			fight(championList[matchList[i].indexOfA], championList[matchList[i].indexOfB], matchList[i].eventList, matchList[i].numberOfEvents);
+	}
 }
 
 bool codeCheck()
 {
-    const char *forbiddenKeyword[] = {"include"};
-    fstream ifs;
-    ifs.open("main.cpp", ios::in);
-    if (ifs.fail())
-        ifs.open(FILENAME, ios::in);
-    if (ifs.fail())
-        return true;
-    ifs.seekg(0, ifs.end);
-    int fileSize = ifs.tellg();
-    ifs.seekg(0, ifs.beg);
-    char *fileContent = new char[fileSize];
-    ifs.read(fileContent, fileSize);
-    ifs.close();
-    *strstr(fileContent, "bool codeCheck() {") = '\0';
-    char *todoSegment = strstr(fileContent, "// Begin implementation");
-    int numberOfForbiddenKeyword = sizeof(forbiddenKeyword) / sizeof(const char *);
-    for (int i = 0; i < numberOfForbiddenKeyword; i++)
-    {
-        if (strstr(todoSegment, forbiddenKeyword[i]))
-            return false;
-    }
-    delete[] fileContent;
-    return true;
+	const char *forbiddenKeyword[] = {"include"};
+	fstream ifs;
+	ifs.open("main.cpp", ios::in);
+	if (ifs.fail())
+		ifs.open(FILENAME, ios::in);
+	if (ifs.fail())
+		return true;
+	ifs.seekg(0, ifs.end);
+	int fileSize = ifs.tellg();
+	ifs.seekg(0, ifs.beg);
+	char *fileContent = new char[fileSize];
+	ifs.read(fileContent, fileSize);
+	ifs.close();
+	*strstr(fileContent, "bool codeCheck() {") = '\0';
+	char *todoSegment = strstr(fileContent, "// Begin implementation");
+	int numberOfForbiddenKeyword = sizeof(forbiddenKeyword) / sizeof(const char *);
+	for (int i = 0; i < numberOfForbiddenKeyword; i++)
+	{
+		if (strstr(todoSegment, forbiddenKeyword[i]))
+			return false;
+	}
+	delete[] fileContent;
+	return true;
 }
 
 int main(int argc, char *argv[])
 {
-    if (codeCheck() == false)
-    {
-        cout << "Forbidden-keyword rule violation." << endl;
-        return -1;
-    }
-    // Section: read testcase
-    ///Student may comment out this section for local testing
-    if (argc < 2)
-        return 0;
-    ifstream fileIn;
-    try
-    {
-        fileIn.open(argv[1]);
-        if (fileIn.fail())
-            throw "Failed to open file.";
-        int numberOfChampions;
-        fileIn >> numberOfChampions;
-        Champion **champList = new Champion *[numberOfChampions];
-        int id, health, damage;
-        for (int i = 0; i < numberOfChampions; i++)
-        {
-            fileIn >> id >> health >> damage;
-            champList[i] = new Champion(id, health, damage);
-        }
-        int numberOfMatches;
-        fileIn >> numberOfMatches;
-        Match *matchList = new Match[numberOfMatches];
-        for (int i = 0; i < numberOfMatches; i++)
-        {
-            fileIn >> matchList[i].indexOfA >> matchList[i].indexOfB;
-            fileIn >> matchList[i].numberOfEvents;
-            matchList[i].eventList = new bool[matchList[i].numberOfEvents];
-            for (int j = 0; j < matchList[i].numberOfEvents; j++)
-                fileIn >> matchList[i].eventList[j];
-        }
-        combat(champList, numberOfChampions, matchList, numberOfMatches);
-        cout << Champion::getNumberOfAliveChampions();
-        fileIn.close();
-        for (int i = 0; i < numberOfChampions; i++)
-            delete champList[i];
-        delete[] champList;
-        for (int i = 0; i < numberOfMatches; i++)
-            delete[] matchList[i].eventList;
-        delete[] matchList;
-    }
-    catch (const char *errMsg)
-    {
-        cerr << errMsg;
-    }
-    // Endsection: read testcase
-    //------------------------------------
-    return 0;
+	/*
+	if (codeCheck() == false)
+	{
+		cout << "Forbidden-keyword rule violation." << endl;
+		return -1;
+	}
+	*/
+	// Section: read testcase
+	///Student may comment out this section for local testing
+	if (argc < 2)
+		return 0;
+	ifstream fileIn;
+	try
+	{
+		fileIn.open(argv[1]);
+		if (fileIn.fail())
+			throw "Failed to open file.";
+		int numberOfChampions;
+		fileIn >> numberOfChampions;
+		Champion **champList = new Champion *[numberOfChampions];
+		int id, health, damage;
+		for (int i = 0; i < numberOfChampions; i++)
+		{
+			fileIn >> id >> health >> damage;
+			champList[i] = new Champion(id, health, damage);
+		}
+		int numberOfMatches;
+		fileIn >> numberOfMatches;
+		Match *matchList = new Match[numberOfMatches];
+		for (int i = 0; i < numberOfMatches; i++)
+		{
+			fileIn >> matchList[i].indexOfA >> matchList[i].indexOfB;
+			fileIn >> matchList[i].numberOfEvents;
+			matchList[i].eventList = new bool[matchList[i].numberOfEvents];
+			for (int j = 0; j < matchList[i].numberOfEvents; j++)
+				fileIn >> matchList[i].eventList[j];
+		}
+		combat(champList, numberOfChampions, matchList, numberOfMatches);
+		cout << Champion::getNumberOfAliveChampions();
+		fileIn.close();
+		for (int i = 0; i < numberOfChampions; i++)
+			delete champList[i];
+		delete[] champList;
+		for (int i = 0; i < numberOfMatches; i++)
+			delete[] matchList[i].eventList;
+		delete[] matchList;
+	}
+	catch (const char *errMsg)
+	{
+		cerr << errMsg;
+	}
+	// Endsection: read testcase
+	//------------------------------------
+	return 0;
 }
